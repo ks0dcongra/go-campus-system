@@ -1,3 +1,3 @@
-DROP TABLE IF EXISTS student;
-DROP TABLE IF EXISTS score;
-DROP TABLE IF EXISTS course;
+DROP TABLE IF EXISTS student cascade;
+DROP TABLE IF EXISTS score cascade;
+DROP TABLE IF EXISTS course cascade;
