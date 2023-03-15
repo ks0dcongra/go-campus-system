@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"example1/app/model"
+	model "example1/app/model"
 	"example1/database"
 	"time"
 

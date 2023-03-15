@@ -1,6 +1,7 @@
 package main
 
 import (
+	"example1/app/http/middleware"
 	database "example1/database"
 	"example1/routes"
 	"fmt"
@@ -8,6 +9,8 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 )
 
 func main() {
@@ -27,12 +30,12 @@ func main() {
 		if err == nil {
 			break
 		}
-		
+
 		fmt.Println("Trying to connect database...")
 		fmt.Println("DB Error===>", err)
-		time.Sleep(3* time.Second)
+		time.Sleep(3 * time.Second)
 	}
-	fmt.Println("Database connected!")	
+	fmt.Println("Database connected!")
 
 	mainServer := gin.New()
 	mainServer.Use(cors.New(cors.Config{
@@ -44,5 +47,11 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 	routes.ApiRoutes(mainServer)
+
+	// 註冊Validator Func
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("userpasd", middleware.UserPasd)
+	}
+
 	mainServer.Run(":9875")
 }
