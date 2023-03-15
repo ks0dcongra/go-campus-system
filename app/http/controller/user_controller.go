@@ -5,7 +5,9 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
+	"log"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,11 +61,34 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 	}
 }
 
+// Logout
 func (h *userController) LogoutUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		middleware.ClearSession(c)
 		c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
 			"message":"Logout Successfully.",
 		}))
+	}
+}
+
+// Create User
+func (h *userController) CreateUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requestData := new(model.CreateStudent)
+		log.Print("happy",requestData)
+		if err := c.ShouldBindJSON(requestData); err != nil {
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+			return
+		}
+		err := c.ShouldBindJSON(requestData)
+		log.Print("happy0",err)
+		student_id, status := service.NewUserService().CreateUser(requestData)
+		log.Print("happy2",student_id)
+		log.Print("happy3",status)
+		if status != responses.Success {
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
+			return
+		}
+		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
 	}
 }

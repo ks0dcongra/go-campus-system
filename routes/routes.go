@@ -14,11 +14,16 @@ func ApiRoutes(router *gin.Engine) {
 	adminApi.POST("item", controller.AdminController().AddItem())
 	adminApi.GET("item", controller.AdminController().GetItem())
 	//user
-	// userApi.Use(middleware.AuthRequired)
+	// 虹堡 Authantication
+	// userApi.Use(middleware.AuthRequired) 
 	userApi.GET("item", controller.UserController().GetItem())
 
+	// create
+	userApi.POST("/create", controller.UserController().CreateUser())
+	
+	// login
 	userApi.POST("login",controller.UserController().LoginUser())
-	//login && logout
+	//logout
 	userApi.Use(session.AuthSession())
 	{
 		userApi.GET("logout",controller.UserController().LogoutUser())
