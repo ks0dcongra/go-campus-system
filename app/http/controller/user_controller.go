@@ -92,20 +92,3 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
 	}
 }
-
-// POST
-// func PostUser(c *gin.Context){
-// 	user := pojo.User{}
-// 	err := c.BindJSON(&user)
-// 	if err != nil {
-// 		c.JSON(http.StatusNotAcceptable,"Error:" + err.Error())
-// 		return
-// 	}
-// 	newUser := pojo.CreateUser(user)
-// 	c.JSON(http.StatusOK, newUser)
-// }
-
-// func CreateUser(user User) User{
-// 	config.DB.Create(&user)
-// 	return user
-// }
