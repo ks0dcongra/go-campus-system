@@ -21,3 +21,12 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 	}
 	return student , responses.Success
 }
+
+// CreateUser
+func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int , status string) {
+	student_id, db := repository.UserRepository().Create(data)
+	if db.Error!= nil {
+		return -1 , responses.Error
+	}
+	return student_id,responses.Success
+}

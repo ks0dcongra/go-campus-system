@@ -8,15 +8,10 @@ import (
 type Student struct {
 	Id int `gorm:"primaryKey;uniqueIndex;autoIncrement;column:id" binding:"required"`
 	Name string `binding:"required,gte=2"`
-	Password string `binding:"required min=4,max=20,userpasd"`
+	Password string `binding:"required,min=4,max=20,userpasd"`
 	Student_number string `binding:"required"`
 	CreatedTime time.Time
 	UpdatedTime time.Time
-}
-
-type LoginStudent struct {
-	Name string `binding:"required"`
-	Password string `binding:"required"`
 }
 
 type Score struct {
@@ -35,3 +30,14 @@ type Course struct {
 	CreatedTime time.Time
 	UpdatedTime time.Time
 }
+
+type LoginStudent struct {
+	Name string `binding:"required"`
+	Password string `binding:"required"`
+}
+type CreateStudent struct {
+	Name string `binding:"required"`
+	Password string `binding:"required"`
+	Student_number string `binding:"required"`
+}
+
