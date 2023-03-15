@@ -1,12 +1,11 @@
 package controller
 
 import (
+	"example1/app/http/middleware"
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
-	"log"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,39 +39,34 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 		requestData := new(model.LoginStudent)
 		if err := c.ShouldBindJSON(requestData); err != nil {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-			log.Println(err)
 			return
 		}
-
-		// err := c.ShouldBindJSON(requestData)
-		// log.Println(err)
-		// if err == nil{
-		// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-		// 	return
-		// }
-		// if err != nil{
-		// 	log.Println("bad")
-		// }
-		// log.Println("KOYO22222", requestData)
 		student, status := service.NewUserService().Login(requestData)
 		if student.Id == 0 {
 			c.JSON(http.StatusNotFound, "Student Error2")
 			return
 		}
-		log.Println("KOYO22223", requestData)
-		//  middleware.SaveSession(c, user.Id)
+		// 用id來儲存session
+		middleware.SaveSession(c, student.Id)
 		if status != responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		log.Println("KOYO22224", requestData)
 		c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
 			"Student" : student,
-			// "Sessions": middleware.GetSession(c),
+			"Sessions":middleware.GetSession(c),
 		}))
 	}
 }
 
+func (h *userController) LogoutUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		middleware.ClearSession(c)
+		c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
+			"message":"Logout Successfully.",
+		}))
+	}
+}
 // pojo
 // func LoginUser(c *gin.Context){
 // 	name := c.PostForm("name")

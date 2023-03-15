@@ -2,14 +2,14 @@ package routes
 
 import (
 	"example1/app/http/controller"
-	// "example1/app/http/middleware"
+	session "example1/app/http/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 func ApiRoutes(router *gin.Engine) {
 	adminApi := router.Group("admin/api")
-	userApi := router.Group("user/api")
+	userApi := router.Group("user/api", session.SetSession())
 	//admin
 	adminApi.POST("item", controller.AdminController().AddItem())
 	adminApi.GET("item", controller.AdminController().GetItem())
@@ -17,8 +17,11 @@ func ApiRoutes(router *gin.Engine) {
 	// userApi.Use(middleware.AuthRequired)
 	userApi.GET("item", controller.UserController().GetItem())
 
-	//login && logout
 	userApi.POST("login",controller.UserController().LoginUser())
-	// userApi.GET("logout",controller.UserController().LogoutUser())
-
+	//login && logout
+	userApi.Use(session.AuthSession())
+	{
+		userApi.GET("logout",controller.UserController().LogoutUser())
+	}
+	
 }
