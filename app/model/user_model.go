@@ -7,8 +7,8 @@ import (
 // example database main table
 type Student struct {
 	Id int `gorm:"primaryKey;uniqueIndex;autoIncrement;column:id" binding:"required"`
-	Name string `binding:"required"`
-	Password string `binding:"required"`
+	Name string `binding:"required,gte=2"`
+	Password string `binding:"required min=4,max=20,userpasd"`
 	Student_number string `binding:"required"`
 	CreatedTime time.Time
 	UpdatedTime time.Time
