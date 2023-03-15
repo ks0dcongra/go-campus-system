@@ -1,4 +1,4 @@
-CREATE TABLE "student" (
+CREATE TABLE "students" (
   "id" bigserial PRIMARY KEY,
   "name" varchar NOT NULL,
   "password" bigint NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE "student" (
   "created_time" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE TABLE "score" (
+CREATE TABLE "scores" (
   "id" bigserial PRIMARY KEY,
   "score" bigint NOT NULL,
   "student_id" bigint NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE "score" (
     -- CONSTRAINT fk_course FOREIGN KEY(course_id) REFERENCES course(id)
 );
 
-CREATE TABLE "course" (
+CREATE TABLE "courses" (
   "id" bigserial PRIMARY KEY,
   "subject" varchar NOT NULL,
   "subject_id" varchar NOT NULL,
@@ -28,5 +28,5 @@ CREATE TABLE "course" (
   "created_time" timestamptz NOT NULL DEFAULT (now())
 );
 -- 另一種方式新增
-ALTER TABLE "score" ADD FOREIGN KEY ("student_id") REFERENCES "student" ("id");
-ALTER TABLE "score" ADD FOREIGN KEY ("course_id") REFERENCES "course" ("id");
+ALTER TABLE "scores" ADD FOREIGN KEY ("student_id") REFERENCES "students" ("id");
+ALTER TABLE "scores" ADD FOREIGN KEY ("course_id") REFERENCES "courses" ("id");
