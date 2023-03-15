@@ -67,38 +67,3 @@ func (h *userController) LogoutUser() gin.HandlerFunc {
 		}))
 	}
 }
-// pojo
-// func LoginUser(c *gin.Context){
-// 	name := c.PostForm("name")
-// 	password := c.PostForm("password")
-// 	user := pojo.CheckUserPassword(name, password)
-// 	if user.Id == 0 {
-// 		c.JSON(http.StatusNotFound, "Error")
-// 		return
-// 	}
-// 	middlewares.SaveSession(c, user.Id)
-// 	c.JSON(http.StatusOK, gin.H{
-// 		"message" : "Login Successfully",
-// 		"User" : user,
-// 		"Sessions": middlewares.GetSession(c),
-// 	})
-// }
-
-
-// Logout
-// func (h *userController) LogoutUser() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		requestData := new(model.SearchItem)
-// 		if err := c.ShouldBindJSON(requestData); err != nil {
-// 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-// 			return
-// 		}
-// 		item, status := service.NewItemService().Logout(requestData)
-// 		if status != responses.Success {
-// 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
-// 			return
-// 		}
-// 		c.JSON(http.StatusOK, responses.Status(responses.Success, item))
-// 	}
-// }
-

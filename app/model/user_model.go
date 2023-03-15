@@ -35,8 +35,3 @@ type Course struct {
 	CreatedTime time.Time
 	UpdatedTime time.Time
 }
-
-// func (Student) TableName() string {
-// 	return "student"
-// }
-
