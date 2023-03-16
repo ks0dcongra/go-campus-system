@@ -7,7 +7,7 @@ import (
 	"example1/app/service"
 	"log"
 	"net/http"
-
+	"example1/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -92,3 +92,40 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
 	}
 }
+
+// Get Score
+// func ScoreSearch(c *gin.Context) gin.HandlerFunc{
+// 	var students []model.Student
+// 	c.BindJSON(&students)
+// 	result := database.DB.Preload("courses").Find(&students)
+// 	c.JSON(http.StatusOK, result)
+// }
+
+// Score Search
+func (h *userController) ScoreSearch() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var student []model.Student
+		database.DB.Preload("Course").Find(&student, "id = ?", "3")
+		c.JSON(http.StatusOK, &student)
+	}
+}
+
+// Score Search
+// func (h *userController) ScoreSearch() gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		requestData := new(model.Student)
+// 		if err := c.ShouldBindJSON(requestData); err != nil {
+// 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+// 			return
+// 		}
+// 		// err := c.ShouldBindJSON(requestData)
+// 		student_id, status := service.NewUserService().CreateUser(requestData)
+// 		// log.Print("happy3",status)
+// 		if status != responses.Success {
+// 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
+// 			return
+// 		}
+// 		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
+// 	}
+// }
+

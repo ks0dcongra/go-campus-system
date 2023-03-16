@@ -23,6 +23,10 @@ func ApiRoutes(router *gin.Engine) {
 	
 	// login
 	userApi.POST("login",controller.UserController().LoginUser())
+
+	// score search
+	userApi.GET("search",controller.UserController().ScoreSearch())
+
 	//logout
 	userApi.Use(session.AuthSession())
 	{

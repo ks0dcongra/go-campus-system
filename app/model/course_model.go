@@ -7,12 +7,9 @@ import (
 type Course struct {
 	Id int `binding:"required"`
 	Subject string `binding:"required"`
-	Subject_id int `binding:"required"`
-	Student []Student `json:"students" gorm:"many2many:score;ForeignKey:Id;joinForeignKey:Course_id;References:Id;joinReferences:Student_id"`
+	Subject_id string `binding:"required"`
+	Student []Student `gorm:"many2many:scores;References:Id;joinReferences:Student_id"`
+	// Student []Student `gorm:"many2many:score;ForeignKey:Id;joinForeignKey:Course_id;References:Id;joinReferences:Student_id"`
 	CreatedTime time.Time
 	UpdatedTime time.Time
-}
-
-func (Course) TableName() string {
-	return "courses"
 }

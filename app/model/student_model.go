@@ -9,7 +9,8 @@ type Student struct {
 	Name string `binding:"required,gte=2"`
 	Password string `binding:"required"`
 	Student_number string `binding:"required"`
-	Course []Course `json:"courses" gorm:"many2many:score;ForeignKey:Id;joinForeignKey:Student_id;References:Id;joinReferences:Course_id"`
+	// Course []Course `gorm:"many2many:score;ForeignKey:Id;joinForeignKey:Student_id;References:Id;joinReferences:Course_id"`
+	Course []Course `gorm:"many2many:scores;References:Id;joinReferences:Course_id"`
 	CreatedTime time.Time
 	UpdatedTime time.Time
 }
@@ -23,6 +24,3 @@ type CreateStudent struct {
 	Student_number string `binding:"required"`
 }
 
-func (Student) TableName() string {
-	return "students"
-}
