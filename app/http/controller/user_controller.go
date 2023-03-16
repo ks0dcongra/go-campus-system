@@ -7,7 +7,6 @@ import (
 	"example1/app/service"
 	"log"
 	"net/http"
-	"example1/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -102,30 +101,50 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 // }
 
 // Score Search
-func (h *userController) ScoreSearch() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var student []model.Student
-		database.DB.Preload("Course").Find(&student, "id = ?", "3")
-		c.JSON(http.StatusOK, &student)
-	}
-}
-
-// Score Search
 // func (h *userController) ScoreSearch() gin.HandlerFunc {
 // 	return func(c *gin.Context) {
-// 		requestData := new(model.Student)
-// 		if err := c.ShouldBindJSON(requestData); err != nil {
-// 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-// 			return
-// 		}
-// 		// err := c.ShouldBindJSON(requestData)
-// 		student_id, status := service.NewUserService().CreateUser(requestData)
-// 		// log.Print("happy3",status)
-// 		if status != responses.Success {
-// 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
-// 			return
-// 		}
-// 		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
+// 		var student []model.Student
+// 		database.DB.Preload("Course").Find(&student, "id = ?", "3")
+// 		c.JSON(http.StatusOK, &student)
 // 	}
 // }
 
+// ScoreSearch
+func (h *userController) ScoreSearch() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// requestData := new(model.SearchScoreStudent)
+		// log.Println(requestData)
+		requestData := c.Param("id")
+		// log.Println("handsome:",c.Param("id"))
+		// if err := c.ShouldBindJSON(requestData); err != nil {
+		// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+		// 	return
+		// }
+		if requestData == "" {
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+			return
+		}
+		// if user.Id == 0 {
+		// 	c.JSON(http.StatusNotFound,"Error")
+		// 	return
+		// }
+		// err := c.ShouldBindJSON(requestData)
+		// log.Print("handsome2",err)
+		student, status := service.NewUserService().ScoreSearch(requestData)
+		// log.Print("happy3",status)
+		if status != responses.Success {
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
+			return
+		}
+		c.JSON(http.StatusOK, responses.Status(responses.Success, student))
+	}
+}
+// user := pojo.FindByUserId(c.Param("id"))
+// 	if user.Id == 0 {
+// 		c.JSON(http.StatusNotFound,"Error")
+// 		return
+// }
+// c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
+// 	"Student" : student,
+// 	"Sessions":middleware.GetSession(c),
+// }))
