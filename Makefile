@@ -4,7 +4,7 @@ postgres:
 migrateup:
     migrate -verbose -source file://database/migration -database postgres://postgres:@127.0.0.1:5432/postgres?sslmode=disable up 1
 migratedown:
-     migrate -verbose -source file://database/migration -database postgres://postgres:@127.0.0.1:5432/postgres?sslmode=disable down 1
+    migrate -verbose -source file://database/migration -database postgres://postgres:@127.0.0.1:5432/postgres?sslmode=disable down 1
 hello:
 	echo "Hello"
 .PHONY: postgres migrateup migratedown

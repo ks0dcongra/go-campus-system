@@ -1,7 +1,7 @@
 CREATE TABLE "students" (
   "id" bigserial PRIMARY KEY,
   "name" varchar NOT NULL,
-  "password" bigint NOT NULL,
+  "password" varchar(128) NOT NULL,
   "student_number" varchar NOT NULL,
   "updated_time" timestamptz NOT NULL DEFAULT (now()),
   "created_time" timestamptz NOT NULL DEFAULT (now())
