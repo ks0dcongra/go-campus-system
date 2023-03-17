@@ -5,6 +5,7 @@ import (
 	"example1/app/model/responses"
 	"example1/app/repository"
 	"log"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -37,11 +38,14 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int , st
 }
 
 // scoreSearch
-func (h *UserService) ScoreSearch(data string) (student model.ReturnStudent , status string) {
+func (h *UserService) ScoreSearch(data string) (student []model.ReturnStudent , status string) {
 	student, db := repository.UserRepository().ScoreSearch(data)
-	if db.Error!= nil {
+	// fmt.Println(student)
+	// fmt.Println("jojo",db)
+	if db.Name == "" {
 		return student , responses.Error
 	}
+	// fmt.Println("yoyo")
 	return student ,responses.Success
 }
 

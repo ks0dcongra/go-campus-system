@@ -35,10 +35,38 @@ type ReturnStudent struct {
 		Score int `binding:"required"`
 }
 
-// type ReturnStudent struct {
-//     Name []Student
-// 	Subject []Course
-// 	Score []Score
+
+// type Happy struct {
+// 	Name string  `binding:"required"`
+// 	Subject string `binding:"required"`
+// 	Score int `binding:"required"`
 // }
 
+// type ReturnStudent struct {
+// 	Name Array  `binding:"required"`
+// 	Subject string `binding:"required"`
+// 	Score int `binding:"required"`
+// }
+// type Name struct {
+// 	Name string
+// }
 
+// type Score2 struct {
+// 	Score int
+// }
+
+// type Subject struct {
+// 	Subject string
+// }
+
+type ReturnStudent2 struct {
+	Name string  `binding:"required"`
+	Subject string `binding:"required"`
+	Score int `binding:"required"`
+}
+
+type User struct {
+	Name string  `binding:"required"`
+	Subject string `binding:"required"`
+	Score int `binding:"required"`
+}

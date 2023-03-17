@@ -5,8 +5,10 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
+	"fmt"
 	"log"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -132,6 +134,8 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		// log.Print("handsome2",err)
 		student, status := service.NewUserService().ScoreSearch(requestData)
 		// log.Print("happy3",status)
+		fmt.Println("AA",student)
+		fmt.Println("BB",status)
 		if status != responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return

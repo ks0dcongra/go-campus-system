@@ -50,7 +50,7 @@ func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gor
 }
 
 // score search
-func (h *_UserRepository) ScoreSearch(data string) (Student model.ReturnStudent, result *gorm.DB) {
+func (h *_UserRepository) ScoreSearch(data string) (Student []model.ReturnStudent, result model.ReturnStudent) {
 	// log.Print("happy4",data)
 	// student := model.Student{
 	// 	Name: data.Name,
@@ -59,7 +59,7 @@ func (h *_UserRepository) ScoreSearch(data string) (Student model.ReturnStudent,
 	// 	CreatedTime: time.Now(),
 	// 	UpdatedTime: time.Now()}
 	// log.Print("happy5",student)
-	log.Print("happy6",data)
+	// log.Print("happy6",data)
 	// studentSearch := new(model.ReturnStudent)
 	// _ = ShouldBindJSON(requestData)
 	studentSearch := model.ReturnStudent{}
@@ -72,17 +72,47 @@ func (h *_UserRepository) ScoreSearch(data string) (Student model.ReturnStudent,
 	// if err := tx.Where("storageid = ?", pool.PoolId).Find(&poolVolumes).Error; err != nil {
 	// 	return err
 	// }
+	// result := map[string]interface{}{}
+
+	// rows , err = database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
+	// Joins("left join scores on students.id = scores.student_id").
+	// Joins("left join courses on courses.id = scores.course_id").Scan(&studentSearch).Rows()
 	
-	result = database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
+	rows,_ := database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
 	Joins("left join scores on students.id = scores.student_id").
-	Joins("left join courses on courses.id = scores.course_id").Scan(&studentSearch)
-	
+	Joins("left join courses on courses.id = scores.course_id").Where("students.id = ?", data).Rows()
+	// .Scan(&studentSearch)
+	// var result string = "123"
+	defer rows.Close()
+	var new []model.ReturnStudent
+	var result2 model.ReturnStudent
+	for rows.Next() {
+		defer rows.Close()
+		// var student studentSearch{}
+		// ScanRows is a method of `gorm.DB`, it can be used to scan a row into a struct
+		database.DB.ScanRows(rows, &studentSearch)
+		// log.Println("yoyo3",rows)
+		log.Println("yoyo3",studentSearch.Name)
+		// var result2 model.ReturnStudent
+		result2 = model.ReturnStudent{Name:studentSearch.Name,Subject:studentSearch.Subject,Score:studentSearch.Score}
+		new = append(new,result2)	
+		// n
+		log.Println("hey",new)
+		// result2 = append(result2, &studentSearch)
+		// do something
+	}
+
+	// var data2 =  model.ReturnStudent{
+	// 	Name : studentSearch.Name,
+	// 	Subject : studentSearch.Subject,
+	// 	Score : studentSearch.Score,
+	// }
 	// result = database.DB.Model(&student).Select("*").
 	// Joins("left join scores on students.id = scores.student_id").
 	// Joins("left join courses on courses.id = scores.course_id").Find(&studentSearch)
 	// m := map[string]interface{}{}
 	
-	// log.Println("%T",studentSearch)
+
 	// result = database.DB.Model(&student).
 	// Select("*").
 	// Joins("inner join score on score.student_id = student.id")
@@ -94,7 +124,7 @@ func (h *_UserRepository) ScoreSearch(data string) (Student model.ReturnStudent,
 	// log.Println(result2)
 	// result = database.DB.Joins("Course").Find(&student, "id = ?", data)
 			
-	return studentSearch, result
+	return new, result2
 }
 
 
