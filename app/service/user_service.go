@@ -40,12 +40,9 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int , st
 // scoreSearch
 func (h *UserService) ScoreSearch(data string) (student []model.ReturnStudent , status string) {
 	student, db := repository.UserRepository().ScoreSearch(data)
-	// fmt.Println(student)
-	// fmt.Println("jojo",db)
 	if db.Name == "" {
 		return student , responses.Error
 	}
-	// fmt.Println("yoyo")
 	return student ,responses.Success
 }
 
@@ -59,7 +56,5 @@ func hashAndSalt(pwd []byte) string {
 	if err != nil {
 		log.Println(err)
 	}
-	// GenerateFromPassword returns a byte slice so we need to
-	// convert the bytes to a string and return it
 	return string(hash)
 }
