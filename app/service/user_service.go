@@ -5,6 +5,7 @@ import (
 	"example1/app/model/responses"
 	"example1/app/repository"
 	"log"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -36,6 +37,15 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int , st
 	return student_id,responses.Success
 }
 
+// scoreSearch
+func (h *UserService) ScoreSearch(data string) (student []model.ReturnStudent , status string) {
+	student, db := repository.UserRepository().ScoreSearch(data)
+	if db.Name == "" {
+		return student , responses.Error
+	}
+	return student ,responses.Success
+}
+
 func hashAndSalt(pwd []byte) string {
 	// Use GenerateFromPassword to hash & salt pwd.
 	// MinCost is just an integer constant provided by the bcrypt
@@ -46,7 +56,5 @@ func hashAndSalt(pwd []byte) string {
 	if err != nil {
 		log.Println(err)
 	}
-	// GenerateFromPassword returns a byte slice so we need to
-	// convert the bytes to a string and return it
 	return string(hash)
 }
