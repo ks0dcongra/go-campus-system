@@ -19,37 +19,37 @@ func NewUserService() *UserService {
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
 	student, db := repository.UserRepository().CheckUserPassword(condition)
-	if db.Error!= nil {
-		return student , responses.Error
+	if db.Error != nil {
+		return student, responses.Error
 	}
-	return student , responses.Success
+	return student, responses.Success
 }
 
 // CreateUser
-func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int , status string) {
+func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, status string) {
 	pwd := []byte(data.Password)
 	hash := hashAndSalt(pwd)
 	data.Password = hash
 	student_id, db := repository.UserRepository().Create(data)
-	if db.Error!= nil {
-		return -1 , responses.Error
+	if db.Error != nil {
+		return -1, responses.Error
 	}
-	return student_id,responses.Success
+	return student_id, responses.Success
 }
 
 // scoreSearch
-func (h *UserService) ScoreSearch(data string) (student []model.ReturnStudent , status string) {
+func (h *UserService) ScoreSearch(data string) (student []model.ReturnStudent, status string) {
 	student, db := repository.UserRepository().ScoreSearch(data)
 	if db.Name == "" {
-		return student , responses.Error
+		return student, responses.Error
 	}
-	return student ,responses.Success
+	return student, responses.Success
 }
 
 func hashAndSalt(pwd []byte) string {
 	// Use GenerateFromPassword to hash & salt pwd.
 	// MinCost is just an integer constant provided by the bcrypt
-	// package along with DefaultCost & MaxCost. 
+	// package along with DefaultCost & MaxCost.
 	// The cost can be any value you want provided it isn't lower
 	// than the MinCost (4)
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)

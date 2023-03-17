@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"regexp"
 	"github.com/go-playground/validator/v10"
+	"regexp"
 )
 
 func UserPasd(field validator.FieldLevel) bool {

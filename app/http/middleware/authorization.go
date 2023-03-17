@@ -11,8 +11,8 @@ func AuthRequired(c *gin.Context) {
 	auth := c.GetHeader("Authorization")
 	if auth != "castles" {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"status": responses.Error,
-			"message":    "No access.",
+			"status":  responses.Error,
+			"message": "No access.",
 		})
 		c.Abort()
 		return

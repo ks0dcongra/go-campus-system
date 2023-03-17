@@ -17,7 +17,6 @@ func UserController() *userController {
 	return &userController{}
 }
 
-
 func (h *userController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.SearchItem)
@@ -53,9 +52,9 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
-			"Student" : student,
-			"Sessions":middleware.GetSession(c),
+		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+			"Student":  student,
+			"Sessions": middleware.GetSession(c),
 		}))
 	}
 }
@@ -64,8 +63,8 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 func (h *userController) LogoutUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		middleware.ClearSession(c)
-		c.JSON(http.StatusOK, responses.Status(responses.Success,  gin.H{
-			"message":"Logout Successfully.",
+		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+			"message": "Logout Successfully.",
 		}))
 	}
 }

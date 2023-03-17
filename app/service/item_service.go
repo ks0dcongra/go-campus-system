@@ -15,16 +15,16 @@ func NewItemService() *ItemService {
 
 func (h *ItemService) Add(data *model.AddItem) (item_id, status string) {
 	id, db := repository.ItemRepository().Create(data.Item_Data)
-	if db.Error!= nil {
+	if db.Error != nil {
 		return "", responses.Error
 	}
-	return id,responses.Success
+	return id, responses.Success
 }
 
 func (h *ItemService) Get(condition *model.SearchItem) (item model.Item, status string) {
 	item, db := repository.ItemRepository().GetByID(condition)
-	if db.Error!= nil {
+	if db.Error != nil {
 		return item, responses.Error
 	}
-	return item,responses.Success
+	return item, responses.Success
 }

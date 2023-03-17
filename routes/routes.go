@@ -15,22 +15,22 @@ func ApiRoutes(router *gin.Engine) {
 	adminApi.GET("item", controller.AdminController().GetItem())
 	//user
 	// 虹堡 Authantication
-	// userApi.Use(middleware.AuthRequired) 
+	// userApi.Use(middleware.AuthRequired)
 	userApi.GET("item", controller.UserController().GetItem())
 
 	// create
 	userApi.POST("create", controller.UserController().CreateUser())
-	
+
 	// login
-	userApi.POST("login",controller.UserController().LoginUser())
+	userApi.POST("login", controller.UserController().LoginUser())
 
 	// score search
-	userApi.GET("search/:id",controller.UserController().ScoreSearch())
+	userApi.GET("search/:id", controller.UserController().ScoreSearch())
 
 	//logout
 	userApi.Use(session.AuthSession())
 	{
-		userApi.GET("logout",controller.UserController().LogoutUser())
+		userApi.GET("logout", controller.UserController().LogoutUser())
 	}
-	
+
 }
