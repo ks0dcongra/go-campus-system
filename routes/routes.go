@@ -24,13 +24,13 @@ func ApiRoutes(router *gin.Engine) {
 	// login
 	userApi.POST("login", controller.UserController().LoginUser())
 
-	// score search
-	userApi.GET("search/:id", controller.UserController().ScoreSearch())
-
-	//logout
 	userApi.Use(session.AuthSession())
 	{
+		//logout
 		userApi.GET("logout", controller.UserController().LogoutUser())
+
+		// score search
+		userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	}
 
 }
