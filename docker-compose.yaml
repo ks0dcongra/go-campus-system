@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  db:
+    env_file:
+        - "./.env"
+    image: postgres:14-alpine
+    container_name: test_postgres7
+    environment:
+      - POSTGRES_USER=${DB_USER}  
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST} 
+    ports:
+      - '9525:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./sql/test.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks:
+      - server
+  api:
+    env_file:
+      - "./.env"
+    image: andy_training
+    container_name: simple_example7
+    build: .
+    ports: 
+      - 9528:8080 
+    restart: on-failure
+    volumes:
+      - api:/usr/src/app/
+    depends_on:
+      - db        
+    networks:
+      - server
+
+volumes:
+  db:  
+  api:
+
+networks:
+  server:
