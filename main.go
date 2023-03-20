@@ -3,6 +3,7 @@ package main
 import (
 	"example1/app/http/middleware"
 	database "example1/database"
+	migration "example1/database/migrations"
 	"example1/routes"
 	"fmt"
 	"time"
@@ -48,10 +49,13 @@ func main() {
 	}))
 	routes.ApiRoutes(mainServer)
 
+	//Migration Init
+	migration.Init()
+
 	// 註冊Validator Func
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
-	database.DB.DB()
+
 	mainServer.Run(":8080")
 }

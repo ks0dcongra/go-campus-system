@@ -6,7 +6,7 @@ type Response struct {
 	Message string      `json:"message"`
 }
 
-//定義系統錯誤與相關回傳訊息
+// 定義系統錯誤與相關回傳訊息
 const (
 	Success      = "0"
 	ParameterErr = "1"

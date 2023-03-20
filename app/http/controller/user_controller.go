@@ -5,7 +5,6 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
-	database "example1/database"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -101,23 +100,5 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, student))
-	}
-}
-
-// Migration
-func (h *userController) Migration() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		database.DB.Migrator().CreateTable(model.Course{}, model.Student{}, model.Score{})
-		// database.DB.Migrator().CreateConstraint(model.Course{}, "id")
-		// database.DB.DB()
-		c.JSON(http.StatusOK, "Success create")
-	}
-}
-
-func (h *userController) DropMigration() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		database.DB.Migrator().DropTable(model.Course{}, model.Student{}, model.Score{})
-		// database.DB.DB()
-		c.JSON(http.StatusOK, "Success create")
 	}
 }

@@ -35,7 +35,4 @@ func ApiRoutes(router *gin.Engine) {
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	}
 
-	//migrate
-	userApi.GET("migrate", controller.UserController().Migration())
-	userApi.GET("dropmigrate", controller.UserController().DropMigration())
 }

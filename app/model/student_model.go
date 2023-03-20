@@ -24,10 +24,6 @@ type CreateStudent struct {
 	Student_number string `binding:"required"`
 }
 
-type SearchScoreStudent struct {
-	Id int `binding:"required"`
-}
-
 type ReturnStudent struct {
 	Name    string `binding:"required"`
 	Subject string `binding:"required"`
