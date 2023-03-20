@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	_ "github.com/joho/godotenv"
 )
 
 // const (
 // 	UserName     string = "postgres"
-// 	Password     string = "Aa123456"
+// 	Password     string = "postgres"
 // 	Addr         string = "127.0.0.1"
 // 	Port         int    = 5432
 // 	Database     string = "example"
@@ -37,10 +37,6 @@ func initDatabase(dsn string) (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	// if err := db.AutoMigrate(new(model.Organization)); err != nil {
-	// 	log.Fatal(err.Error())
-	// }
 
 	fmt.Println("Database connected ...")
 

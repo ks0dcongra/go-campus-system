@@ -52,6 +52,6 @@ func main() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
-	
+	database.DB.DB()
 	mainServer.Run(":8080")
 }

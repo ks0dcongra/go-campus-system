@@ -10,12 +10,14 @@ import (
 func ApiRoutes(router *gin.Engine) {
 	adminApi := router.Group("admin/api")
 	userApi := router.Group("user/api", session.SetSession())
-	//admin
+	//adminItem
 	adminApi.POST("item", controller.AdminController().AddItem())
 	adminApi.GET("item", controller.AdminController().GetItem())
-	//user
+
 	// 虹堡 Authantication
 	// userApi.Use(middleware.AuthRequired)
+
+	//userItem
 	userApi.GET("item", controller.UserController().GetItem())
 
 	// create
@@ -33,4 +35,7 @@ func ApiRoutes(router *gin.Engine) {
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	}
 
+	//migrate
+	userApi.GET("migrate", controller.UserController().Migration())
+	userApi.GET("dropmigrate", controller.UserController().DropMigration())
 }

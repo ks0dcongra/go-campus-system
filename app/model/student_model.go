@@ -10,6 +10,7 @@ type Student struct {
 	Password       string `binding:"required"`
 	Student_number string `binding:"required"`
 	// Course []Course `gorm:"many2many:score;ForeignKey:Id;joinForeignKey:Student_id;References:Id;joinReferences:Course_id"`
+	Score       []Score `gorm:"foreignKey:Student_id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" binding:"required"`
 	CreatedTime time.Time
 	UpdatedTime time.Time
 }
