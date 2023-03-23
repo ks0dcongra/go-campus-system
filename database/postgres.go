@@ -1,8 +1,8 @@
 package database
 
 import (
-	"fmt"
 	"os"
+	"fmt"
 
 	_ "github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
