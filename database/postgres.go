@@ -1,8 +1,8 @@
 package database
 
 import (
-	"fmt"
 	"os"
+	"fmt"
 
 	_ "github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -11,11 +11,11 @@ import (
 )
 
 // const (
-// 	UserName     string = "postgres"
-// 	Password     string = "postgres"
-// 	Addr         string = "127.0.0.1"
-// 	Port         int    = 5432
-// 	Database     string = "example"
+// 	UserName string = "postgres"
+// 	Password string = "postgres"
+// 	Addr     string = "127.0.0.1"
+// 	Port     int    = 5432
+// 	Database string = "example"
 // )
 
 var (

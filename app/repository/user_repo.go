@@ -3,13 +3,16 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"time"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"time"
 )
 
 type _UserRepository struct {
 }
+
+// var new []model.ReturnStudent
 
 func UserRepository() *_UserRepository {
 	return &_UserRepository{}
@@ -50,11 +53,14 @@ func (h *_UserRepository) ScoreSearch(data string) (Student []model.ReturnStuden
 	defer rows.Close()
 	var new []model.ReturnStudent
 	var result2 model.ReturnStudent
-	for rows.Next() {
-		database.DB.ScanRows(rows, &studentSearch)
-		result2 = model.ReturnStudent{Name: studentSearch.Name, Subject: studentSearch.Subject, Score: studentSearch.Score}
-		new = append(new, result2)
+	if rows != nil {
+		for rows.Next() {
+			database.DB.ScanRows(rows, &studentSearch)
+			result2 = model.ReturnStudent{Name: studentSearch.Name, Subject: studentSearch.Subject, Score: studentSearch.Score}
+			new = append(new, result2)
+		}
 	}
+
 	return new, result2
 }
 

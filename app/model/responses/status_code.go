@@ -4,6 +4,7 @@ type Response struct {
 	Status  string      `json:"status"`
 	Data    interface{} `json:"data"`
 	Message string      `json:"message"`
+	Redis   string      `json:"redis"`
 }
 
 //定義系統錯誤與相關回傳訊息
@@ -19,9 +20,11 @@ var MsgText = map[string]string{
 	Error:        "Has some promble",
 }
 
-func Status(code string, data interface{}) Response {
+func Status(code string, data interface{}, redis string) Response {
 	return Response{
 		Status:  code,
 		Data:    data,
-		Message: MsgText[code]}
+		Message: MsgText[code],
+		Redis:   redis,
+	}
 }

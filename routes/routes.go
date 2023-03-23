@@ -33,6 +33,8 @@ func ApiRoutes(router *gin.Engine) {
 
 		// score search
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
+		// userApi.GET("/:id", service.CacheOneUserDecorator(controller.UserController().ScoreSearch()))
+		// user.GET("/:id", service.CacheOneUserDecorator(service.RedisOneUser, "id", "user_%s", pojo.User{}))
 	}
 
 	//migrate

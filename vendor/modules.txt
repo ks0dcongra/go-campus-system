@@ -60,6 +60,10 @@ github.com/goccy/go-json/internal/encoder/vm_color_indent
 github.com/goccy/go-json/internal/encoder/vm_indent
 github.com/goccy/go-json/internal/errors
 github.com/goccy/go-json/internal/runtime
+# github.com/gomodule/redigo v2.0.0+incompatible
+## explicit
+github.com/gomodule/redigo/internal
+github.com/gomodule/redigo/redis
 # github.com/gorilla/context v1.1.1
 ## explicit
 github.com/gorilla/context
@@ -123,6 +127,11 @@ github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
+# github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7
+## explicit
+github.com/pquerna/ffjson/ffjson
+github.com/pquerna/ffjson/fflib/v1
+github.com/pquerna/ffjson/fflib/v1/internal
 # github.com/twitchyliquid64/golang-asm v0.15.1
 ## explicit; go 1.13
 github.com/twitchyliquid64/golang-asm/asm/arch

@@ -4,9 +4,8 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/repository"
-	"log"
-
 	"golang.org/x/crypto/bcrypt"
+	"log"
 )
 
 type UserService struct {

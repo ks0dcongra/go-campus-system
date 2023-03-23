@@ -4,7 +4,7 @@ services:
     env_file:
         - "./.env"
     image: postgres:14-alpine
-    container_name: test_postgres7
+    container_name: test_postgres8
     environment:
       - POSTGRES_USER=${DB_USER}  
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -17,11 +17,21 @@ services:
       - ./sql/test.sql:/docker-entrypoint-initdb.d/create_tables.sql
     networks:
       - server
+  redis:
+    container_name: "redis_example8"
+    image: redis:alpine
+    # Specify the redis.conf file to use and add a password.
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass mypassword
+    ports: 
+      - "6379:6379"
+    # map the volumes to that redis has the custom conf file from this project.
+    volumes: 
+      - /redis.conf:/usr/local/etc/redis/redis.conf
   api:
     env_file:
       - "./.env"
-    image: andy_training
-    container_name: simple_example7
+    image: andy_training8
+    container_name: simple_example8
     build: .
     ports: 
       - 9528:8080 
@@ -32,7 +42,6 @@ services:
       - db        
     networks:
       - server
-
 volumes:
   db:  
   api:
