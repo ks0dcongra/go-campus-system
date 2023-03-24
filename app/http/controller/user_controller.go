@@ -5,9 +5,12 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
-	database "example1/database"
+	// database "example1/database"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
@@ -91,6 +94,17 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 	}
 }
 
+func newPool(addr string) *redis.Pool {
+	// setPassword := redis.DialPassword("mypassword")
+	log.Println("addr:",addr)
+	return &redis.Pool{
+		MaxIdle:     3,
+		IdleTimeout: 240 * time.Second,
+		// Dial or DialContext must be set. When both are set, DialContext takes precedence over Dial.
+		Dial: func() (redis.Conn, error) { return redis.Dial("tcp", addr) },
+	}
+}
+
 // ScoreSearch
 func (h *userController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -102,7 +116,9 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		redisKey := fmt.Sprintf("user_%s", requestData)
 		var empty interface{}
 		// 連線redis資料庫
-		conn := database.RedisDefaultPool.Get()
+		log.Println(os.Getenv("REDIS_HOST"))
+		conn := newPool(os.Getenv("REDIS_HOST")).Get()
+		// conn := database.RedisDefaultPool.Get()
 		// 函式中沒東西可以執行後才會操作，資料庫用完再關閉
 		defer conn.Close()
 		// 尋找redis裡面有沒有rediskey，如果撈到redis有暫存就不用去撈資料庫了，
@@ -126,3 +142,11 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		}
 	}
 }
+
+// func redis {
+// 	database:Redis連線
+// 	service:拿到連線結果
+// 	判斷REdIS有沒有Key存在
+// 	拿到判斷結果
+// 	如果沒有去創造KEY去暫存於Redis中
+// }

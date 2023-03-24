@@ -1,8 +1,12 @@
 package database
 
 import (
-	"github.com/gomodule/redigo/redis"
+	"log"
+	"os"
 	"time"
+
+	"github.com/gomodule/redigo/redis"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 var RedisDefaultPool *redis.Pool
@@ -10,6 +14,7 @@ var RedisDefaultPool *redis.Pool
 func newPool(addr string) *redis.Pool {
 	setdb := redis.DialDatabase(0)
 	setPassword := redis.DialPassword("mypassword")
+	log.Println("addr:",addr)
 	return &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
@@ -19,5 +24,6 @@ func newPool(addr string) *redis.Pool {
 }
 
 func init() {
-	RedisDefaultPool = newPool("127.0.0.1:6379")
+	RedisDefaultPool = newPool(os.Getenv("REDIS_HOST"))
+	log.Println("RedisDefaultPool:",RedisDefaultPool)
 }

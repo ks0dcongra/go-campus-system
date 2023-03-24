@@ -5,7 +5,7 @@ services:
     env_file:
         - "./.env"
     image: postgres:14-alpine
-    container_name: test_postgres9
+    container_name: test_postgres
     environment:
       - POSTGRES_USER=${DB_USER}  
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -19,20 +19,24 @@ services:
     networks:
         - server
   redis:
-    container_name: "redis9"
-    image: redis:alpine
+    container_name: redis
+    image: redis
     # Specify the redis.conf file to use and add a password.
-    command: redis-server /usr/local/etc/redis/redis.conf --requirepass mypassword
+    command: /usr/local/etc/redis/redis.conf
+    environment:
+      - IP=0.0.0.0
     ports: 
       - "6379:6379"
     # map the volumes to that redis has the custom conf file from this project.
     volumes: 
       - /redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - server
   api:
     env_file:
       - "./.env"
-    image: andy_training
-    container_name: example9
+    image: andy_trainings
+    container_name: example
     build: .
     ports: 
       - 9528:8080 
@@ -40,7 +44,8 @@ services:
     volumes:
       - api:/usr/src/app/
     depends_on:
-      - db        
+      - db
+      - redis    
     networks:
       - server
 volumes:

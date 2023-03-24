@@ -15,8 +15,8 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o andy_training
+RUN go build -o andy_trainings
 
-ENTRYPOINT  ["/app/andy_training"]
+ENTRYPOINT  ["/app/andy_trainings"]
 
 EXPOSE 9528
