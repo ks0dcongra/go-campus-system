@@ -5,11 +5,7 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
-	"log"
-
-	// database "example1/database"
 	"fmt"
-	// "log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -91,39 +87,25 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 	}
 }
 
-
-
 // ScoreSearch
 func (h *userController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := c.Param("id")
-		if (requestData == "0" || requestData == "" ){
+		if requestData == "0" || requestData == "" {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		redisKey := fmt.Sprintf("user_%s", requestData)
-		
 		student, status := service.NewUserService().ScoreSearch(requestData, redisKey)
-		log.Println("student:",student)
-		log.Println("status:",status)
 		if status == responses.Error {
 			// 失敗
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
-		}else if status == responses.SuccessDb {
+		} else if status == responses.SuccessDb {
 			// 成功但來自DB
 			c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student))
-		}else{
+		} else {
 			// 成功但來自Redis
 			c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student))
 		}
 	}
 }
-
-
-// func redis {
-// 	database: Redis連線
-// 	service:拿到連線結果
-// 	service:判斷REdIS有沒有Key存在
-//  service:取得Key存在的成果
-// 	repo: 如果沒有去創造KEY去暫存於Redis中
-// }

@@ -9,7 +9,6 @@ import (
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -82,7 +81,7 @@ func SetRedisKey(redisKey string, redisData []byte) error {
 	conn := database.RedisDefaultPool.Get()
 	// 函式程式碼執行完後才會關閉資料庫
 	defer conn.Close()
-	_, err :=conn.Do("SETEX", redisKey, 30, redisData)
+	_, err := conn.Do("SETEX", redisKey, 30, redisData)
 	return err
 }
 
@@ -94,7 +93,7 @@ func hashAndSalt(pwd []byte) string {
 	// than the MinCost (4)
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
 	if err != nil {
-		log.Println(err)
+		log.Panic(err)
 	}
 	return string(hash)
 }
