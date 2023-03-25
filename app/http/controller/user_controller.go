@@ -26,15 +26,15 @@ func (h *userController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.SearchItem)
 		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		item, status := service.NewItemService().Get(requestData)
 		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, item, "From DB"))
+		c.JSON(http.StatusOK, responses.Status(responses.Success, item))
 	}
 }
 
@@ -43,7 +43,7 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.LoginStudent)
 		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		student, status := service.NewUserService().Login(requestData)
@@ -54,13 +54,13 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 		// 用id來儲存session
 		middleware.SaveSession(c, student.Id)
 		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 			"Student":  student,
 			"Sessions": middleware.GetSession(c),
-		}, "From DB"))
+		}))
 	}
 }
 
@@ -70,7 +70,7 @@ func (h *userController) LogoutUser() gin.HandlerFunc {
 		middleware.ClearSession(c)
 		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 			"message": "Logout Successfully.",
-		}, "From DB"))
+		}))
 	}
 }
 
@@ -79,15 +79,15 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.CreateStudent)
 		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		student_id, status := service.NewUserService().CreateUser(requestData)
 		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id, "From DB"))
+		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
 	}
 }
 
@@ -98,7 +98,7 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := c.Param("id")
 		if (requestData == "0" || requestData == "" ){
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		redisKey := fmt.Sprintf("user_%s", requestData)
@@ -108,13 +108,13 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		log.Println("status:",status)
 		if status == responses.Error {
 			// 失敗
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 		}else if status == responses.SuccessDb {
 			// 成功但來自DB
-			c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student))
 		}else{
 			// 成功但來自Redis
-			c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student, "From Redis"))
+			c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student))
 		}
 	}
 }

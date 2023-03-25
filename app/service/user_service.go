@@ -66,7 +66,7 @@ func (h *UserService) ScoreSearch(data string, redisKey string) (student []inter
 	if err != nil {
 		// 加密成JSON檔，用ffjson比普通的json還快
 		student, db := repository.UserRepository().ScoreSearch(data)
-		log.Println("db:",db)
+		log.Println("db:",db.Name)
 		log.Println("studentService:",student)
 		if db.Name == "" {
 			return student, responses.Error
@@ -76,12 +76,10 @@ func (h *UserService) ScoreSearch(data string, redisKey string) (student []inter
 		// 設置redis的key、value，30秒後掰掰
 		conn.Do("SETEX", redisKey, 30, redisData)
 		return student, responses.SuccessDb
-		// c.JSON(http.StatusOK, responses.Status(responses.Success, student, "From DB"))
 	} else {
 		// 將Byte解密映射到type User上
 		var studentRedis []interface{}
 		ffjson.Unmarshal(dbData, &studentRedis)
-		// c.JSON(http.StatusOK, responses.Status(responses.Success, empty, "From Redis"))
 		return studentRedis, responses.SuccessRedis
 	}
 }

@@ -20,29 +20,29 @@ func (h *adminController) AddItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.AddItem)
 		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		item_id, status := service.NewItemService().Add(requestData)
 		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, item_id, "From DB"))
+		c.JSON(http.StatusOK, responses.Status(responses.Success, item_id))
 	}
 }
 func (h *adminController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.SearchItem)
 		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		item, status := service.NewItemService().Get(requestData)
 		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, item, "From DB"))
+		c.JSON(http.StatusOK, responses.Status(responses.Success, item))
 	}
 }
