@@ -6,6 +6,7 @@ import (
 	"example1/app/repository"
 	database "example1/database"
 	"log"
+
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
 
@@ -40,48 +41,49 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, sta
 	return student_id, responses.Success
 }
 
-// func newPool(addr string) *redis.Pool {
-// 	// setPassword := redis.DialPassword("mypassword")
-// 	log.Println("addr:",addr)
-// 	return &redis.Pool{
-// 		MaxIdle:     3,
-// 		IdleTimeout: 240 * time.Second,
-// 		// Dial or DialContext must be set. When both are set, DialContext takes precedence over Dial.
-// 		Dial: func() (redis.Conn, error) { return redis.Dial("tcp", addr) },
-// 	}
-// }
-
 // scoreSearch
-func (h *UserService) ScoreSearch(data string, redisKey string) (student []interface{}, status string) {
+func (h *UserService) ScoreSearch(requestData string, redisKey string) (student []interface{}, status string) {
+	dbData, err := GetRedisKey(redisKey)
+	// student, status = SetRedisKeyOrNot(err, requestData, redisKey, dbData)
+	if err != nil {
+		student, db := repository.UserRepository().ScoreSearch(requestData)
+		if db.Name == "" {
+			return student, responses.Error
+		}
+		// 加密成JSON檔，用ffjson比普通的json還快
+		redisData, _ := ffjson.Marshal(student)
+		err = SetRedisKey(redisKey, redisData)
+		if err != nil {
+			return student, responses.Error
+		}
+		return student, responses.SuccessDb
+	} else {
+		var studentRedis []interface{}
+		// 將Byte解密映射到studentRedis上
+		ffjson.Unmarshal(dbData, &studentRedis)
+		return studentRedis, responses.SuccessRedis
+	}
+}
+
+func GetRedisKey(redisKey string) ([]byte, error) {
 	// 連線redis資料庫
-	// conn := newPool(os.Getenv("REDIS_HOST")).Get()
 	conn := database.RedisDefaultPool.Get()
-	// 函式中沒東西可以執行後才會操作，資料庫用完再關閉
+	// 函式程式碼執行完後才會關閉資料庫
 	defer conn.Close()
 	// 尋找redis裡面有沒有rediskey，如果撈到redis有暫存就不用去撈資料庫了，
 	// 如果沒有找到err就會存在就會進入if判斷，轉成Bytes是為了供ffjson套件使用
 	dbData, err := redis.Bytes(conn.Do("GET", redisKey))
-	log.Println("dbData:",dbData)
-	log.Println("err:",err)
-	if err != nil {
-		// 加密成JSON檔，用ffjson比普通的json還快
-		student, db := repository.UserRepository().ScoreSearch(data)
-		log.Println("db:",db.Name)
-		log.Println("studentService:",student)
-		if db.Name == "" {
-			return student, responses.Error
-		}
-		// log.Println(student2)
-		redisData, _ := ffjson.Marshal(student)
-		// 設置redis的key、value，30秒後掰掰
-		conn.Do("SETEX", redisKey, 30, redisData)
-		return student, responses.SuccessDb
-	} else {
-		// 將Byte解密映射到type User上
-		var studentRedis []interface{}
-		ffjson.Unmarshal(dbData, &studentRedis)
-		return studentRedis, responses.SuccessRedis
-	}
+	return dbData, err
+
+}
+
+func SetRedisKey(redisKey string, redisData []byte) error {
+	// 第二次連線redis資料庫，設置redis的key、value，30秒後掰掰
+	conn := database.RedisDefaultPool.Get()
+	// 函式程式碼執行完後才會關閉資料庫
+	defer conn.Close()
+	_, err :=conn.Do("SETEX", redisKey, 30, redisData)
+	return err
 }
 
 func hashAndSalt(pwd []byte) string {
