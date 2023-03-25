@@ -3,6 +3,7 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"log"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -42,25 +43,20 @@ func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gor
 }
 
 // score search
-func (h *_UserRepository) ScoreSearch(data string) (studentInterface []interface{}, result model.SearchStudent) {
-	studentSearch := model.SearchStudent{}
-	// studentSearch := model.Student{}
+func (h *_UserRepository) ScoreSearch(data string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
 	student := model.Student{}
-	// student := model.SearchStudent{}
 	rows, _ := database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
 		Joins("left join scores on students.id = scores.student_id").
 		Joins("left join courses on courses.id = scores.course_id").Where("students.id = ?", data).Rows()
 	defer rows.Close()
-	// var new []interface{}
-	// var result2 model.SearchStudent
 	if rows != nil {
 		for rows.Next() {
 			database.DB.ScanRows(rows, &studentSearch)
-			result = model.SearchStudent{Name: studentSearch.Name, Subject: studentSearch.Subject, Score: studentSearch.Score}
-			studentInterface = append(studentInterface, result)
+
+			studentInterface = append(studentInterface, studentSearch)
 		}
 	}
-	return studentInterface, result
+	return studentInterface, studentSearch
 }
 
 // hash 方法
