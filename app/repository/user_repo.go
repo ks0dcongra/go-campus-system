@@ -12,8 +12,6 @@ import (
 type _UserRepository struct {
 }
 
-// var new []model.ReturnStudent
-
 func UserRepository() *_UserRepository {
 	return &_UserRepository{}
 }
@@ -44,26 +42,28 @@ func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gor
 }
 
 // score search
-func (h *_UserRepository) ScoreSearch(data string) (Student []model.ReturnStudent, result model.ReturnStudent) {
-	studentSearch := model.ReturnStudent{}
+func (h *_UserRepository) ScoreSearch(data string) (studentInterface []interface{}, result model.SearchStudent) {
+	studentSearch := model.SearchStudent{}
+	// studentSearch := model.Student{}
 	student := model.Student{}
+	// student := model.SearchStudent{}
 	rows, _ := database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
 		Joins("left join scores on students.id = scores.student_id").
 		Joins("left join courses on courses.id = scores.course_id").Where("students.id = ?", data).Rows()
 	defer rows.Close()
-	var new []model.ReturnStudent
-	var result2 model.ReturnStudent
+	// var new []interface{}
+	// var result2 model.SearchStudent
 	if rows != nil {
 		for rows.Next() {
 			database.DB.ScanRows(rows, &studentSearch)
-			result2 = model.ReturnStudent{Name: studentSearch.Name, Subject: studentSearch.Subject, Score: studentSearch.Score}
-			new = append(new, result2)
+			result = model.SearchStudent{Name: studentSearch.Name, Subject: studentSearch.Subject, Score: studentSearch.Score}
+			studentInterface = append(studentInterface, result)
 		}
 	}
-
-	return new, result2
+	return studentInterface, result
 }
 
+// hash 方法
 func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
 	byteHash := []byte(hashedPwd)
 	byteHash2 := []byte(plainPwd)

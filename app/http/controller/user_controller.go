@@ -5,15 +5,12 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
+	"log"
+
 	// database "example1/database"
 	"fmt"
-	"log"
+	// "log"
 	"net/http"
-	"os"
-	"time"
-
-	"github.com/gomodule/redigo/redis"
-	"github.com/pquerna/ffjson/ffjson"
 
 	"github.com/gin-gonic/gin"
 )
@@ -94,59 +91,39 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 	}
 }
 
-func newPool(addr string) *redis.Pool {
-	// setPassword := redis.DialPassword("mypassword")
-	log.Println("addr:",addr)
-	return &redis.Pool{
-		MaxIdle:     3,
-		IdleTimeout: 240 * time.Second,
-		// Dial or DialContext must be set. When both are set, DialContext takes precedence over Dial.
-		Dial: func() (redis.Conn, error) { return redis.Dial("tcp", addr) },
-	}
-}
+
 
 // ScoreSearch
 func (h *userController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := c.Param("id")
-		if requestData == "" {
+		if (requestData == "0" || requestData == "" ){
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil, "From DB"))
 			return
 		}
 		redisKey := fmt.Sprintf("user_%s", requestData)
-		var empty interface{}
-		// 連線redis資料庫
-		log.Println(os.Getenv("REDIS_HOST"))
-		conn := newPool(os.Getenv("REDIS_HOST")).Get()
-		// conn := database.RedisDefaultPool.Get()
-		// 函式中沒東西可以執行後才會操作，資料庫用完再關閉
-		defer conn.Close()
-		// 尋找redis裡面有沒有rediskey，如果撈到redis有暫存就不用去撈資料庫了，
-		// 如果沒有找到err就會存在就會進入if判斷，轉成Bytes是為了供ffjson套件使用
-		data, err := redis.Bytes(conn.Do("GET", redisKey))
-		if err != nil {
-			student, status := service.NewUserService().ScoreSearch(requestData)
-			if status != responses.Success {
-				c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
-				return
-			}
-			// 加密成JSON檔，用ffjson比普通的json還快
-			redisData, _ := ffjson.Marshal(student)
-			// 設置redis的key、value，30秒後掰掰
-			conn.Do("SETEX", redisKey, 30, redisData)
-			c.JSON(http.StatusOK, responses.Status(responses.Success, student, "From DB"))
-		} else {
-			// 將Byte解密映射到type User上
-			ffjson.Unmarshal(data, &empty)
-			c.JSON(http.StatusOK, responses.Status(responses.Success, empty, "From Redis"))
+		
+		student, status := service.NewUserService().ScoreSearch(requestData, redisKey)
+		log.Println("student:",student)
+		log.Println("status:",status)
+		if status == responses.Error {
+			// 失敗
+			c.JSON(http.StatusOK, responses.Status(responses.Error, nil, "From DB"))
+		}else if status == responses.SuccessDb {
+			// 成功但來自DB
+			c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student, "From DB"))
+		}else{
+			// 成功但來自Redis
+			c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student, "From Redis"))
 		}
 	}
 }
 
+
 // func redis {
-// 	database:Redis連線
+// 	database: Redis連線
 // 	service:拿到連線結果
-// 	判斷REdIS有沒有Key存在
-// 	拿到判斷結果
-// 	如果沒有去創造KEY去暫存於Redis中
+// 	service:判斷REdIS有沒有Key存在
+//  service:取得Key存在的成果
+// 	repo: 如果沒有去創造KEY去暫存於Redis中
 // }
