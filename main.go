@@ -1,11 +1,13 @@
 package main
 
 import (
+	"crypto/tls"
 	"example1/app/http/middleware"
 	database "example1/database"
 	migration "example1/database/migrations"
 	"example1/routes"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -39,6 +41,7 @@ func main() {
 	fmt.Println("Database connected!")
 
 	mainServer := gin.New()
+	
 	mainServer.Use(cors.New(cors.Config{
 		AllowAllOrigins:  true,
 		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT"},
@@ -57,5 +60,21 @@ func main() {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
 
-	mainServer.Run(":8080")
+	// TLS連線
+	cfg := &tls.Config{
+		MinVersion: tls.VersionTLS12,
+	}
+	
+	srv := &http.Server{
+		Addr:      ":8080",
+		TLSConfig: cfg,
+		Handler:   mainServer,
+	}
+
+	// 啟動 TLS 服務器
+	if err := srv.ListenAndServeTLS("cert/server.pem", "cert/server.key"); err != nil {
+		panic(err)
+	}
+
+	// mainServer.Run(":8080")
 }
