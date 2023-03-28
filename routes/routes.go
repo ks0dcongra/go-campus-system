@@ -3,7 +3,6 @@ package routes
 import (
 	"example1/app/http/controller"
 	session "example1/app/http/middleware"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,10 +32,5 @@ func ApiRoutes(router *gin.Engine) {
 		userApi.GET("logout", controller.UserController().LogoutUser())
 		// score search
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
-
 	}
-
-	userApi.GET("/hello", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello, HTTPS!")
-	})
 }
