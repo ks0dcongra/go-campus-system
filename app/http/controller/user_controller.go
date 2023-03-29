@@ -6,8 +6,10 @@ import (
 	"example1/app/model/responses"
 	"example1/app/service"
 	"fmt"
+	"log"
 	"net/http"
-
+	"os"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/gin-gonic/gin"
 )
 
@@ -90,6 +92,8 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 // ScoreSearch
 func (h *userController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		log.Println("HelloWorld!",os.Getenv("DB_HOST"))
+		log.Println("ByeWorld!",os.Getenv("TEST_SERVICE"))
 		requestData := c.Param("id")
 		if requestData == "0" || requestData == "" {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))

@@ -160,9 +160,6 @@ github.com/twitchyliquid64/golang-asm/unsafeheader
 # github.com/ugorji/go/codec v1.2.9
 ## explicit; go 1.11
 github.com/ugorji/go/codec
-# github.com/unrolled/secure v1.13.0
-## explicit; go 1.13
-github.com/unrolled/secure
 # golang.org/x/arch v0.0.0-20210923205945-b76863e36670
 ## explicit; go 1.17
 golang.org/x/arch/x86/x86asm

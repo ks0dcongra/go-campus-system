@@ -7,6 +7,8 @@ import (
 	"example1/routes"
 	"fmt"
 	"log"
+
+	// "log"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -41,7 +43,7 @@ func main() {
 
 	// 連接伺服器
 	mainServer := gin.New()
-
+	
 	// 定義router呼叫格式
 	mainServer.Use(cors.New(cors.Config{
 		AllowAllOrigins:  true,
@@ -62,12 +64,12 @@ func main() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
-
-	go func() {
-        if err := mainServer.RunTLS(":443","./cert/server.pem", "./cert/server.key"); err != nil {
-            log.Fatal("HTTPS service failed: ", err)
-        }
-    }()
+	
+	// go func() {
+    //     if err := mainServer.RunTLS(":443","./cert/server.pem", "./cert/server.key"); err != nil {
+    //         log.Fatal("HTTPS service failed: ", err)
+    //     }
+    // }()
 	if err := mainServer.Run(":8080"); err != nil {
 		log.Fatal("HTTP service failed: ", err)
 	}

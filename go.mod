@@ -22,7 +22,6 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
-	github.com/unrolled/secure v1.13.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
