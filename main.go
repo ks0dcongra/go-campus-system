@@ -6,6 +6,9 @@ import (
 	migration "example1/database/migrations"
 	"example1/routes"
 	"fmt"
+	"log"
+
+	// "log"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -15,7 +18,7 @@ import (
 )
 
 func main() {
-	//DBConnect
+	// 連接DB
 	dsn := fmt.Sprintf("postgresql://%v:%v@%v:%v/%v?sslmode=disable",
 		database.UserName,
 		database.Password,
@@ -38,7 +41,10 @@ func main() {
 	}
 	fmt.Println("Database connected!")
 
+	// 連接伺服器
 	mainServer := gin.New()
+	
+	// 定義router呼叫格式
 	mainServer.Use(cors.New(cors.Config{
 		AllowAllOrigins:  true,
 		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT"},
@@ -47,6 +53,8 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           12 * time.Hour,
 	}))
+
+	// 連接Router
 	routes.ApiRoutes(mainServer)
 
 	//Migration Init
@@ -56,6 +64,14 @@ func main() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
-
-	mainServer.Run(":8080")
+	
+	// go func() {
+    //     if err := mainServer.RunTLS(":443","./cert/server.pem", "./cert/server.key"); err != nil {
+    //         log.Fatal("HTTPS service failed: ", err)
+    //     }
+    // }()
+	if err := mainServer.Run(":8080"); err != nil {
+		log.Fatal("HTTP service failed: ", err)
+	}
 }
+  

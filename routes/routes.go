@@ -33,5 +33,4 @@ func ApiRoutes(router *gin.Engine) {
 		// score search
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	}
-
 }
