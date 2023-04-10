@@ -15,9 +15,24 @@ services:
       - '9525:5432'
     # volumes:
     #   - db:/var/lib/postgresql/data
-      # - ./sql/test.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    # - ./sql/test.sql:/docker-entrypoint-initdb.d/create_tables.sql
     networks:
         - server
+  gin:
+    env_file:
+      - "./.env"
+    image: andy_trainings
+    container_name: gin
+    build: .
+    ports: 
+      - 9528:8080 
+    restart: on-failure
+    volumes:
+      - ./app/config:/usr/src/app/
+    depends_on:
+      - db    
+    networks:
+      - server
   redis:
     container_name: redis
     image: redis
@@ -29,23 +44,6 @@ services:
     # map the volumes to that redis has the custom conf file from this project.
     volumes: 
       - /redis.conf:/usr/local/etc/redis/redis.conf
-    depends_on:
-      - db  
-    networks:
-      - server
-  golang:
-    env_file:
-      - "./.env"
-    image: andy_trainings
-    container_name: golang
-    build: .
-    ports: 
-      - 9528:8080 
-    restart: on-failure
-    volumes:
-      - ./app/config:/usr/src/app/
-    depends_on:
-      - redis    
     networks:
       - server
   proxy:
@@ -61,14 +59,14 @@ services:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx
       - ./nginx/cert:/etc/nginx/cert 
-    depends_on:
-      - golang
     networks:
       - server
-# volumes:
-#   db:  
-#   golang:
-#   redis:
-#   proxy:
+    links:
+      - gin
+volumes:
+  db:  
+  gin:
+  redis:
+  proxy:
 networks:
   server:
