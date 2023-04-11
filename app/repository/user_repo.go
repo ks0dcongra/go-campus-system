@@ -5,7 +5,7 @@ import (
 	"example1/database"
 	"example1/utils/token"
 	"time"
-	
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -30,13 +30,13 @@ func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Stud
 	}
 
 	// Token：若成功搜尋到，產出Token
-	tokenResult,err = token.GenerateToken(student.Id)
+	tokenResult, err = token.GenerateToken(student.Id)
 
 	if err != nil {
 		tokenResult = "something error!"
 		return student, result, tokenResult
 	}
-	
+
 	return student, result, tokenResult
 }
 

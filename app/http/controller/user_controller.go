@@ -47,7 +47,7 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 		}
 		student, status, tokenResult := service.NewUserService().Login(requestData)
 		if student.Id == 0 {
-			c.JSON(http.StatusNotFound, responses.Status(responses.Error, gin.H{"message":"student not found!"}))
+			c.JSON(http.StatusNotFound, responses.Status(responses.Error, gin.H{"message": "student not found!"}))
 			return
 		}
 		// [Session用]:用id存至session暫存
@@ -57,7 +57,7 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
-			"Student":  student,
+			"Student": student,
 			// [Session用]:拿到上面session暫存
 			// "Sessions": middleware.GetSession(c),
 			// [Token用]:回傳的參數
@@ -108,7 +108,7 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		// [Token用]:先將uint轉換成int再運用strconv轉換成string。
 		user_id, err := token.ExtractTokenID(c)
 		str_user_id := strconv.Itoa(int(user_id))
-		// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。 
+		// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
 		if str_user_id != requestData {
 			c.JSON(http.StatusOK, responses.Status(responses.SelfTokenErr, nil))
 			return
