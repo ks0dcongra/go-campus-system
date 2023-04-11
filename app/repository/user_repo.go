@@ -3,8 +3,9 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"example1/utils/token"
 	"time"
-
+	
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -17,16 +18,26 @@ func UserRepository() *_UserRepository {
 }
 
 // Login Check
-func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB) {
+func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
 	name := condition.Name
 	student := model.Student{}
 	result = database.DB.Where("name = ?", name).First(&student)
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		result.Error = err
-		return student, result
+		tokenResult = "something error!"
+		return student, result, tokenResult
 	}
-	return student, result
+
+	// Token：若成功搜尋到，產出Token
+	tokenResult,err = token.GenerateToken(student.Id)
+
+	if err != nil {
+		tokenResult = "something error!"
+		return student, result, tokenResult
+	}
+	
+	return student, result, tokenResult
 }
 
 // Create User

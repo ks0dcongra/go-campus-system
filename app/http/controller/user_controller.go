@@ -5,10 +5,12 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
+	"example1/utils/token"
 	"fmt"
 	"net/http"
-	_ "github.com/joho/godotenv/autoload"
+	"strconv"
 	"github.com/gin-gonic/gin"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type userController struct {
@@ -17,6 +19,10 @@ type userController struct {
 func UserController() *userController {
 	return &userController{}
 }
+
+var (
+	blacklist   = make(map[string]bool) // 用于存储被登出的 Token
+)
 
 func (h *userController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -42,20 +48,23 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
-		student, status := service.NewUserService().Login(requestData)
+		student, status, tokenResult := service.NewUserService().Login(requestData)
 		if student.Id == 0 {
-			c.JSON(http.StatusNotFound, "Student Error2")
+			c.JSON(http.StatusNotFound, responses.Status(responses.Error, gin.H{"message":"student not found!"}))
 			return
 		}
-		// 用id來儲存session
-		middleware.SaveSession(c, student.Id)
+		// [Session用]:用id存至session暫存
+		// middleware.SaveSession(c, student.Id)
 		if status != responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 			"Student":  student,
-			"Sessions": middleware.GetSession(c),
+			// [Session用]:拿到上面session暫存
+			// "Sessions": middleware.GetSession(c),
+			// [Token用]:回傳的參數
+			"Token": tokenResult,
 		}))
 	}
 }
@@ -95,6 +104,20 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
+		// [Token用]:先將uint轉換成int再運用strconv轉換成string。
+		user_id, err := token.ExtractTokenID(c)
+		str_user_id := strconv.Itoa(int(user_id))
+		// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。 
+		if str_user_id != requestData {
+			c.JSON(http.StatusOK, responses.Status(responses.SelfTokenErr, nil))
+			return
+		}
+		// [Token用]:Token那邊出錯了!
+		if err != nil {
+			c.JSON(http.StatusBadRequest, responses.Status(responses.TokenErr, nil))
+			return
+		}
+
 		redisKey := fmt.Sprintf("user_%s", requestData)
 		student, status := service.NewUserService().ScoreSearch(requestData, redisKey)
 		if status == responses.Error {

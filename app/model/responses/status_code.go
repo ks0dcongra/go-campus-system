@@ -13,6 +13,8 @@ const (
 	Error        = "2"
 	SuccessDb    = "3"
 	SuccessRedis = "4"
+	SelfTokenErr = "5"
+	TokenErr = "6"
 )
 
 var MsgText = map[string]string{
@@ -21,6 +23,8 @@ var MsgText = map[string]string{
 	Error:        "Has some problem",
 	SuccessDb:    "Success from DB",
 	SuccessRedis: "Success from Redis",
+	SelfTokenErr: "只限本人查詢分數!",
+	TokenErr: "Token 認證沒過!",
 }
 
 func Status(code string, data interface{}) Response {
