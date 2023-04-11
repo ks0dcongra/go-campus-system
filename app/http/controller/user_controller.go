@@ -1,14 +1,15 @@
 package controller
 
 import (
-	"example1/app/http/middleware"
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
+	"example1/utils/global"
 	"example1/utils/token"
 	"fmt"
 	"net/http"
 	"strconv"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -19,10 +20,6 @@ type userController struct {
 func UserController() *userController {
 	return &userController{}
 }
-
-var (
-	blacklist   = make(map[string]bool) // 用于存储被登出的 Token
-)
 
 func (h *userController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -72,7 +69,11 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 // Logout
 func (h *userController) LogoutUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		middleware.ClearSession(c)
+		// [Session用]:清除目前Session
+		// middleware.ClearSession(c)
+		// [Token用]:取得Header
+		tokenString := c.GetHeader("Authorization")
+		global.Blacklist[tokenString] = true // 将 Token 加入黑名单
 		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 			"message": "Logout Successfully.",
 		}))

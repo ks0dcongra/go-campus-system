@@ -18,6 +18,4 @@ func AuthRequired(c *gin.Context) {
 		return
 	}
 	c.Next()
-	return
-
 }

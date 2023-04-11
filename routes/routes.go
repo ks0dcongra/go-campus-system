@@ -37,13 +37,12 @@ func ApiRoutes(router *gin.Engine) {
 	// 	// score search
 	// 	userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	// }
-
-	//logout
-	userApi.GET("logout", controller.UserController().LogoutUser())
 	
 	// [Token用]:驗證JWT是否正確設置?
 	userApi.Use(middleware.JwtAuthMiddleware())
 	{
+		//logout
+		userApi.GET("logout", controller.UserController().LogoutUser())
 		// score search
 		userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	}
