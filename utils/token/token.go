@@ -33,6 +33,7 @@ func GenerateToken(user_id int) (string, error) {
 
 // 验证 JWT Token
 func TokenValid(c *gin.Context) error {
+	// 擷取JWT中的UserID
 	tokenString := ExtractToken(c)
 	_, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -47,11 +48,13 @@ func TokenValid(c *gin.Context) error {
 }
 
 func ExtractToken(c *gin.Context) string {
+	// 如果URL有串接字串救回傳URL
 	token := c.Query("token")
 	if token != "" {
 		return token
 	}
 	bearerToken := c.Request.Header.Get("Authorization")
+	// 如果bearerToken符合長度標準就回傳bearerToken
 	if len(strings.Split(bearerToken, " ")) == 2 {
 		return strings.Split(bearerToken, " ")[1]
 	}
@@ -60,6 +63,7 @@ func ExtractToken(c *gin.Context) string {
 
 func ExtractTokenID(c *gin.Context) (uint, error) {
 	tokenString := ExtractToken(c)
+	// 解析JWT
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -69,6 +73,7 @@ func ExtractTokenID(c *gin.Context) (uint, error) {
 	if err != nil {
 		return 0, err
 	}
+	// 取出plain code
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
