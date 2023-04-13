@@ -110,7 +110,7 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 		str_user_id := strconv.Itoa(int(user_id))
 		// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
 		if str_user_id != requestData {
-			c.JSON(http.StatusOK, responses.Status(responses.SelfTokenErr, nil))
+			c.JSON(http.StatusOK, responses.Status(responses.ScoreTokenErr, nil))
 			return
 		}
 		// [Token用]:Token那邊出錯了!
