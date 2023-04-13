@@ -12,18 +12,14 @@ import (
 
 func JwtAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 創建 JwtFactory 實例
+		JwtFactory := token.Newjwt()
+
 		// 驗證Token合法是否
-		token, err := token.TokenValid(c)
+		err := JwtFactory.TokenValid(c)
 		if err != nil {
-			log.Println("err:",err)
+			log.Println("JwtAuthMiddleware() err:",err)
 			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenErr, err))
-			c.Abort()
-			return
-		}
-	
-		// 檢查簽名是否有效
-		if !token.Valid {
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenErr, gin.H{"message":"token signature invalid"}))
 			c.Abort()
 			return
 		}

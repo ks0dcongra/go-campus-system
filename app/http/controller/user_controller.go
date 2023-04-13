@@ -105,8 +105,12 @@ func (h *userController) ScoreSearch() gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
+
+		// 創建 JwtFactory 實例
+		JwtFactory := token.Newjwt()
+
 		// [Token用]:先將uint轉換成int再運用strconv轉換成string。
-		user_id, err := token.ExtractTokenID(c)
+		user_id, err := JwtFactory.ExtractTokenID(c)
 		str_user_id := strconv.Itoa(int(user_id))
 		// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
 		if str_user_id != requestData {

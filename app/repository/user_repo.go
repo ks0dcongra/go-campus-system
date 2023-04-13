@@ -17,6 +17,7 @@ func UserRepository() *_UserRepository {
 	return &_UserRepository{}
 }
 
+
 // Login Check
 func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
 	name := condition.Name
@@ -25,15 +26,17 @@ func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Stud
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		result.Error = err
-		tokenResult = "something error!"
+		tokenResult = "密碼錯誤"
 		return student, result, tokenResult
 	}
 
-	// Token：若成功搜尋到，產出Token
-	tokenResult, err = token.GenerateToken(student.Id)
+	// 創建 JwtFactory 實例
+	JwtFactory := token.Newjwt()
+	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
+	tokenResult, err = JwtFactory.GenerateToken(student.Id)
 
 	if err != nil {
-		tokenResult = "something error!"
+		tokenResult = "生成 Token 錯誤:"
 		return student, result, tokenResult
 	}
 
