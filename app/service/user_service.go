@@ -20,12 +20,12 @@ func NewUserService() *UserService {
 }
 
 // Login
-func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
-	student, db := repository.UserRepository().CheckUserPassword(condition)
+func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string, tokenResult string) {
+	student, db, tokenResult := repository.UserRepository().CheckUserPassword(condition)
 	if db.Error != nil {
-		return student, responses.Error
+		return student, responses.Error, tokenResult
 	}
-	return student, responses.Success
+	return student, responses.Success, tokenResult
 }
 
 // CreateUser

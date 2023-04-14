@@ -3,6 +3,7 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"example1/utils/token"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -16,17 +17,30 @@ func UserRepository() *_UserRepository {
 	return &_UserRepository{}
 }
 
+
 // Login Check
-func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB) {
+func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
 	name := condition.Name
 	student := model.Student{}
 	result = database.DB.Where("name = ?", name).First(&student)
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		result.Error = err
-		return student, result
+		tokenResult = "密碼錯誤"
+		return student, result, tokenResult
 	}
-	return student, result
+
+	// 創建 JwtFactory 實例
+	JwtFactory := token.Newjwt()
+	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
+	tokenResult, err = JwtFactory.GenerateToken(student.Id)
+
+	if err != nil {
+		tokenResult = "生成 Token 錯誤:"
+		return student, result, tokenResult
+	}
+
+	return student, result, tokenResult
 }
 
 // Create User
