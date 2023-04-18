@@ -4,6 +4,7 @@ import (
 	"example1/app/model"
 	"example1/database"
 	"example1/utils/token"
+	"log"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -20,11 +21,24 @@ func UserRepository() *_UserRepository {
 
 // Login Check
 func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
+	// log.Println(condition)
+	log.Println("HIHIHIHI")
 	name := condition.Name
+	log.Println("HIHIHIHI2",name)
 	student := model.Student{}
+	log.Println("HIHIHIHI3",student)
 	result = database.DB.Where("name = ?", name).First(&student)
+	
+	// err := database.DB.Session(&gorm.Session{SkipDefaultTransaction: true}).Where("name = ?", name).First(&student).Error
+	// if err != nil {
+	// 	log.Printf("Failed to get student with name %s: %v", name, err)
+	// 	return nil
+	// }
+	log.Println("HIHIHIHI4",student.Password, condition.Password)
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
+		log.Println("HIHIHIHI5",pwdMatch)
+		log.Println("HIHIHIHI6",err)
 		result.Error = err
 		tokenResult = "密碼錯誤"
 		return student, result, tokenResult
@@ -33,14 +47,27 @@ func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Stud
 	// 創建 JwtFactory 實例
 	JwtFactory := token.Newjwt()
 	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
+	log.Println("HIHIHIHI0",student.Id)
 	tokenResult, err = JwtFactory.GenerateToken(student.Id)
-
+	log.Println("HIHIHIHI7",tokenResult)
+	log.Println("HIHIHIHI8",err)
 	if err != nil {
 		tokenResult = "生成 Token 錯誤:"
 		return student, result, tokenResult
 	}
 
 	return student, result, tokenResult
+}
+
+// hash 方法
+func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
+	byteHash := []byte(hashedPwd)
+	byteHash2 := []byte(plainPwd)
+	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
+	if err != nil {
+		return false, err
+	}
+	return true, err
 }
 
 // Create User
@@ -73,15 +100,4 @@ func (h *_UserRepository) ScoreSearch(requestData string) (studentInterface []in
 	// 資料庫最後再關閉
 	defer rows.Close()
 	return studentInterface, studentSearch
-}
-
-// hash 方法
-func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
-	byteHash := []byte(hashedPwd)
-	byteHash2 := []byte(plainPwd)
-	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
-	if err != nil {
-		return false, err
-	}
-	return true, err
 }
