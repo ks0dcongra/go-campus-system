@@ -11,16 +11,16 @@ import (
 	"gorm.io/gorm"
 )
 
-type _UserRepository struct {
+type Export_UserRepository struct {
 }
 
-func UserRepository() *_UserRepository {
-	return &_UserRepository{}
+func UserRepository() *Export_UserRepository {
+	return &Export_UserRepository{}
 }
 
 
 // Login Check
-func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
+func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
 	// log.Println(condition)
 	log.Println("HIHIHIHI")
 	name := condition.Name
@@ -71,7 +71,7 @@ func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
 }
 
 // Create User
-func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
+func (h *Export_UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
 	student := model.Student{
 		Name:           data.Name,
 		Password:       data.Password,
@@ -83,7 +83,7 @@ func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gor
 }
 
 // score search
-func (h *_UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
+func (h *Export_UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
 	// 宣告student格式給rows的搜尋結果套用
 	student := model.Student{}
 	// 將三張資料表join起來，去搜尋是否有id=requestData的人，並拿出指定欄位

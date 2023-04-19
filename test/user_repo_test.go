@@ -1,4 +1,4 @@
-package repository
+package test
 
 import (
 	"example1/app/model"
