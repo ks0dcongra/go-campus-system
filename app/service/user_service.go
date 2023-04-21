@@ -4,9 +4,9 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/repository"
+	"example1/utils/token"
 	database "example1/database"
 	"log"
-
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
 	"golang.org/x/crypto/bcrypt"
@@ -25,12 +25,44 @@ func NewUserService() *UserService {
 }
 
 // Login
-func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string, tokenResult string) {
-	student, db, tokenResult := repository.UserRepository().CheckUserPassword(condition)
-	if db.Error != nil {
-		return student, responses.Error, tokenResult
+func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
+	student, DbError := repository.UserRepository().CheckUserPassword(condition)
+	// 如果資料庫沒有搜尋到東西 
+	if student.Id == 0 || DbError != nil {
+		log.Println("DbError:",DbError)
+		return student, responses.DbErr
 	}
-	return student, responses.Success, tokenResult
+
+	// 密碼錯誤
+	pwdMatch, pwdErr:= comparePasswords(student.Password, condition.Password)
+	if !pwdMatch {
+		log.Println("comparePasswordsError:",pwdErr)
+		return student, responses.PasswordErr
+	}
+	
+	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token
+	// 創建 JwtFactory 實例
+	JwtFactory := token.Newjwt()
+	tokenResult, tokenErr := JwtFactory.GenerateToken(student.Id)
+	
+	if tokenErr != nil {
+		log.Println("TokenError:",tokenErr)
+		return student, responses.TokenErr
+	} else {
+		student.Token = tokenResult
+		return student, responses.Success
+	}
+}
+
+// hash 方法
+func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
+	byteHash := []byte(hashedPwd)
+	byteHash2 := []byte(plainPwd)
+	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
+	if err != nil {
+		return false, err
+	}
+	return true, err
 }
 
 // CreateUser

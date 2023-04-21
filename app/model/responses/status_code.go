@@ -15,7 +15,9 @@ const (
 	SuccessRedis = "4"
 	ScoreTokenErr = "5"
 	TokenErr     = "6"
-	TokenInvalid = "7"
+	TokenExpired = "7"
+	PasswordErr  = "8"
+	DbErr = "9"
 )
 
 var MsgText = map[string]string{
@@ -26,7 +28,9 @@ var MsgText = map[string]string{
 	SuccessRedis: "Success from Redis",
 	ScoreTokenErr: "The scores only limited myself to query",
 	TokenErr:     "Token issue, can't pass authorization",
-	TokenInvalid: "Token has been invalidated because blaklist has this token",
+	TokenExpired: "Token has been Expired because blaklist has this token",
+	PasswordErr: "Database hash password not in consonance with input password",
+	DbErr: "SQL not found",
 }
 
 func Status(code string, data interface{}) Response {

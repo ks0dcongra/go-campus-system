@@ -27,7 +27,7 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 		// 取得header检查 Token 是否在黑名单中
 		tokenString := c.GetHeader("Authorization")
 		if _, ok := global.Blacklist[tokenString]; ok {
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenInvalid, nil))
+			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenExpired, nil))
 			c.Abort()
 			return
 		}

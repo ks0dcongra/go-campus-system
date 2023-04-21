@@ -45,24 +45,33 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
-		student, status, tokenResult := service.NewUserService().Login(requestData)
-		if student.Id == 0 {
-			c.JSON(http.StatusNotFound, responses.Status(responses.Error, gin.H{"message": "student not found!"}))
+		student, status:= service.NewUserService().Login(requestData)
+		if status == responses.DbErr {
+			c.JSON(http.StatusNotFound, responses.Status(responses.DbErr, nil))
 			return
 		}
 		// [Session用]:用id存至session暫存
 		// middleware.SaveSession(c, student.Id)
-		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
+		if status == responses.PasswordErr {
+			c.JSON(http.StatusOK, responses.Status(responses.DbErr, nil))
 			return
 		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
-			"Student": student,
-			// [Session用]:拿到上面session暫存
-			// "Sessions": middleware.GetSession(c),
-			// [Token用]:回傳的參數
-			"Token": tokenResult,
-		}))
+
+		if status == responses.TokenErr {
+			c.JSON(http.StatusOK, responses.Status(responses.DbErr, nil))
+			return
+		}
+
+		if status == responses.Success{
+			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+				"Student": student,
+				// [Session用]:拿到上面session暫存
+				// "Sessions": middleware.GetSession(c),
+				// [Token用]:回傳的參數
+				// "Token": tokenResult,
+			}))
+			return
+		}
 	}
 }
 

@@ -3,10 +3,8 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
-	"example1/utils/token"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -19,41 +17,11 @@ func UserRepository() *Export_UserRepository {
 
 
 // Login Check
-func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
+func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, DbError error) {
 	name := condition.Name
 	student := model.Student{}
-	result = database.DB.Where("name = ?", name).First(&student)
-
-	// 密碼錯誤
-	pwdMatch, err := comparePasswords(student.Password, condition.Password)
-	if !pwdMatch {
-		result.Error = err
-		tokenResult = "Password Wrong!"
-		return student, result, tokenResult
-	}
-
-	// 創建 JwtFactory 實例
-	JwtFactory := token.Newjwt()
-	
-	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token
-	tokenResult, err = JwtFactory.GenerateToken(student.Id)
-	if err != nil {
-		tokenResult = "生成 Token 錯誤:"
-		return student, result, tokenResult
-	}
-
-	return student, result, tokenResult
-}
-
-// hash 方法
-func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
-	byteHash := []byte(hashedPwd)
-	byteHash2 := []byte(plainPwd)
-	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
-	if err != nil {
-		return false, err
-	}
-	return true, err
+	result := database.DB.Where("name = ?", name).First(&student)
+	return student, result.Error
 }
 
 // Create User
