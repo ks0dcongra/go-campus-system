@@ -12,7 +12,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type UserServiceInterface interface {
+	Login(condition *model.LoginStudent) (student model.Student, status string, tokenResult string)
+}
+
 type UserService struct {
+	
 }
 
 func NewUserService() *UserService {
