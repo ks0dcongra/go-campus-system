@@ -4,7 +4,6 @@ import (
 	"example1/app/model"
 	"example1/database"
 	"example1/utils/token"
-	"log"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -21,36 +20,20 @@ func UserRepository() *Export_UserRepository {
 
 // Login Check
 func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
-	// log.Println(condition)
-	log.Println("HIHIHIHI")
 	name := condition.Name
-	log.Println("HIHIHIHI2",name)
 	student := model.Student{}
-	log.Println("HIHIHIHI3",student)
 	result = database.DB.Where("name = ?", name).First(&student)
-	
-	// err := database.DB.Session(&gorm.Session{SkipDefaultTransaction: true}).Where("name = ?", name).First(&student).Error
-	// if err != nil {
-	// 	log.Printf("Failed to get student with name %s: %v", name, err)
-	// 	return nil
-	// }
-	log.Println("HIHIHIHI4",student.Password, condition.Password)
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
-		log.Println("HIHIHIHI5",pwdMatch)
-		log.Println("HIHIHIHI6",err)
 		result.Error = err
-		tokenResult = "密碼錯誤"
+		tokenResult = "Password Wrong!"
 		return student, result, tokenResult
 	}
 
 	// 創建 JwtFactory 實例
 	JwtFactory := token.Newjwt()
 	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
-	log.Println("HIHIHIHI0",student.Id)
 	tokenResult, err = JwtFactory.GenerateToken(student.Id)
-	log.Println("HIHIHIHI7",tokenResult)
-	log.Println("HIHIHIHI8",err)
 	if err != nil {
 		tokenResult = "生成 Token 錯誤:"
 		return student, result, tokenResult

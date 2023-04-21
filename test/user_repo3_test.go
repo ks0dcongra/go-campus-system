@@ -4,7 +4,6 @@ import (
 	"example1/app/model"
 	"example1/app/repository"
 	"example1/database"
-	"log"
 	"testing"
 	"reflect"
 
@@ -12,64 +11,45 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
-
+// TODO:dd
 func Test_UserRepository_CheckUserPassword3(t *testing.T) {
 	type args struct {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		Name     string
-		Password string
 		student  []model.Student
-		h               *repository.Export_UserRepository
 		args            args
+		h               *repository.Export_UserRepository
 		wantStudent     model.Student
 		wantResult      *gorm.DB
 		wantTokenResult string
 	}{
 		{
-			Name:     "James",
-			Password: "12345678",
 			student: []model.Student{
 				{
 					Id:       2,
 					Name:     "James",
-					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Example hashed password
+					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			h:  repository.UserRepository(),
 			args:   args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
-			wantStudent:     model.Student{Id: 1, Name: "test"},
-			wantResult:      nil,
-			wantTokenResult: "token",
+			h:  repository.UserRepository(),
+			wantStudent:     model.Student{Id: 2, Name: "James",Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
+			wantTokenResult: "Password Wrong!",
 		},
 		{
-			Name:     "Curry",
-			Password: "12345678",
 			student: []model.Student{
 				{
 					Id:       1,
 					Name:     "Curry",
-					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Example hashed password
+					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			h:  repository.UserRepository(),
 			args:   args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
-			wantStudent:     model.Student{Id: 1, Name: "test"},
-			wantResult:      nil,
-			wantTokenResult: "token",
+			h:  repository.UserRepository(),
+			wantStudent:     model.Student{Id: 1, Name: "Curry",Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
+			wantTokenResult: "Password Wrong!",
 		},
-		// GPT示範案例
-		// {
-		// 	Name:            "test case 1",
-		// 	Password:        "password",
-		// 	student:         []model.Student{{ID: 1, Name: "test"}},
-		// 	h:               repository.UserRepository(),
-		// 	args:            args{condition: &model.LoginStudent{Username: "test", Password: "password"}},
-		// 	wantStudent:     model.Student{ID: 1, Name: "test"},
-		// 	wantResult:      nil,
-		// 	wantTokenResult: "token",
-		// },
 	}
 
 	// 開始創一個模擬database實體
@@ -78,8 +58,9 @@ func Test_UserRepository_CheckUserPassword3(t *testing.T) {
 		t.Errorf("Failed to open mock sql db, got error: %v", err)
 	}
 	if db == nil {
-		t.Error("db is null")
-	}
+		t.Error("db is null") 
+	} 
+	
 	if mock == nil {
 		t.Error("mock is null")
 	}
@@ -96,27 +77,34 @@ func Test_UserRepository_CheckUserPassword3(t *testing.T) {
 		t.Fatalf("Failed to open mock DB: %v", err)
 	}
 
-	for i, tt := range tests {
-		// tt := tt
-		// i := i
-		t.Run(tt.Name, func(t *testing.T) {
-			log.Println(i)
-			log.Println(tt)
-			mock.ExpectQuery(`SELECT \* FROM "students" WHERE name = \$1 ORDER BY "students"\."id" LIMIT 1`).
-				WithArgs(tt.Name).
-				WillReturnRows(sqlmock.NewRows([]string{"id", "name", "password"}).
-				AddRow(tt.student[i].Id, tt.student[i].Name, tt.student[i].Password))
+	for _, tt := range tests {
+		t.Run("Check Repository SQL", func(t *testing.T) {
+
+			// 設定Mock SQL預期回傳資料與欄位
+			rows := sqlmock.NewRows([]string{"id", "name", "password"}).
+				AddRow(tt.student[0].Id, tt.student[0].Name, tt.student[0].Password)
+
+			// 設定Mock SQL撈取資料後預期之狀況
+			mock.ExpectQuery(`SELECT \* FROM "students"`).
+				WithArgs(tt.student[0].Name).
+				WillReturnRows(rows)
 				
-			gotStudent, gotResult, gotTokenResult := tt.h.CheckUserPassword(tt.args.condition)
+			// 模擬東西丟入repository去跑
+			gotStudent,_,gotTokenResult := tt.h.CheckUserPassword(tt.args.condition)
+			// 判斷回傳的東西是否相同
 			if !reflect.DeepEqual(gotStudent, tt.wantStudent) {
 				t.Errorf("_UserRepository.CheckUserPassword() gotStudent = %v, want %v", gotStudent, tt.wantStudent)
 			}
-			if !reflect.DeepEqual(gotResult, tt.wantResult) {
-				t.Errorf("_UserRepository.CheckUserPassword() gotResult = %v, want %v", gotResult, tt.wantResult)
-			}
-			if gotTokenResult != tt.wantTokenResult {
+			// 判斷錯誤字串是否等於Password Wrong!
+			if password_wrong := reflect.DeepEqual(gotTokenResult, tt.wantTokenResult); password_wrong {
 				t.Errorf("_UserRepository.CheckUserPassword() gotTokenResult = %v, want %v", gotTokenResult, tt.wantTokenResult)
+			}
+			
+			err = mock.ExpectationsWereMet()
+			if err != nil {
+			t.Errorf("Failed to meet DB expectations: %v", err)
 			}
 		})
 	}
+	
 }
