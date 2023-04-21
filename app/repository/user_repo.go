@@ -23,6 +23,8 @@ func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent)
 	name := condition.Name
 	student := model.Student{}
 	result = database.DB.Where("name = ?", name).First(&student)
+
+	// 密碼錯誤
 	pwdMatch, err := comparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		result.Error = err
@@ -32,7 +34,8 @@ func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent)
 
 	// 創建 JwtFactory 實例
 	JwtFactory := token.Newjwt()
-	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
+	
+	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token
 	tokenResult, err = JwtFactory.GenerateToken(student.Id)
 	if err != nil {
 		tokenResult = "生成 Token 錯誤:"
