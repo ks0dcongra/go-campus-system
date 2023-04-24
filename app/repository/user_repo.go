@@ -8,16 +8,16 @@ import (
 	"gorm.io/gorm"
 )
 
-type Export_UserRepository struct {
+type UserRepository struct {
 }
 
-func UserRepository() *Export_UserRepository {
-	return &Export_UserRepository{}
+func NewUserRepository() *UserRepository {
+	return &UserRepository{}
 }
 
 
 // Login Check
-func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, DbError error) {
+func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Student, DbError error) {
 	name := condition.Name
 	student := model.Student{}
 	result := database.DB.Where("name = ?", name).First(&student)
@@ -25,7 +25,7 @@ func (h *Export_UserRepository) CheckUserPassword(condition *model.LoginStudent)
 }
 
 // Create User
-func (h *Export_UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
+func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
 	student := model.Student{
 		Name:           data.Name,
 		Password:       data.Password,
@@ -37,7 +37,7 @@ func (h *Export_UserRepository) Create(data *model.CreateStudent) (id int, resul
 }
 
 // score search
-func (h *Export_UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
+func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
 	// 宣告student格式給rows的搜尋結果套用
 	student := model.Student{}
 	// 將三張資料表join起來，去搜尋是否有id=requestData的人，並拿出指定欄位
