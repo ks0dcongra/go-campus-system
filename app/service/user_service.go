@@ -29,6 +29,7 @@ type UserServiceHashTokenInterface interface {
 }
 
 type UserService struct {	
+	UserRepository *repository.UserRepository
 }
 
 type UserServiceRedis struct {	

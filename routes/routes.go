@@ -21,13 +21,13 @@ func ApiRoutes(router *gin.Engine) {
 	// userApi.Use(middleware.AuthRequired)
 
 	//userItem
-	userApi.GET("item", controller.UserController().GetItem())
+	userApi.GET("item", controller.NewUserController().GetItem())
 
 	// create
-	userApi.POST("create", controller.UserController().CreateUser())
+	userApi.POST("create", controller.NewUserController().CreateUser())
 
 	// login
-	userApi.POST("login", controller.UserController().LoginUser())
+	userApi.POST("login", controller.NewUserController().LoginUser())
 
 	// [Session用]:Session Auth
 	// userApi.Use(session.AuthSession())
@@ -42,8 +42,8 @@ func ApiRoutes(router *gin.Engine) {
 	userApi.Use(middleware.JwtAuthMiddleware())
 	{
 		//logout
-		userApi.GET("logout", controller.UserController().LogoutUser())
+		userApi.GET("logout", controller.NewUserController().LogoutUser())
 		// score search
-		userApi.GET("search/:id", controller.UserController().ScoreSearch())
+		userApi.GET("search/:id", controller.NewUserController().ScoreSearch())
 	}
 }

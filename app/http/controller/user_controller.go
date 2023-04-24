@@ -7,6 +7,7 @@ import (
 	"example1/utils/global"
 	"example1/utils/token"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -14,14 +15,15 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-type userController struct {
+type UserController struct {
+	UserService *service.UserService
 }
 
-func UserController() *userController {
-	return &userController{}
+func NewUserController() *UserController {
+	return &UserController{}
 }
 
-func (h *userController) GetItem() gin.HandlerFunc {
+func (h *UserController) GetItem() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.SearchItem)
 		if err := c.ShouldBindJSON(requestData); err != nil {
@@ -38,10 +40,12 @@ func (h *userController) GetItem() gin.HandlerFunc {
 }
 
 // Login
-func (h *userController) LoginUser() gin.HandlerFunc {
+func (h *UserController) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.LoginStudent)
+		log.Println("niceifosdifdsofs",requestData)
 		if err := c.ShouldBindJSON(requestData); err != nil {
+			log.Println("nice shot",err)
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
@@ -76,7 +80,7 @@ func (h *userController) LoginUser() gin.HandlerFunc {
 }
 
 // Logout
-func (h *userController) LogoutUser() gin.HandlerFunc {
+func (h *UserController) LogoutUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// [Session用]:清除目前Session
 		// middleware.ClearSession(c)
@@ -90,7 +94,7 @@ func (h *userController) LogoutUser() gin.HandlerFunc {
 }
 
 // Create User
-func (h *userController) CreateUser() gin.HandlerFunc {
+func (h *UserController) CreateUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.CreateStudent)
 		if err := c.ShouldBindJSON(requestData); err != nil {
@@ -107,7 +111,7 @@ func (h *userController) CreateUser() gin.HandlerFunc {
 }
 
 // ScoreSearch
-func (h *userController) ScoreSearch() gin.HandlerFunc {
+func (h *UserController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := c.Param("id")
 		if requestData == "0" || requestData == "" {
