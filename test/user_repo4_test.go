@@ -95,6 +95,10 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 			if !reflect.DeepEqual(gotStudent, tt.wantStudent) {
 				t.Errorf("UserRepository.CheckUserPassword() name = %v, gotStudent = %v, want %v",tt.student[0].Name, gotStudent, tt.wantStudent)
 			}
+			sqlerr := mock.ExpectationsWereMet()
+			if sqlerr != nil {
+			t.Errorf("Failed to meet DB expectations: %v", err)
+			}
 		})
 	}
 }
