@@ -89,11 +89,11 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 			
 			gotStudent, err := tt.h.Login(tt.args.condition)
 			if err != tt.wantErr {
-				t.Errorf("UserRepository.CheckUserPassword() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("UserRepository.CheckUserPassword() name= %v, error = %v, wantErr %v",tt.student[0].Name, err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(gotStudent, tt.wantStudent) {
-				t.Errorf("UserRepository.CheckUserPassword() = %v, want %v", gotStudent, tt.wantStudent)
+				t.Errorf("UserRepository.CheckUserPassword() name = %v, gotStudent = %v, want %v",tt.student[0].Name, gotStudent, tt.wantStudent)
 			}
 		})
 	}
