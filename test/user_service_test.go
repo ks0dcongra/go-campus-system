@@ -14,9 +14,9 @@ import (
 	"gorm.io/gorm"
 )
 
-type MockUserService struct{
-	UserService service.UserServiceInterface
-}
+// type MockUserService struct{
+// 	UserService service.UserServiceInterface
+// }
 
 func (m *MockUserService) CheckUserPassword() error {
 	condition := &model.LoginStudent{Name: "James", Password: "12345678"}
@@ -62,7 +62,6 @@ func (m *MockUserService) CheckUserPassword() error {
 }
 
 func TestUserService_Login(t *testing.T){
-
 	type args struct {
 		condition *model.LoginStudent
 	}
@@ -76,9 +75,7 @@ func TestUserService_Login(t *testing.T){
 	}{
 		// TODO: Add test cases.
 	}
-	mockUserService := &MockUserService{
-		UserService : service.NewUserService(),
-	}
+	mockUserService := &MockUserService{}
 
 	tokenResult := mockUserService.CheckUserPassword()
 

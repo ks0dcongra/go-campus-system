@@ -12,6 +12,10 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
+type TokenInterface interface {
+	GenerateToken(user_id int) (string, error)
+}
+
 type JwtFactory struct {
 }
 
@@ -25,8 +29,9 @@ type CustomClaims struct {
 	jwt.StandardClaims
 }
 
-func (jwtItem *JwtFactory) GenerateToken(user_id int) (string, error)  {
+func (j *JwtFactory) GenerateToken(user_id int) (string, error)  {
 	token_lifespan, err := strconv.Atoi(os.Getenv("TOKEN_HOUR_LIFESPAN"))
+	
 	// 這邊的token_lifespan != 0是為了讓測試可以不會因為抓不到環境變數而直接報出error
 	if err != nil && token_lifespan != 0{
 		return "", err
@@ -34,6 +39,10 @@ func (jwtItem *JwtFactory) GenerateToken(user_id int) (string, error)  {
 
 	if token_lifespan == 0{
 		token_lifespan, _ = strconv.Atoi("1")
+	}
+
+	if user_id == 0{
+		return "", fmt.Errorf("user_id can't use 0")
 	}
 
 	claims := &CustomClaims{
@@ -48,12 +57,10 @@ func (jwtItem *JwtFactory) GenerateToken(user_id int) (string, error)  {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("API_SECRET")))
 }
-// JWT 只要驗這些嗎
-// What is Unit Test with golang? 
 
 // 验证 JWT Token
-func (jwtItem *JwtFactory) TokenValid(c *gin.Context) (error) {
-	tokenString := jwtItem.ExtractToken(c)
+func (j *JwtFactory) TokenValid(c *gin.Context) (error) {
+	tokenString := j.ExtractToken(c)
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		// 這個條件判斷用於檢查 Token 是否使用了預期的簽名方法。如果 Token 的簽名方法不是 HMAC，則返回一個錯誤，並指明簽名方法不符合預期。
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -97,7 +104,7 @@ func (jwtItem *JwtFactory) TokenValid(c *gin.Context) (error) {
 }
 
 //  把postman上的Bearer Token 前綴處理掉，僅回傳Token
-func (jwtItem *JwtFactory) ExtractToken(c *gin.Context) string {
+func (j *JwtFactory) ExtractToken(c *gin.Context) string {
 	bearerToken := c.Request.Header.Get("Authorization")
 	// 如果bearerToken符合長度標準就回傳bearerToken
 	if len(strings.Split(bearerToken, " ")) == 2 {
@@ -106,9 +113,9 @@ func (jwtItem *JwtFactory) ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-func (jwtItem *JwtFactory) ExtractTokenID(c *gin.Context) (uint, error) {
+func (j *JwtFactory) ExtractTokenID(c *gin.Context) (uint, error) {
 	// 把postman上的Bearer Token 前綴處理掉，僅回傳Token
-	tokenString := jwtItem.ExtractToken(c)
+	tokenString := j.ExtractToken(c)
 	// 這個條件判斷用於檢查 Token 是否使用了預期的簽名方法。如果 Token 的簽名方法不是 HMAC，則返回一個錯誤，並指明簽名方法不符合預期。
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		// 這個條件判斷用於檢查 Token 是否使用了預期的簽名方法。如果 Token 的簽名方法不是 HMAC，則返回一個錯誤，並指明簽名方法不符合預期。
