@@ -1,32 +1,22 @@
 package test
 
 import (
+	"bytes"
+
 	"example1/app/http/controller"
-	// "example1/app/repository"
-	// "example1/app/service"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+
 	"reflect"
 	"testing"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/stretchr/testify/assert" 
-    "github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/assert"
+	// "github.com/stretchr/testify/mock"
 )
-
-// 丟出特定的錯誤
-
-type MyMockedObject struct{
-	mock.Mock
-}
-
-func (m *MyMockedObject) DoSomething(number int) (bool, error) {
-	args := m.Called(number)
-	return args.Bool(0), args.Error(1)
-}
 
 func Test_userController_LoginUser(t *testing.T) {
 	tests := []struct {
@@ -41,44 +31,39 @@ func Test_userController_LoginUser(t *testing.T) {
 		},
 		
 	}
-	
-
-	
-	// 初始化 controller、service 和 repository
-	// repo := &repository.UserRepository{}
-	// service := &service.UserService{UserRepository:repo}
-	// controller := &controller.UserController{UserService: service}
-	// fmt.Println("1",controller)
-
-	
-	
+	// TODO:
 	// 初始化測試用的 Gin 引擎和 HTTP 請求、響應
 	router := gin.New()
 	router.POST("/login", controller.NewUserController().LoginUser())
-	// router.GET("/login",controller.LoginUser())
-	req := httptest.NewRequest("POST", "/login", nil)
+
+	// 將 JSON 編碼的數據轉換為 io.Reader 接口，並使用 httptest.NewRequest() 創建一個包含 JSON 內容的 POST 請求
+	jsonData := []byte(`{"Name":"Mar234","Password":"12345678"}`)
 	
-	
-	// // req := httptest.NewRequest("GET", "user/api/login", nil)
+	req := httptest.NewRequest("POST", "/login", bytes.NewBuffer(jsonData))
+	req.Header.Set("Authorization", "Bearer testToken")
+	// req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
-	// // router.ServeHTTP(w, req)
-	// req.Header.Set("Authorization", "Bearer testToken")
-	// fmt.Println("2",req.Header.Get("Authorization"))
-	// handler := func(w http.ResponseWriter, r *http.Request) {
-	// 	io.WriteString(w, "hihihi")
-	// }
-	// handler(w, req)
+	// c, _ := gin.CreateTestContext(w)
+	// c.Params = []gin.Param{gin.Param{Key: "k", Value: "v"}}
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "helloworld")
+	}
+
+	handler(w, req)
 	router.ServeHTTP(w, req)
+
 	resp := w.Result()
 	body, _ := io.ReadAll(resp.Body)
-	// fmt.Println("3",req)
-	fmt.Println("33333",resp)
+	expectedStatus := http.StatusOK
+
+	fmt.Println("1",req)
+	fmt.Println("2",w)
+	fmt.Println("3",resp)
 	fmt.Println("4",resp.StatusCode)
 	fmt.Println("5",resp.Body)
 	fmt.Println("7",resp.Header.Get("Content-Type"))
 	fmt.Println("8",string(body))
-
-	expectedStatus := http.StatusOK
 	fmt.Println("9",expectedStatus)
 	fmt.Println("10",w.Code)
 	assert.Equal(t, expectedStatus, w.Code)

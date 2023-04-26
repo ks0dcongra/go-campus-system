@@ -13,9 +13,9 @@ import (
 )
 
 type UserServiceInterface interface {
-	Login(condition *model.LoginStudent) (student model.Student, status string, tokenResult string)
-	CreateUser(data *model.CreateStudent) (student_id int, status string)
-	ScoreSearch(requestData string, redisKey string) (student []interface{}, status string)
+	Login(condition *model.LoginStudent) (student model.Student, status string)
+	// CreateUser(data *model.CreateStudent) (student_id int, status string)
+	// ScoreSearch(requestData string, redisKey string) (student []interface{}, status string)
 }
 
 type UserServiceRedisInterface interface {
