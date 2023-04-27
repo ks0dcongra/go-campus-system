@@ -10,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 	"example1/app/http/repo"
@@ -29,26 +28,25 @@ func (es *EmployeeSerivceImpl) GetSrEmployeeNumbers(age int) int {
 	return len(srEmps)
 }
 
-type UserControllerInterface interface {
-	LoginUser() gin.HandlerFunc
-}
 
 type UserController struct {
 	UserService service.UserServiceInterface 
 }
 
 func NewUserController() *UserController {
-	return &UserController{}
+	return &UserController{
+		
+	}
 }
 
 func (h *UserController) GetItem() gin.HandlerFunc {
+	requestData := new(model.SearchItem)
+	item, status := service.NewItemService().Get(requestData)
 	return func(c *gin.Context) {
-		requestData := new(model.SearchItem)
 		if err := c.ShouldBindJSON(requestData); err != nil {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 			return
 		}
-		item, status := service.NewItemService().Get(requestData)
 		if status != responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
 			return
@@ -64,27 +62,33 @@ func (h *UserController) GetItem() gin.HandlerFunc {
 */
 
 // Login TEST Mock 
-// func (h *UserController) LoginUser() (model.Student, string) {
+// func (h *UserController) LoginUser(c *gin.Context) {
 // 	log.Println("nice shot100")
 // 	jsonData := &model.LoginStudent{Name:"Mar234",Password:"12345678"}
 // 	student, status:= h.UserService.Login(jsonData)
-// 	return student, status
+// 	log.Println(student, status)
+// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
 // }
 
 // Login
-func (h *UserController) LoginUser() gin.HandlerFunc {
-	log.Println("nice shot1")
+func (h *UserController) LoginUser() gin.HandlerFunc{
 	return func(c *gin.Context) {
-		log.Println("nice shot2")
+		log.Println("nice shot87")
 		requestData := new(model.LoginStudent)
-		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-			return
-		}
+		// if err := c.ShouldBindJSON(requestData); err != nil {
+		// 	log.Println(c)
+		// 	log.Println(err)
+		// 	c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
+		// 	return
+		// }
+		student, status:= h.UserService.Login(requestData)
+		// student, status:= service.NewUserService().Login(requestData)
+		
+		log.Println("nice shot2",student)
 		// student, status:= h.UserService.Login(requestData)
-		student, status:= service.NewUserService().Login(requestData)
-
+		log.Println("nice shot3",status)
 		if status == responses.Success{
+			log.Println("nice shot3ininininininnininini")
 			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 				"Student": student,
 				// [Session用]:拿到上面session暫存
@@ -93,9 +97,10 @@ func (h *UserController) LoginUser() gin.HandlerFunc {
 				// "Sessions": middleware.GetSession(c),
 				// [Token用]:回傳的參數
 				// "Token": tokenResult,
-			}))
+				}))
 			return
 		}
+		log.Println("nice shot4")
 		c.JSON(http.StatusNotFound, responses.Status(status, nil))
 	}
 }

@@ -52,6 +52,7 @@ func NewUserServiceHashToken() *UserServiceHashToken {
 
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
+	log.Println("nice shot4")
 	student, DbError := repository.NewUserRepository().Login(condition)
 	// 如果資料庫沒有搜尋到東西 
 	if DbError != nil {

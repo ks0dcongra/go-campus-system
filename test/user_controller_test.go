@@ -3,7 +3,7 @@ package test
 import (
 	"bytes"
 
-	"example1/app/http/controller"
+	
 	"fmt"
 	"io"
 	"net/http"

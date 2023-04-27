@@ -3,6 +3,7 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -20,6 +21,7 @@ func NewUserRepository() *UserRepository {
 func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Student, DbError error) {
 	name := condition.Name
 	student := model.Student{}
+	log.Println("nice shot5")
 	result := database.DB.Where("name = ?", name).First(&student)
 	return student, result.Error
 }
