@@ -1,10 +1,10 @@
-package test
+package service_test
 
 import (
 	"example1/app/model"
 	"example1/app/service"
 	"example1/utils/token"
-	"reflect"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -22,8 +22,8 @@ func TestUserService_Login_Success(t *testing.T) {
 		student  []model.Student
 		args            args
 		h           *service.UserService
-		wantPwdErr  error
-		wantTokenErr error
+		// wantPwdErr  error
+		// wantTokenErr error
 	}{
 		{
 			student: []model.Student{
@@ -35,8 +35,6 @@ func TestUserService_Login_Success(t *testing.T) {
 			},
 			args:   args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
 			h:  service.NewUserService(),
-			wantPwdErr: nil,
-			wantTokenErr: nil,
 		},
 		{
 			student: []model.Student{
@@ -48,8 +46,6 @@ func TestUserService_Login_Success(t *testing.T) {
 			},
 			args:   args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
 			h:  service.NewUserService(),
-			wantPwdErr: nil,
-			wantTokenErr: nil,
 		},
 	}
 	
@@ -59,19 +55,16 @@ func TestUserService_Login_Success(t *testing.T) {
 				UserServiceHashToken: service.NewUserServiceHashToken(),
 			}
 			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password,tt.args.condition.Password)
-			
-			if !reflect.DeepEqual(pwdErr, tt.wantPwdErr) {
-				t.Errorf("UserService.Login() name= %v, pwdErr = %v, want %v", tt.student[0].Name, pwdErr, tt.wantPwdErr)
-			}
+			assert := assert.New(t)
+			assert.Nil(pwdErr)
 		})
 		t.Run("測試Token", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				JwtFactory: token.Newjwt(),
 			}
 			_, tokenErr := mockUserService.JwtFactory.GenerateToken(tt.student[0].Id)
-			if !reflect.DeepEqual(tokenErr, tt.wantTokenErr) {
-				t.Errorf("UserService.Login() name= %v tokenErr = %v, want %v", tt.student[0].Name, tokenErr, tt.wantTokenErr)
-			}
+			assert := assert.New(t)
+			assert.Nil(tokenErr)
 		})
 	}
 }
@@ -84,10 +77,10 @@ func TestUserService_Login_Failure(t *testing.T) {
 		student  []model.Student
 		args            args
 		h           *service.UserService
-		wantPwdErr  error
-		wantTokenErr error
+		// wantPwdErr  error
+		// wantTokenErr error
 	}{
-		{
+		{	
 			student: []model.Student{
 				{
 					Id:       0,
@@ -97,8 +90,6 @@ func TestUserService_Login_Failure(t *testing.T) {
 			},
 			args:   args{condition: &model.LoginStudent{Name: "James", Password: "123456789"}},
 			h:  service.NewUserService(),
-			wantPwdErr: nil,
-			wantTokenErr: nil,
 		},
 		{
 			student: []model.Student{
@@ -110,8 +101,6 @@ func TestUserService_Login_Failure(t *testing.T) {
 			},
 			args:   args{condition: &model.LoginStudent{Name: "Curry", Password: "012345678"}},
 			h:  service.NewUserService(),
-			wantPwdErr: nil,
-			wantTokenErr: nil,
 		},
 	}
 	
@@ -121,19 +110,16 @@ func TestUserService_Login_Failure(t *testing.T) {
 				UserServiceHashToken: service.NewUserServiceHashToken(),
 			}
 			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password,tt.args.condition.Password)
-			
-			if reflect.DeepEqual(pwdErr, tt.wantPwdErr) {
-				t.Errorf("UserService.Login() name= %v, pwdErr = %v, want %v", tt.student[0].Name, pwdErr, tt.wantPwdErr)
-			}
+			assert := assert.New(t)
+			assert.NotNil(pwdErr)
 		})
 		t.Run("測試Token", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				JwtFactory: token.Newjwt(),
 			}
 			_, tokenErr := mockUserService.JwtFactory.GenerateToken(tt.student[0].Id)
-			if reflect.DeepEqual(tokenErr, tt.wantTokenErr) {
-				t.Errorf("UserService.Login() name= %v tokenErr = %v, want %v", tt.student[0].Name, tokenErr, tt.wantTokenErr)
-			}
+			assert := assert.New(t)
+			assert.NotNil(tokenErr)
 		})
 	}
 }

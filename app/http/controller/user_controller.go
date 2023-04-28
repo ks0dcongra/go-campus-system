@@ -6,36 +6,48 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
-	"fmt"
-	"log"
 	"net/http"
 	"strconv"
+	"fmt"
+	
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
-	"example1/app/http/repo"
 )
-type EmployeeService interface {
-	GetSrEmployeeNumbers(int) int
-}
-
-type EmployeeSerivceImpl struct {
-	EmpRepo repo.EmployeeRepo
-}
-
-func (es *EmployeeSerivceImpl) GetSrEmployeeNumbers(age int) int {
-	log.Println("niceifosdifdsofsf:::::::::")
-	srEmps := es.EmpRepo.FindEmployeesAgeGreaterThan(age)
-	return len(srEmps)
-}
-
 
 type UserController struct {
 	UserService service.UserServiceInterface 
 }
 
-func NewUserController() *UserController {
+func NewUserController(UserService service.UserServiceInterface) *UserController {
 	return &UserController{
-		
+		UserService,
+	}
+}
+
+// Login
+func (h *UserController) LoginUser() gin.HandlerFunc{
+	return func(c *gin.Context) {
+		requestData := new(model.LoginStudent)
+		// var login model.LoginStudent
+		if err := c.ShouldBindJSON(requestData); err != nil {
+			c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
+			return
+		}
+		student, status := h.UserService.Login(requestData)
+		// student, status:= service.NewUserService().Login(requestData)
+		if status == responses.Success{
+			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+				"Student": student,
+				// [Session用]:拿到上面session暫存
+				// [Session用]:用id存至session暫存
+				// middleware.SaveSession(c, student.Id)
+				// "Sessions": middleware.GetSession(c),
+				// [Token用]:回傳的參數
+				// "Token": tokenResult,
+				}))
+			return
+		}
+		c.JSON(http.StatusNotFound, responses.Status(status, nil))
 	}
 }
 
@@ -52,56 +64,6 @@ func (h *UserController) GetItem() gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, item))
-	}
-}
-// TODO:
-/* 
-1. 先 refactor controller
-2. 偽造物件坐在LoginUser()上
-3. 測router的status code就好
-*/
-
-// Login TEST Mock 
-// func (h *UserController) LoginUser(c *gin.Context) {
-// 	log.Println("nice shot100")
-// 	jsonData := &model.LoginStudent{Name:"Mar234",Password:"12345678"}
-// 	student, status:= h.UserService.Login(jsonData)
-// 	log.Println(student, status)
-// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-// }
-
-// Login
-func (h *UserController) LoginUser() gin.HandlerFunc{
-	return func(c *gin.Context) {
-		log.Println("nice shot87")
-		requestData := new(model.LoginStudent)
-		// if err := c.ShouldBindJSON(requestData); err != nil {
-		// 	log.Println(c)
-		// 	log.Println(err)
-		// 	c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
-		// 	return
-		// }
-		student, status:= h.UserService.Login(requestData)
-		// student, status:= service.NewUserService().Login(requestData)
-		
-		log.Println("nice shot2",student)
-		// student, status:= h.UserService.Login(requestData)
-		log.Println("nice shot3",status)
-		if status == responses.Success{
-			log.Println("nice shot3ininininininnininini")
-			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
-				"Student": student,
-				// [Session用]:拿到上面session暫存
-				// [Session用]:用id存至session暫存
-				// middleware.SaveSession(c, student.Id)
-				// "Sessions": middleware.GetSession(c),
-				// [Token用]:回傳的參數
-				// "Token": tokenResult,
-				}))
-			return
-		}
-		log.Println("nice shot4")
-		c.JSON(http.StatusNotFound, responses.Status(status, nil))
 	}
 }
 
