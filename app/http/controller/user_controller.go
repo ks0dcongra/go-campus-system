@@ -51,22 +51,6 @@ func (h *UserController) LoginUser() gin.HandlerFunc{
 	}
 }
 
-func (h *UserController) GetItem() gin.HandlerFunc {
-	requestData := new(model.SearchItem)
-	item, status := service.NewItemService().Get(requestData)
-	return func(c *gin.Context) {
-		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-			return
-		}
-		if status != responses.Success {
-			c.JSON(http.StatusOK, responses.Status(responses.Error, nil))
-			return
-		}
-		c.JSON(http.StatusOK, responses.Status(responses.Success, item))
-	}
-}
-
 // Logout
 func (h *UserController) LogoutUser() gin.HandlerFunc {
 	return func(c *gin.Context) {

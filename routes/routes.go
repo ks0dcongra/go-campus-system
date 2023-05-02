@@ -9,22 +9,13 @@ import (
 )
 
 func ApiRoutes(router *gin.Engine) {
-	adminApi := router.Group("admin/api")
-
 	userApi := router.Group("user/api")
 	userService := service.NewUserService()
 	// [Session用]:每次進行user相關操作都會產生一個Session
 	// userApi := router.Group("user/api", session.SetSession())
 
-	//adminItem
-	adminApi.POST("item", controller.AdminController().AddItem())
-	adminApi.GET("item", controller.AdminController().GetItem())
-
 	// 虹堡 Authantication驗證是否為紅寶之人
 	// userApi.Use(middleware.AuthRequired)
-
-	//userItem
-	userApi.GET("item", controller.NewUserController(userService).GetItem())
 
 	// create
 	userApi.POST("create", controller.NewUserController(userService).CreateUser())
