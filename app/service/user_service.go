@@ -4,12 +4,12 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/repository"
-	"example1/utils/token"
 	database "example1/database"
-	"log"
+	"example1/utils/token"
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
 	"golang.org/x/crypto/bcrypt"
+	"log"
 )
 
 type UserServiceInterface interface {
@@ -28,14 +28,14 @@ type UserServiceHashTokenInterface interface {
 	HashAndSalt(pwd []byte) string
 }
 
-type UserService struct {	
-	UserService UserServiceInterface 
+type UserService struct {
+	UserService UserServiceInterface
 }
 
-type UserServiceRedis struct {	
+type UserServiceRedis struct {
 }
 
-type UserServiceHashToken struct {	
+type UserServiceHashToken struct {
 }
 
 func NewUserService() *UserService {
@@ -53,25 +53,25 @@ func NewUserServiceHashToken() *UserServiceHashToken {
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
 	student, DbError := repository.NewUserRepository().Login(condition)
-	// 如果資料庫沒有搜尋到東西 
+	// 如果資料庫沒有搜尋到東西
 	if DbError != nil {
-		log.Println("DbError:",DbError)
+		log.Println("DbError:", DbError)
 		return student, responses.DbErr
 	}
 	// 密碼錯誤
-	pwdMatch, pwdErr:= NewUserServiceHashToken().ComparePasswords(student.Password, condition.Password)
+	pwdMatch, pwdErr := NewUserServiceHashToken().ComparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
-		log.Println("comparePasswordsError:",pwdErr)
+		log.Println("comparePasswordsError:", pwdErr)
 		return student, responses.PasswordErr
 	}
-	
+
 	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token
 	// 創建 JwtFactory 實例
 	JwtFactory := token.Newjwt()
 	tokenResult, tokenErr := JwtFactory.GenerateToken(student.Id)
-	
+
 	if tokenErr != nil {
-		log.Println("TokenError:",tokenErr)
+		log.Println("TokenError:", tokenErr)
 		return student, responses.TokenErr
 	} else {
 		student.Token = tokenResult

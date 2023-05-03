@@ -15,38 +15,38 @@ import (
 )
 
 type ServiceMock struct {
-    mock.Mock
+	mock.Mock
 }
 
-func (serviceMock *ServiceMock) Login(requestData *model.LoginStudent) (model.Student, string){
-    args := serviceMock.Called(requestData)
-    return args.Get(0).(model.Student),args.Get(1).(string)
+func (serviceMock *ServiceMock) Login(requestData *model.LoginStudent) (model.Student, string) {
+	args := serviceMock.Called(requestData)
+	return args.Get(0).(model.Student), args.Get(1).(string)
 }
 
 func Test_userController_LoginUser2(t *testing.T) {
-	
+
 	tests := []struct {
-		name string
-		PostBody model.LoginStudent
-		MockResponse model.Student
+		name               string
+		PostBody           model.LoginStudent
+		MockResponse       model.Student
 		MockResponseStatus string
-		wantHttpStatusOK int
+		wantHttpStatusOK   int
 		wantResponseStatus string
 	}{
 		{
-			name : "test_case_1",
-			PostBody : model.LoginStudent{
-				Name:"Mar234",
-				Password:"12345678",
-			},
-			MockResponse : model.Student{
-				Id: 99, 
-				Name: "Jack", 
+			name: "test_case_1",
+			PostBody: model.LoginStudent{
+				Name:     "Mar234",
 				Password: "12345678",
 			},
-			MockResponseStatus : "0",
-			wantHttpStatusOK : http.StatusOK,
-			wantResponseStatus : "0",
+			MockResponse: model.Student{
+				Id:       99,
+				Name:     "Jack",
+				Password: "12345678",
+			},
+			MockResponseStatus: "0",
+			wantHttpStatusOK:   http.StatusOK,
+			wantResponseStatus: "0",
 		},
 	}
 
@@ -57,10 +57,10 @@ func Test_userController_LoginUser2(t *testing.T) {
 
 			serviceMock := new(ServiceMock)
 			// 設定 ServiceMock 的 Login 方法的預期輸出
-			
+
 			serviceMock.On("Login", mock.Anything).
-				Return(tt.MockResponse,tt.MockResponseStatus)
-				
+				Return(tt.MockResponse, tt.MockResponseStatus)
+
 			controller := controller.NewUserController(serviceMock)
 			// 使用非工廠模式時的方法
 			// controller := controller.UserController{
@@ -71,11 +71,11 @@ func Test_userController_LoginUser2(t *testing.T) {
 			jsonValue, _ := json.Marshal(tt.PostBody)
 
 			// create a request to test the controller
-			req,_ := http.NewRequest("POST", "/user/api/login", bytes.NewBuffer(jsonValue))
+			req, _ := http.NewRequest("POST", "/user/api/login", bytes.NewBuffer(jsonValue))
 
 			// create a ResponseRecorder to record the response
 			w := httptest.NewRecorder()
-			
+
 			// create a fake gin.Context
 			c, router := gin.CreateTestContext(w)
 			c.Request = req
@@ -91,8 +91,8 @@ func Test_userController_LoginUser2(t *testing.T) {
 
 			// 解析response
 			var responseBody map[string]interface{}
-			err := json.Unmarshal(w.Body.Bytes(),&responseBody)
-			
+			err := json.Unmarshal(w.Body.Bytes(), &responseBody)
+
 			// 驗證ctx status code, 程式的status code, 與marshall完後的資料是否有錯誤
 			assert := assert.New(t)
 			assert.Equal(tt.wantHttpStatusOK, w.Code)

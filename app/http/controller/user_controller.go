@@ -6,16 +6,16 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
+	"fmt"
 	"net/http"
 	"strconv"
-	"fmt"
-	
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 )
 
 type UserController struct {
-	UserService service.UserServiceInterface 
+	UserService service.UserServiceInterface
 }
 
 func NewUserController(UserService service.UserServiceInterface) *UserController {
@@ -25,7 +25,7 @@ func NewUserController(UserService service.UserServiceInterface) *UserController
 }
 
 // Login
-func (h *UserController) LoginUser() gin.HandlerFunc{
+func (h *UserController) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.LoginStudent)
 		// var login model.LoginStudent
@@ -35,7 +35,7 @@ func (h *UserController) LoginUser() gin.HandlerFunc{
 		}
 		student, status := h.UserService.Login(requestData)
 		// student, status:= service.NewUserService().Login(requestData)
-		if status == responses.Success{
+		if status == responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 				"Student": student,
 				// [Session用]:拿到上面session暫存
@@ -44,7 +44,7 @@ func (h *UserController) LoginUser() gin.HandlerFunc{
 				// "Sessions": middleware.GetSession(c),
 				// [Token用]:回傳的參數
 				// "Token": tokenResult,
-				}))
+			}))
 			return
 		}
 		c.JSON(http.StatusNotFound, responses.Status(status, nil))

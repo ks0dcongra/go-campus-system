@@ -17,11 +17,11 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		student  []model.Student
-		args            args
-		h               *repository.UserRepository
-		wantStudent     model.Student
-		wantErr         error
+		student     []model.Student
+		args        args
+		h           *repository.UserRepository
+		wantStudent model.Student
+		wantErr     error
 	}{
 		{
 			student: []model.Student{
@@ -31,10 +31,10 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "James"}},
-			h:  repository.NewUserRepository(),
-			wantStudent:     model.Student{Id: 2, Name: "James",Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
-			wantErr:  nil,
+			args:        args{condition: &model.LoginStudent{Name: "James"}},
+			h:           repository.NewUserRepository(),
+			wantStudent: model.Student{Id: 2, Name: "James", Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
+			wantErr:     nil,
 		},
 		{
 			student: []model.Student{
@@ -44,10 +44,10 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "Curry"}},
-			h:  repository.NewUserRepository(),
-			wantStudent:     model.Student{Id: 1, Name: "Curry",Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
-			wantErr: nil,
+			args:        args{condition: &model.LoginStudent{Name: "Curry"}},
+			h:           repository.NewUserRepository(),
+			wantStudent: model.Student{Id: 1, Name: "Curry", Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
+			wantErr:     nil,
 		},
 	}
 
@@ -57,9 +57,9 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 		t.Errorf("Failed to open mock sql db, got error: %v", err)
 	}
 	if db == nil {
-		t.Error("db is null") 
-	} 
-	
+		t.Error("db is null")
+	}
+
 	if mock == nil {
 		t.Error("mock is null")
 	}
@@ -81,12 +81,12 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 			// 設定Mock SQL預期回傳資料與欄位
 			rows := sqlmock.NewRows([]string{"id", "name", "password"}).
 				AddRow(tt.student[0].Id, tt.student[0].Name, tt.student[0].Password)
-				
+
 			// 設定Mock SQL撈取資料後預期之狀況
 			mock.ExpectQuery(`SELECT \* FROM "students"`).
 				WithArgs(tt.student[0].Name).
 				WillReturnRows(rows)
-			
+
 			gotStudent, err := tt.h.Login(tt.args.condition)
 			sqlerr := mock.ExpectationsWereMet()
 

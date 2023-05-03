@@ -8,10 +8,9 @@ import (
 	"testing"
 )
 
-
 type MockUserService struct {
 	UserServiceHashToken service.UserServiceHashTokenInterface
-	JwtFactory token.TokenInterface
+	JwtFactory           token.TokenInterface
 }
 
 func TestUserService_Login_Success(t *testing.T) {
@@ -19,9 +18,9 @@ func TestUserService_Login_Success(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		student  []model.Student
-		args            args
-		h           *service.UserService
+		student []model.Student
+		args    args
+		h       *service.UserService
 		// wantPwdErr  error
 		// wantTokenErr error
 	}{
@@ -33,8 +32,8 @@ func TestUserService_Login_Success(t *testing.T) {
 					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
-			h:  service.NewUserService(),
+			args: args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
+			h:    service.NewUserService(),
 		},
 		{
 			student: []model.Student{
@@ -44,17 +43,17 @@ func TestUserService_Login_Success(t *testing.T) {
 					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
-			h:  service.NewUserService(),
+			args: args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
+			h:    service.NewUserService(),
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run("測試Hash", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				UserServiceHashToken: service.NewUserServiceHashToken(),
 			}
-			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password,tt.args.condition.Password)
+			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password, tt.args.condition.Password)
 			assert := assert.New(t)
 			assert.Nil(pwdErr)
 		})
@@ -74,13 +73,13 @@ func TestUserService_Login_Failure(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		student  []model.Student
-		args            args
-		h           *service.UserService
+		student []model.Student
+		args    args
+		h       *service.UserService
 		// wantPwdErr  error
 		// wantTokenErr error
 	}{
-		{	
+		{
 			student: []model.Student{
 				{
 					Id:       0,
@@ -88,8 +87,8 @@ func TestUserService_Login_Failure(t *testing.T) {
 					Password: "$0002a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "James", Password: "123456789"}},
-			h:  service.NewUserService(),
+			args: args{condition: &model.LoginStudent{Name: "James", Password: "123456789"}},
+			h:    service.NewUserService(),
 		},
 		{
 			student: []model.Student{
@@ -99,17 +98,17 @@ func TestUserService_Login_Failure(t *testing.T) {
 					Password: "$1112a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 				},
 			},
-			args:   args{condition: &model.LoginStudent{Name: "Curry", Password: "012345678"}},
-			h:  service.NewUserService(),
+			args: args{condition: &model.LoginStudent{Name: "Curry", Password: "012345678"}},
+			h:    service.NewUserService(),
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run("測試Hash", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				UserServiceHashToken: service.NewUserServiceHashToken(),
 			}
-			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password,tt.args.condition.Password)
+			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password, tt.args.condition.Password)
 			assert := assert.New(t)
 			assert.NotNil(pwdErr)
 		})

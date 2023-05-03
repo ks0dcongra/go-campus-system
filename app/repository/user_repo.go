@@ -15,7 +15,6 @@ func NewUserRepository() *UserRepository {
 	return &UserRepository{}
 }
 
-
 // Login Check
 func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Student, DbError error) {
 	name := condition.Name

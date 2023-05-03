@@ -56,11 +56,10 @@ func TestJwtAuthMiddleware(t *testing.T) {
 			},
 		},
 	}
-	
+
 	gin.SetMode(gin.TestMode)
 
 	router := gin.New()
-	
 
 	router.Use(middleware.JwtAuthMiddleware())
 	{
@@ -89,7 +88,7 @@ func TestJwtAuthMiddleware(t *testing.T) {
 
 			// 驗證status code
 			assert.Equal(t, tt.expectedStatus, w.Code)
-			
+
 			var body responses.Response
 			err = json.Unmarshal(w.Body.Bytes(), &body)
 
