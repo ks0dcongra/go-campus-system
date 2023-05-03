@@ -1,11 +1,16 @@
 package service_test
 
 import (
+	"errors"
 	"example1/app/model"
+	"example1/app/model/responses"
 	"example1/app/service"
 	"example1/utils/token"
-	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 type MockUserService struct {
@@ -13,7 +18,7 @@ type MockUserService struct {
 	JwtFactory           token.TokenInterface
 }
 
-func TestUserService_Login_Success(t *testing.T) {
+func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 	type args struct {
 		condition *model.LoginStudent
 	}
@@ -66,7 +71,7 @@ func TestUserService_Login_Success(t *testing.T) {
 	}
 }
 
-func TestUserService_Login_Failure(t *testing.T) {
+func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 	type args struct {
 		condition *model.LoginStudent
 	}
@@ -119,16 +124,82 @@ func TestUserService_Login_Failure(t *testing.T) {
 	}
 }
 
-// 測試貓咪interface
-// type MockCatService struct {
-// 	service.UserServiceHashToken
-// }
-// func AnimalTestInterface(userServiceHashTokenInterface service.UserServiceHashTokenInterface)  (bool, error){
-//     a,b := userServiceHashTokenInterface.ComparePasswords("a","b")
-// 	return a,b
-// }
-// func Cat(){
-// 	cat := &MockCatService{}
-// 	a,b := AnimalTestInterface(cat)
-// 	log.Println(a,b)
-// }
+type UserRepositoryMock struct {
+	mock.Mock
+}
+
+func (m *UserRepositoryMock) Login(condition *model.LoginStudent) (model.Student, error) {
+	args := m.Called(condition)
+	student, ok := args.Get(0).(model.Student)
+	if !ok {
+		return model.Student{}, errors.New("Invalid return value")
+	}
+	return student, args.Error(1)
+}
+
+func TestUserService_Login(t *testing.T) {
+	condition := &model.LoginStudent{
+		Name:    "test@example.com",
+		Password: "12345678",
+	}
+	mockStudent := model.Student{
+		Id:	1,
+		Name: "test@example.com",
+		Score: nil,
+		Student_number: "",	
+		Token: "",
+		Password:  "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // hashed "password"
+		CreatedTime: time.Now(),
+		UpdatedTime: time.Now(),
+	}
+
+	t.Run("returns student and success when login is successful", func(t *testing.T) {
+		repoMock := new(UserRepositoryMock)
+		repoMock.On("Login", condition).Return(mockStudent, nil)
+
+		userService := service.UserService{
+			UserRepository: repoMock,
+		}
+		actual, status := userService.Login(condition)
+
+		expectedStatus := responses.Success
+		expectedStudent := mockStudent
+
+		assert.Equal(t, expectedStatus, status)
+		assert.Equal(t, expectedStudent.Id, actual.Id)
+		assert.Equal(t, expectedStudent.Name, actual.Name)
+		assert.Equal(t, expectedStudent.Password, actual.Password)
+	})
+
+	t.Run("returns DbErr when repository returns an error", func(t *testing.T) {
+		repoMock := new(UserRepositoryMock)
+		repoMock.On("Login", condition).Return(model.Student{}, errors.New("Database error"))
+
+		userService := service.UserService{
+			UserRepository: repoMock,
+		}
+		actual, status := userService.Login(condition)
+
+		expectedStatus := responses.DbErr
+
+		assert.Equal(t, expectedStatus, status)
+		assert.Equal(t, model.Student{}, actual)
+	})
+
+	t.Run("returns PasswordErr when password is incorrect", func(t *testing.T) {
+		repoMock := new(UserRepositoryMock)
+		// mockStudent.Password = "wrong password"
+		repoMock.On("Login", condition).Return(mockStudent, nil)
+
+		userService := service.UserService{
+			UserRepository: repoMock,
+		}
+
+		condition.Password = "wrongpassword"
+		_, status := userService.Login(condition)
+
+		expectedStatus := responses.PasswordErr
+
+		assert.Equal(t, expectedStatus, status)
+	})
+}
