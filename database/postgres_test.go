@@ -39,7 +39,6 @@ func DbSetup() (*gorm.DB, error){
 		Port,
 		Database,
 	)
-	log.Println("dsn:",dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
