@@ -14,40 +14,19 @@ import (
 
 type UserServiceInterface interface {
 	Login(condition *model.LoginStudent) (student model.Student, status string)
-	// CreateUser(data *model.CreateStudent) (student_id int, status string)
-	// ScoreSearch(requestData string, redisKey string) (student []interface{}, status string)
-}
-
-type UserServiceRedisInterface interface {
+	CreateUser(data *model.CreateStudent) (student_id int, status string)
+	ScoreSearch(requestData string, redisKey string) (student []interface{}, status string)
 	GetRedisKey(redisKey string) ([]byte, error)
 	SetRedisKey(redisKey string, redisData []byte) error
-}
-
-type UserServiceHashTokenInterface interface {
 	ComparePasswords(hashedPwd string, plainPwd string) (bool, error)
 	HashAndSalt(pwd []byte) string
 }
-
 type UserService struct {
 	UserService UserServiceInterface
 }
 
-type UserServiceRedis struct {
-}
-
-type UserServiceHashToken struct {
-}
-
 func NewUserService() *UserService {
 	return &UserService{}
-}
-
-func NewUserServiceRedis() *UserServiceRedis {
-	return &UserServiceRedis{}
-}
-
-func NewUserServiceHashToken() *UserServiceHashToken {
-	return &UserServiceHashToken{}
 }
 
 // Login
@@ -59,7 +38,7 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 		return student, responses.DbErr
 	}
 	// 密碼錯誤
-	pwdMatch, pwdErr := NewUserServiceHashToken().ComparePasswords(student.Password, condition.Password)
+	pwdMatch, pwdErr := NewUserService().ComparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		log.Println("comparePasswordsError:", pwdErr)
 		return student, responses.PasswordErr
@@ -80,7 +59,7 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 }
 
 // hash 方法
-func (ht *UserServiceHashToken) ComparePasswords(hashedPwd string, plainPwd string) (bool, error) {
+func (h *UserService) ComparePasswords(hashedPwd string, plainPwd string) (bool, error) {
 	byteHash := []byte(hashedPwd)
 	byteHash2 := []byte(plainPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
@@ -93,7 +72,7 @@ func (ht *UserServiceHashToken) ComparePasswords(hashedPwd string, plainPwd stri
 // CreateUser
 func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, status string) {
 	pwd := []byte(data.Password)
-	hash := NewUserServiceHashToken().HashAndSalt(pwd)
+	hash := NewUserService().HashAndSalt(pwd)
 	data.Password = hash
 	student_id, db := repository.NewUserRepository().Create(data)
 	if db.Error != nil {
@@ -104,7 +83,7 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, sta
 
 // scoreSearch
 func (h *UserService) ScoreSearch(requestData string, redisKey string) (student []interface{}, status string) {
-	dbData, err := NewUserServiceRedis().GetRedisKey(redisKey)
+	dbData, err := NewUserService().GetRedisKey(redisKey)
 	// student, status = SetRedisKeyOrNot(err, requestData, redisKey, dbData)
 	if err != nil {
 		student, db := repository.NewUserRepository().ScoreSearch(requestData)
@@ -113,7 +92,7 @@ func (h *UserService) ScoreSearch(requestData string, redisKey string) (student 
 		}
 		// 加密成JSON檔，用ffjson比普通的json還快
 		redisData, _ := ffjson.Marshal(student)
-		err = NewUserServiceRedis().SetRedisKey(redisKey, redisData)
+		err = NewUserService().SetRedisKey(redisKey, redisData)
 		if err != nil {
 			return student, responses.Error
 		}
@@ -126,7 +105,7 @@ func (h *UserService) ScoreSearch(requestData string, redisKey string) (student 
 	}
 }
 
-func (r *UserServiceRedis) GetRedisKey(redisKey string) ([]byte, error) {
+func (h *UserService) GetRedisKey(redisKey string) ([]byte, error) {
 	// 連線redis資料庫
 	conn := database.RedisDefaultPool.Get()
 	// 函式程式碼執行完後才會關閉資料庫
@@ -138,7 +117,7 @@ func (r *UserServiceRedis) GetRedisKey(redisKey string) ([]byte, error) {
 
 }
 
-func (r *UserServiceRedis) SetRedisKey(redisKey string, redisData []byte) error {
+func (h *UserService) SetRedisKey(redisKey string, redisData []byte) error {
 	// 第二次連線redis資料庫，設置redis的key、value，30秒後掰掰
 	conn := database.RedisDefaultPool.Get()
 	// 函式程式碼執行完後才會關閉資料庫
@@ -147,7 +126,7 @@ func (r *UserServiceRedis) SetRedisKey(redisKey string, redisData []byte) error 
 	return err
 }
 
-func (ht *UserServiceHashToken) HashAndSalt(pwd []byte) string {
+func (h *UserService) HashAndSalt(pwd []byte) string {
 	// Use GenerateFromPassword to hash & salt pwd.
 	// MinCost is just an integer constant provided by the bcrypt
 	// package along with DefaultCost & MaxCost.

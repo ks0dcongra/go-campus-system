@@ -9,7 +9,7 @@ import (
 )
 
 type MockUserService struct {
-	UserServiceHashToken service.UserServiceHashTokenInterface
+	UserServiceHashToken service.UserServiceInterface
 	JwtFactory           token.TokenInterface
 }
 
@@ -21,8 +21,6 @@ func TestUserService_Login_Success(t *testing.T) {
 		student []model.Student
 		args    args
 		h       *service.UserService
-		// wantPwdErr  error
-		// wantTokenErr error
 	}{
 		{
 			student: []model.Student{
@@ -51,7 +49,7 @@ func TestUserService_Login_Success(t *testing.T) {
 	for _, tt := range tests {
 		t.Run("測試Hash", func(t *testing.T) {
 			mockUserService := &MockUserService{
-				UserServiceHashToken: service.NewUserServiceHashToken(),
+				UserServiceHashToken: service.NewUserService(),
 			}
 			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password, tt.args.condition.Password)
 			assert := assert.New(t)
@@ -76,8 +74,6 @@ func TestUserService_Login_Failure(t *testing.T) {
 		student []model.Student
 		args    args
 		h       *service.UserService
-		// wantPwdErr  error
-		// wantTokenErr error
 	}{
 		{
 			student: []model.Student{
@@ -106,7 +102,7 @@ func TestUserService_Login_Failure(t *testing.T) {
 	for _, tt := range tests {
 		t.Run("測試Hash", func(t *testing.T) {
 			mockUserService := &MockUserService{
-				UserServiceHashToken: service.NewUserServiceHashToken(),
+				UserServiceHashToken: service.NewUserService(),
 			}
 			_, pwdErr := mockUserService.UserServiceHashToken.ComparePasswords(tt.student[0].Password, tt.args.condition.Password)
 			assert := assert.New(t)

@@ -18,10 +18,17 @@ type ServiceMock struct {
 	mock.Mock
 }
 
+// Mock因為傳入的interface需要指定所有method，不然會報錯
 func (serviceMock *ServiceMock) Login(requestData *model.LoginStudent) (model.Student, string) {
 	args := serviceMock.Called(requestData)
 	return args.Get(0).(model.Student), args.Get(1).(string)
 }
+func (serviceMock *ServiceMock) CreateUser(*model.CreateStudent) (int, string){return 0,""}
+func (serviceMock *ServiceMock) ScoreSearch(string, string) ([]interface{}, string){return nil,""}
+func (serviceMock *ServiceMock) GetRedisKey(string) ([]byte, error){return nil,nil}
+func (serviceMock *ServiceMock) SetRedisKey(string, []byte) error{return nil}
+func (serviceMock *ServiceMock) ComparePasswords(string, string) (bool, error){return false,nil}
+func (serviceMock *ServiceMock) HashAndSalt([]byte) string{return ""}
 
 func Test_userController_LoginUser2(t *testing.T) {
 
