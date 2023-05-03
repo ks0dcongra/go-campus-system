@@ -72,29 +72,3 @@ func main() {
 		log.Fatal("HTTP service failed: ", err)
 	}
 }
-
-// Controller測試，借放。
-// func Test_sample(t *testing.T) {
-// 	// 首先一樣創建一個與main相同的router
-// 	router := gin.New()
-// 	router.GET("/hello", func(c *gin.Context) {
-// 		fmt.Printf("c.Request.Header: %v\n", c.Request.Header)
-// 	}, func(c *gin.Context) {
-// 		c.JSON(200, gin.H{"hello": "world"})
-// 	})
-
-// 	// 建立測試用的 HTTP 回應紀錄器
-// 	w := httptest.NewRecorder()
-// 	// 建立測試用的 HTTP 請求
-// 	req, _ := http.NewRequest("GET", "/hello", nil)
-// 	req.Header.Set("Authorization", "Bearer testToken")
-
-// 	// gin 有提供 ServeHTTP 的 function 來讓使用者模擬請求丟入的情況，將Request /hc的Response給conform到ResponseRecorder
-// 	router.ServeHTTP(w, req)
-
-// 	expectedStatus := http.StatusOK
-// 	// 然後比較Response Code、Response Text等內容是否符合預期
-// 	assert.Equal(t, expectedStatus, w.Code)
-
-// 	// fmt.Println("Body: %+v", w.Body)
-// }
