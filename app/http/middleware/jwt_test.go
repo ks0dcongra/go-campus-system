@@ -97,7 +97,7 @@ func TestJwtAuthMiddleware(t *testing.T) {
 			assert.NoError(t, err)
 			// 驗證預期的body與response的body是否相同
 			assert.Equal(t, tt.expectedBody, body)
-			// 刪除當前測試案例中所使用的 JWT token。這麼做是為了確保每個測試案例之間的獨立性，以免前一個測試案例的黑名單 token 影響到後一個測試案例。
+			// 刪除當前測試案例中所使用的 JWT token。以免前一個測試案例的黑名單 token 影響到後一個測試案例。
 			delete(global.Blacklist, tt.authHeader)
 		})
 	}
