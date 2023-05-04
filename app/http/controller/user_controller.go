@@ -6,6 +6,7 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,9 +17,9 @@ type UserController struct {
 	UserService service.UserServiceInterface
 }
 
-func NewUserController() *UserController {
+func NewUserController(UserService service.UserServiceInterface) *UserController {
 	return &UserController{
-		UserService: service.NewUserService(),
+		UserService,
 	}
 }
 
@@ -99,7 +100,6 @@ func (h *UserController) ScoreSearch() gin.HandlerFunc {
 		}
 
 		student, status := service.NewUserService().ScoreSearch(requestData, user_id)
-
 		switch status {
 		case responses.Error:
 			c.JSON(http.StatusNotFound, responses.Status(responses.Error, nil))
@@ -110,7 +110,17 @@ func (h *UserController) ScoreSearch() gin.HandlerFunc {
 		case responses.ScoreTokenErr:
 			c.JSON(http.StatusNotFound, responses.Status(responses.ScoreTokenErr, nil))
 		default: //default:當前面條件都沒有滿足時將會執行此處內包含的方法
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.Error, nil))
+			fmt.Println(status)
 		}
+		// if status == responses.Error {
+		// 	// 失敗
+		// 	c.JSON(http.StatusNotFound, responses.Status(responses.Error, nil))
+		// } else if status == responses.SuccessDb {
+		// 	// 成功但來自DB
+		// 	c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student))
+		// } else {
+		// 	// 成功但來自Redis
+		// 	c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student))
+		// }
 	}
 }

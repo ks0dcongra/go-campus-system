@@ -29,15 +29,13 @@ type UserService struct {
 }
 
 func NewUserService() *UserService {
-	return &UserService{
-		UserRepository: repository.NewUserRepository(),
-	}
+	return &UserService{}
 }
 
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
-	// student, DbError := h.UserRepository.Login(condition)
 	student, DbError := repository.NewUserRepository().Login(condition)
+	// student, DbError := h.UserRepository.Login(condition)
 	// 如果資料庫沒有搜尋到東西
 	if DbError != nil {
 		log.Println("DbError:", DbError)
@@ -50,7 +48,8 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 		return student, responses.PasswordErr
 	}
 
-	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token，創建 JwtFactory 實例
+	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token
+	// 創建 JwtFactory 實例
 	JwtFactory := token.Newjwt()
 	tokenResult, tokenErr := JwtFactory.GenerateToken(student.Id)
 
@@ -92,6 +91,7 @@ func (h *UserService) ScoreSearch(requestData string, user_id uint) (student []i
 	// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
 	if str_user_id != requestData {
 		return nil, responses.ScoreTokenErr
+		// c.JSON(http.StatusOK, responses.Status(responses.ScoreTokenErr, nil))
 	}
 	redisKey := fmt.Sprintf("user_%s", requestData)
 

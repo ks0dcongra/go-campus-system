@@ -68,9 +68,11 @@ func Test_userController_LoginUser2(t *testing.T) {
 			serviceMock.On("Login", mock.Anything).
 				Return(tt.MockResponse, tt.MockResponseStatus)
 
-			controller := controller.UserController{
-			    UserService: serviceMock,
-			}
+			controller := controller.NewUserController(serviceMock)
+			// 使用非工廠模式時的方法
+			// controller := controller.UserController{
+			//     UserService: serviceMock,
+			// }
 
 			// 設置 POST 請求的 Body
 			jsonValue, _ := json.Marshal(tt.PostBody)
