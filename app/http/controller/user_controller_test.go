@@ -24,7 +24,7 @@ func (serviceMock *ServiceMock) Login(requestData *model.LoginStudent) (model.St
 	return args.Get(0).(model.Student), args.Get(1).(string)
 }
 func (serviceMock *ServiceMock) CreateUser(*model.CreateStudent) (int, string){return 0,""}
-func (serviceMock *ServiceMock) ScoreSearch(string, string) ([]interface{}, string){return nil,""}
+func (serviceMock *ServiceMock) ScoreSearch(string, uint) ([]interface{}, string){return nil,""}
 func (serviceMock *ServiceMock) GetRedisKey(string) ([]byte, error){return nil,nil}
 func (serviceMock *ServiceMock) SetRedisKey(string, []byte) error{return nil}
 func (serviceMock *ServiceMock) ComparePasswords(string, string) (bool, error){return false,nil}

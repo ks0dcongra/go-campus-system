@@ -4,18 +4,21 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/repository"
-	database "example1/database"
 	"example1/utils/token"
+	database "example1/database"
+	"fmt"
+	"log"
+	"strconv"
+
 	"github.com/gomodule/redigo/redis"
 	"github.com/pquerna/ffjson/ffjson"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 )
 
 type UserServiceInterface interface {
 	Login(condition *model.LoginStudent) (student model.Student, status string)
 	CreateUser(data *model.CreateStudent) (student_id int, status string)
-	ScoreSearch(requestData string, redisKey string) (student []interface{}, status string)
+	ScoreSearch(requestData string, user_id uint) (student []interface{}, status string)
 	GetRedisKey(redisKey string) ([]byte, error)
 	SetRedisKey(redisKey string, redisData []byte) error
 	ComparePasswords(hashedPwd string, plainPwd string) (bool, error)
@@ -31,8 +34,8 @@ func NewUserService() *UserService {
 
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
-	// student, DbError := repository.NewUserRepository().Login(condition)
-	student, DbError := h.UserRepository.Login(condition)
+	student, DbError := repository.NewUserRepository().Login(condition)
+	// student, DbError := h.UserRepository.Login(condition)
 	// 如果資料庫沒有搜尋到東西
 	if DbError != nil {
 		log.Println("DbError:", DbError)
@@ -83,11 +86,20 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, sta
 }
 
 // scoreSearch
-func (h *UserService) ScoreSearch(requestData string, redisKey string) (student []interface{}, status string) {
+func (h *UserService) ScoreSearch(requestData string, user_id uint) (student []interface{}, status string) {
+	str_user_id := strconv.Itoa(int(user_id))
+	// [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
+	if str_user_id != requestData {
+		return nil, responses.ScoreTokenErr
+		// c.JSON(http.StatusOK, responses.Status(responses.ScoreTokenErr, nil))
+	}
+	redisKey := fmt.Sprintf("user_%s", requestData)
+
+	// 如果抓取redis的過程有error就跑進service並重新設置redis
 	dbData, err := NewUserService().GetRedisKey(redisKey)
-	// student, status = SetRedisKeyOrNot(err, requestData, redisKey, dbData)
 	if err != nil {
 		student, db := repository.NewUserRepository().ScoreSearch(requestData)
+
 		if db.Name == "" {
 			return student, responses.Error
 		}
@@ -115,7 +127,6 @@ func (h *UserService) GetRedisKey(redisKey string) ([]byte, error) {
 	// 如果沒有找到err就會存在就會進入if判斷，轉成Bytes是為了供ffjson套件使用
 	dbData, err := redis.Bytes(conn.Do("GET", redisKey))
 	return dbData, err
-
 }
 
 func (h *UserService) SetRedisKey(redisKey string, redisData []byte) error {
