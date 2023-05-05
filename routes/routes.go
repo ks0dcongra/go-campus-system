@@ -3,14 +3,14 @@ package routes
 import (
 	"example1/app/http/controller"
 	"example1/app/http/middleware"
-	"example1/app/service"
+	// "example1/app/service"
 
 	"github.com/gin-gonic/gin"
 )
 
 func ApiRoutes(router *gin.Engine) {
 	userApi := router.Group("user/api")
-	userService := service.NewUserService()
+	// userService := service.NewUserService()
 	// [Session用]:每次進行user相關操作都會產生一個Session
 	// userApi := router.Group("user/api", session.SetSession())
 
@@ -18,10 +18,10 @@ func ApiRoutes(router *gin.Engine) {
 	// userApi.Use(middleware.AuthRequired)
 
 	// create
-	userApi.POST("create", controller.NewUserController(userService).CreateUser())
+	userApi.POST("create", controller.NewUserController().CreateUser())
 
 	// login
-	userApi.POST("login", controller.NewUserController(userService).LoginUser())
+	userApi.POST("login", controller.NewUserController().LoginUser())
 
 	// [Session用]:Session Auth
 	// userApi.Use(session.AuthSession())
@@ -36,8 +36,8 @@ func ApiRoutes(router *gin.Engine) {
 	userApi.Use(middleware.JwtAuthMiddleware())
 	{
 		//logout
-		userApi.GET("logout", controller.NewUserController(userService).LogoutUser())
+		userApi.GET("logout", controller.NewUserController().LogoutUser())
 		// score search
-		userApi.GET("search/:id", controller.NewUserController(userService).ScoreSearch())
+		userApi.GET("search/:id", controller.NewUserController().ScoreSearch())
 	}
 }
