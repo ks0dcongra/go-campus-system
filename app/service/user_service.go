@@ -41,13 +41,13 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 	// 如果資料庫沒有搜尋到東西
 	if DbError != nil {
 		log.Println("DbError:", DbError)
-		return student, responses.DbErr
+		return model.Student{}, responses.DbErr
 	}
 	// 密碼錯誤
 	pwdMatch, pwdErr := NewUserService().ComparePasswords(student.Password, condition.Password)
 	if !pwdMatch {
 		log.Println("comparePasswordsError:", pwdErr)
-		return student, responses.PasswordErr
+		return model.Student{}, responses.PasswordErr
 	}
 
 	// Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token，創建 JwtFactory 實例
@@ -56,7 +56,7 @@ func (h *UserService) Login(condition *model.LoginStudent) (student model.Studen
 
 	if tokenErr != nil {
 		log.Println("TokenError:", tokenErr)
-		return student, responses.TokenErr
+		return model.Student{}, responses.TokenErr
 	} else {
 		student.Token = tokenResult
 		return student, responses.Success
