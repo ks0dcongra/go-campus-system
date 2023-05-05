@@ -3,6 +3,7 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
+	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -38,9 +39,10 @@ func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm
 }
 
 // score search
-func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
+func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}) {
 	// 宣告student格式給rows的搜尋結果套用
 	student := model.Student{}
+	studentSearch := model.SearchStudent{}
 	// 將三張資料表join起來，去搜尋是否有id=requestData的人，並拿出指定欄位
 	rows, err := database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
 		Joins("left join scores on students.id = scores.student_id").
@@ -52,7 +54,8 @@ func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []int
 			studentInterface = append(studentInterface, studentSearch)
 		}
 	}
+	log.Println(studentInterface, studentSearch)
 	// 資料庫最後再關閉
 	defer rows.Close()
-	return studentInterface, studentSearch
+	return studentInterface
 }

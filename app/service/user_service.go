@@ -98,11 +98,7 @@ func (h *UserService) ScoreSearch(requestData string, user_id uint) (student []i
 	// 如果抓取redis的過程有error就跑進service並重新設置redis
 	dbData, err := NewUserService().GetRedisKey(redisKey)
 	if err != nil {
-		student, db := repository.NewUserRepository().ScoreSearch(requestData)
-
-		if db.Name == "" {
-			return student, responses.Error
-		}
+		student := repository.NewUserRepository().ScoreSearch(requestData)
 		// 加密成JSON檔，用ffjson比普通的json還快
 		redisData, _ := ffjson.Marshal(student)
 		err = NewUserService().SetRedisKey(redisKey, redisData)
