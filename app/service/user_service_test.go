@@ -6,6 +6,7 @@ import (
 	"example1/app/model/responses"
 	"example1/app/service"
 	"example1/utils/token"
+	"fmt"
 	"testing"
 	"time"
 
@@ -23,11 +24,15 @@ func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
+		testName1 string
+		testName2 string
 		student []model.Student
 		args    args
 		h       *service.UserService
 	}{
 		{
+			testName1: "測試Hash: Test Case1",
+			testName2: "測試Token: Test Case1",
 			student: []model.Student{
 				{
 					Id:       2,
@@ -39,6 +44,8 @@ func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 			h:    service.NewUserService(),
 		},
 		{
+			testName1: "測試Hash: Test Case2",
+			testName2: "測試Token: Test Case2",
 			student: []model.Student{
 				{
 					Id:       1,
@@ -52,7 +59,7 @@ func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run("測試Hash", func(t *testing.T) {
+		t.Run("tt.testName1", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				UserServiceHashToken: service.NewUserService(),
 			}
@@ -60,7 +67,7 @@ func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 			assert := assert.New(t)
 			assert.Nil(pwdErr)
 		})
-		t.Run("測試Token", func(t *testing.T) {
+		t.Run("tt.testName2", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				JwtFactory: token.Newjwt(),
 			}
@@ -76,11 +83,15 @@ func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
+		testName1 string
+		testName2 string
 		student []model.Student
 		args    args
 		h       *service.UserService
 	}{
-		{
+		{	
+			testName1: "測試Hash: Test Case1",
+			testName2: "測試Token: Test Case1",
 			student: []model.Student{
 				{
 					Id:       0,
@@ -92,6 +103,8 @@ func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 			h:    service.NewUserService(),
 		},
 		{
+			testName1: "測試Hash: Test Case2",
+			testName2: "測試Token: Test Case2",
 			student: []model.Student{
 				{
 					Id:       0,
@@ -105,7 +118,7 @@ func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run("測試Hash", func(t *testing.T) {
+		t.Run("tt.testName1", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				UserServiceHashToken: service.NewUserService(),
 			}
@@ -113,7 +126,7 @@ func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 			assert := assert.New(t)
 			assert.NotNil(pwdErr)
 		})
-		t.Run("測試Token", func(t *testing.T) {
+		t.Run("tt.testName2", func(t *testing.T) {
 			mockUserService := &MockUserService{
 				JwtFactory: token.Newjwt(),
 			}
@@ -146,60 +159,64 @@ func TestUserService_Login(t *testing.T) {
 		Id:	1,
 		Name: "test@example.com",
 		Score: nil,
-		Student_number: "",	
-		Token: "",
+		Student_number: "testStudent_number",	
+		Token: "testToken",
 		Password:  "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // hashed "password"
 		CreatedTime: time.Now(),
 		UpdatedTime: time.Now(),
 	}
 
-	t.Run("returns student and success when login is successful", func(t *testing.T) {
-		repoMock := new(UserRepositoryMock)
-		repoMock.On("Login", condition).Return(mockStudent, nil)
+	tests := []struct {
+		name string
+		DBError error
+		expectedStatus string
+		expectedStudent model.Student
+	}{
+		{
+			name : "returns student and success when login is successful",
+			DBError: nil,
+			expectedStatus: responses.Success,
+			expectedStudent: mockStudent,
+		},
+		{
+			name : "returns DbErr when repository returns an error",
+			DBError: fmt.Errorf("SQL Error"),
+			expectedStatus: responses.DbErr,
+			expectedStudent: model.Student{},
+		},
+		{
+			name : "returns TokenError when GenerateToken error",
+			DBError: nil,
+			expectedStatus: responses.TokenErr,
+			expectedStudent: model.Student{},
+		},
+		{
+			name : "returns PasswordErr when password is incorrect",
+			DBError: nil,
+			expectedStatus: responses.PasswordErr,
+			expectedStudent: model.Student{},
+		},
 
-		userService := service.UserService{
-			UserRepository: repoMock,
-		}
-		actual, status := userService.Login(condition)
+	}
 
-		expectedStatus := responses.Success
-		expectedStudent := mockStudent
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			repoMock := new(UserRepositoryMock)
+			if tt.name == "returns TokenError when GenerateToken error"{
+				mockStudent.Id = 0
+			}
+			repoMock.On("Login", condition).Return(mockStudent, tt.DBError)
+	
+			userService := service.UserService{
+				UserRepository: repoMock,
+			}
+			if tt.name == "returns PasswordErr when password is incorrect"{
+				condition.Password = "wrong_password"
+			}
+			actual, status := userService.Login(condition)
 
-		assert.Equal(t, expectedStatus, status)
-		assert.Equal(t, expectedStudent.Id, actual.Id)
-		assert.Equal(t, expectedStudent.Name, actual.Name)
-		assert.Equal(t, expectedStudent.Password, actual.Password)
-	})
-
-	t.Run("returns DbErr when repository returns an error", func(t *testing.T) {
-		repoMock := new(UserRepositoryMock)
-		repoMock.On("Login", condition).Return(model.Student{}, errors.New("Database error"))
-
-		userService := service.UserService{
-			UserRepository: repoMock,
-		}
-		actual, status := userService.Login(condition)
-
-		expectedStatus := responses.DbErr
-
-		assert.Equal(t, expectedStatus, status)
-		assert.Equal(t, model.Student{}, actual)
-	})
-
-	t.Run("returns PasswordErr when password is incorrect", func(t *testing.T) {
-		repoMock := new(UserRepositoryMock)
-		// mockStudent.Password = "wrong password"
-		repoMock.On("Login", condition).Return(mockStudent, nil)
-
-		userService := service.UserService{
-			UserRepository: repoMock,
-		}
-
-		condition.Password = "wrongpassword"
-		_, status := userService.Login(condition)
-
-		expectedStatus := responses.PasswordErr
-
-		assert.Equal(t, expectedStatus, status)
-	})
+			assert.Equal(t, tt.expectedStatus, status)
+			assert.Equal(t, tt.expectedStudent.Student_number, actual.Student_number)
+		})
+	}
 }
