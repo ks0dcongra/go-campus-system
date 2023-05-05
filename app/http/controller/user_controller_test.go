@@ -57,9 +57,8 @@ func Test_userController_LoginUser(t *testing.T) {
 			ExpectedResponseStatus: responses.Success,
 		},
 		{
-			name: "Failure_login_parameterErr",
-			PostBody: model.LoginStudent{	
-			},
+			name:     "Failure_login_parameterErr",
+			PostBody: model.LoginStudent{},
 			MockResponse: model.Student{
 				Id:       98,
 				Name:     "Emily",

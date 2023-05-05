@@ -103,7 +103,7 @@ func (j *JwtFactory) TokenValid(c *gin.Context) error {
 	return nil
 }
 
-//  把postman上的Bearer Token 前綴處理掉，僅回傳Token
+// 把postman上的Bearer Token 前綴處理掉，僅回傳Token
 func (j *JwtFactory) ExtractToken(c *gin.Context) string {
 	bearerToken := c.Request.Header.Get("Authorization")
 	// 如果bearerToken符合長度標準就回傳bearerToken
