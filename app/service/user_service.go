@@ -36,8 +36,8 @@ func NewUserService() *UserService {
 
 // Login
 func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) {
-	// student, DbError := h.UserRepository.Login(condition)
-	student, DbError := repository.NewUserRepository().Login(condition)
+	student, DbError := h.UserRepository.Login(condition)
+	// student, DbError := repository.NewUserRepository().Login(condition)
 	// 如果資料庫沒有搜尋到東西
 	if DbError != nil {
 		log.Println("DbError:", DbError)

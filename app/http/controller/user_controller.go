@@ -31,8 +31,8 @@ func (h *UserController) LoginUser() gin.HandlerFunc {
 			c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
 			return
 		}
-		// student, status := h.UserService.Login(requestData)
-		student, status:= service.NewUserService().Login(requestData)
+		student, status := h.UserService.Login(requestData)
+		// student, status:= service.NewUserService().Login(requestData)
 		if status == responses.Success {
 			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 				"Student": student,
@@ -40,8 +40,6 @@ func (h *UserController) LoginUser() gin.HandlerFunc {
 				// [Session用]:用id存至session暫存
 				// middleware.SaveSession(c, student.Id)
 				// "Sessions": middleware.GetSession(c),
-				// [Token用]:回傳的參數
-				// "Token": tokenResult,
 			}))
 			return
 		}
@@ -100,17 +98,10 @@ func (h *UserController) ScoreSearch() gin.HandlerFunc {
 
 		student, status := service.NewUserService().ScoreSearch(requestData, user_id)
 
-		switch status {
-		case responses.Error:
-			c.JSON(http.StatusNotFound, responses.Status(responses.Error, nil))
-		case responses.SuccessDb:
-			c.JSON(http.StatusOK, responses.Status(responses.SuccessDb, student))
-		case responses.SuccessRedis:
-			c.JSON(http.StatusOK, responses.Status(responses.SuccessRedis, student))
-		case responses.ScoreTokenErr:
-			c.JSON(http.StatusNotFound, responses.Status(responses.ScoreTokenErr, nil))
-		default: //default:當前面條件都沒有滿足時將會執行此處內包含的方法
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.Error, nil))
+		if status == responses.SuccessDb || status == responses.SuccessRedis{
+			c.JSON(http.StatusOK, responses.Status(status, student))
+		}else{
+			c.JSON(http.StatusNotFound, responses.Status(status, student))
 		}
 	}
 }
