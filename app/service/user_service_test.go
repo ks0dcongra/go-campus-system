@@ -26,9 +26,9 @@ func TestUserService_HashAndTokenFunction_Success(t *testing.T) {
 	tests := []struct {
 		testName1 string
 		testName2 string
-		student []model.Student
-		args    args
-		h       *service.UserService
+		student   []model.Student
+		args      args
+		h         *service.UserService
 	}{
 		{
 			testName1: "測試Hash: Test Case1",
@@ -85,11 +85,11 @@ func TestUserService_HashAndTokenFunction_Failure(t *testing.T) {
 	tests := []struct {
 		testName1 string
 		testName2 string
-		student []model.Student
-		args    args
-		h       *service.UserService
+		student   []model.Student
+		args      args
+		h         *service.UserService
 	}{
-		{	
+		{
 			testName1: "測試Hash: Test Case1",
 			testName2: "測試Token: Test Case1",
 			student: []model.Student{
@@ -152,65 +152,64 @@ func (m *UserRepositoryMock) Login(condition *model.LoginStudent) (model.Student
 
 func TestUserService_Login(t *testing.T) {
 	condition := &model.LoginStudent{
-		Name:    "test@example.com",
+		Name:     "test@example.com",
 		Password: "12345678",
 	}
 	mockStudent := model.Student{
-		Id:	1,
-		Name: "test@example.com",
-		Score: nil,
-		Student_number: "testStudent_number",	
-		Token: "testToken",
-		Password:  "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // hashed "password"
-		CreatedTime: time.Now(),
-		UpdatedTime: time.Now(),
+		Id:             1,
+		Name:           "test@example.com",
+		Score:          nil,
+		Student_number: "testStudent_number",
+		Token:          "testToken",
+		Password:       "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // hashed "password"
+		CreatedTime:    time.Now(),
+		UpdatedTime:    time.Now(),
 	}
 
 	tests := []struct {
-		name string
-		DBError error
-		expectedStatus string
+		name            string
+		DBError         error
+		expectedStatus  string
 		expectedStudent model.Student
 	}{
 		{
-			name : "returns student and success when login is successful",
-			DBError: nil,
-			expectedStatus: responses.Success,
+			name:            "returns student and success when login is successful",
+			DBError:         nil,
+			expectedStatus:  responses.Success,
 			expectedStudent: mockStudent,
 		},
 		{
-			name : "returns DbErr when repository returns an error",
-			DBError: fmt.Errorf("SQL Error"),
-			expectedStatus: responses.DbErr,
+			name:            "returns DbErr when repository returns an error",
+			DBError:         fmt.Errorf("SQL Error"),
+			expectedStatus:  responses.DbErr,
 			expectedStudent: model.Student{},
 		},
 		{
-			name : "returns TokenError when GenerateToken error",
-			DBError: nil,
-			expectedStatus: responses.TokenErr,
+			name:            "returns TokenError when GenerateToken error",
+			DBError:         nil,
+			expectedStatus:  responses.TokenErr,
 			expectedStudent: model.Student{},
 		},
 		{
-			name : "returns PasswordErr when password is incorrect",
-			DBError: nil,
-			expectedStatus: responses.PasswordErr,
+			name:            "returns PasswordErr when password is incorrect",
+			DBError:         nil,
+			expectedStatus:  responses.PasswordErr,
 			expectedStudent: model.Student{},
 		},
-
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			repoMock := new(UserRepositoryMock)
-			if tt.name == "returns TokenError when GenerateToken error"{
+			if tt.name == "returns TokenError when GenerateToken error" {
 				mockStudent.Id = 0
 			}
 			repoMock.On("Login", condition).Return(mockStudent, tt.DBError)
-	
+
 			userService := service.UserService{
 				UserRepository: repoMock,
 			}
-			if tt.name == "returns PasswordErr when password is incorrect"{
+			if tt.name == "returns PasswordErr when password is incorrect" {
 				condition.Password = "wrong_password"
 			}
 			actual, status := userService.Login(condition)

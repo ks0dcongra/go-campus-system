@@ -7,6 +7,7 @@ import (
 
 	"gorm.io/gorm"
 )
+
 type UserRepositoryInterface interface {
 	Login(condition *model.LoginStudent) (Student model.Student, DbError error)
 }

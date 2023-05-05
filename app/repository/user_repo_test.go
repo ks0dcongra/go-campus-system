@@ -18,33 +18,33 @@ func TestUserRepository_SQL_Success(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		name		string
-		student     model.Student
-		args        args
-		h           *repository.UserRepository
+		name            string
+		student         model.Student
+		args            args
+		h               *repository.UserRepository
 		expectedStudent model.Student
 		expectedErr     error
 	}{
 		{
 			name: "Success_Case1_SQL測試",
 			student: model.Student{
-					Id:       1,
-					Name:     "James",
-					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
+				Id:       1,
+				Name:     "James",
+				Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 			},
-			args:        args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
-			h:           repository.NewUserRepository(),
+			args:            args{condition: &model.LoginStudent{Name: "James", Password: "12345678"}},
+			h:               repository.NewUserRepository(),
 			expectedStudent: model.Student{Id: 1, Name: "James", Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
 		},
 		{
 			name: "Success_Case2_SQL測試",
 			student: model.Student{
-					Id:       2,
-					Name:     "Curry",
-					Password: "000$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
+				Id:       2,
+				Name:     "Curry",
+				Password: "000$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 			},
-			args:        args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
-			h:           repository.NewUserRepository(),
+			args:            args{condition: &model.LoginStudent{Name: "Curry", Password: "12345678"}},
+			h:               repository.NewUserRepository(),
 			expectedStudent: model.Student{Id: 2, Name: "Curry", Password: "000$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS"},
 		},
 	}
@@ -104,32 +104,32 @@ func TestUserRepository_SQL_Failure(t *testing.T) {
 		condition *model.LoginStudent
 	}
 	tests := []struct {
-		name		string
-		student     model.Student
-		args        args
-		h           *repository.UserRepository
+		name            string
+		student         model.Student
+		args            args
+		h               *repository.UserRepository
 		expectedStudent model.Student
 	}{
 		{
-			name:	"Failure_Case1_SQL測試",
+			name: "Failure_Case1_SQL測試",
 			student: model.Student{
-					Id:       1,
-					Name:     "James",
-					Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
+				Id:       1,
+				Name:     "James",
+				Password: "$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 			},
-			args:        args{condition: &model.LoginStudent{ Password: "12345678"}},
-			h:           repository.NewUserRepository(),
+			args:            args{condition: &model.LoginStudent{Password: "12345678"}},
+			h:               repository.NewUserRepository(),
 			expectedStudent: model.Student{Id: 0, Name: "", Password: ""},
 		},
 		{
-			name:	"Failure_Case2_SQL測試",
+			name: "Failure_Case2_SQL測試",
 			student: model.Student{
-					Id:       2,
-					Name:     "Curry",
-					Password: "000$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
+				Id:       2,
+				Name:     "Curry",
+				Password: "000$2a$04$fn7SQX1dw4TFNlaEXBZZiuZDD2.b6TY4aYuhd2eCrbkwdrnpxMTmS", // Password為丟入之預期狀況
 			},
-			args:        args{condition: &model.LoginStudent{}},
-			h:           repository.NewUserRepository(),
+			args:            args{condition: &model.LoginStudent{}},
+			h:               repository.NewUserRepository(),
 			expectedStudent: model.Student{Id: 0, Name: "", Password: ""},
 		},
 	}

@@ -98,9 +98,9 @@ func (h *UserController) ScoreSearch() gin.HandlerFunc {
 
 		student, status := service.NewUserService().ScoreSearch(requestData, user_id)
 
-		if status == responses.SuccessDb || status == responses.SuccessRedis{
+		if status == responses.SuccessDb || status == responses.SuccessRedis {
 			c.JSON(http.StatusOK, responses.Status(status, student))
-		}else{
+		} else {
 			c.JSON(http.StatusNotFound, responses.Status(status, student))
 		}
 	}

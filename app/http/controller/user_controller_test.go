@@ -34,12 +34,12 @@ func (serviceMock *ServiceMock) HashAndSalt([]byte) string                      
 
 func Test_userController_LoginUser(t *testing.T) {
 	tests := []struct {
-		name  string
-		PostBody model.LoginStudent
-		MockResponse  model.Student
-		MockResponseStatus  string
-		ExpectedHttpStatus  int
-		ExpectedResponseStatus  string
+		name                   string
+		PostBody               model.LoginStudent
+		MockResponse           model.Student
+		MockResponseStatus     string
+		ExpectedHttpStatus     int
+		ExpectedResponseStatus string
 	}{
 		{
 			name: "Success_login",
@@ -52,8 +52,8 @@ func Test_userController_LoginUser(t *testing.T) {
 				Name:     "Jason",
 				Password: "12345678",
 			},
-			MockResponseStatus: responses.Success,
-			ExpectedHttpStatus:   http.StatusOK,
+			MockResponseStatus:     responses.Success,
+			ExpectedHttpStatus:     http.StatusOK,
 			ExpectedResponseStatus: responses.Success,
 		},
 		{
@@ -67,8 +67,8 @@ func Test_userController_LoginUser(t *testing.T) {
 				Name:     "Emily",
 				Password: "1234",
 			},
-			MockResponseStatus: responses.ParameterErr,
-			ExpectedHttpStatus:   http.StatusNotFound,
+			MockResponseStatus:     responses.ParameterErr,
+			ExpectedHttpStatus:     http.StatusNotFound,
 			ExpectedResponseStatus: responses.ParameterErr,
 		},
 		{
@@ -82,8 +82,8 @@ func Test_userController_LoginUser(t *testing.T) {
 				Name:     "Andy",
 				Password: "123",
 			},
-			MockResponseStatus: responses.PasswordErr,
-			ExpectedHttpStatus:   http.StatusNotFound,
+			MockResponseStatus:     responses.PasswordErr,
+			ExpectedHttpStatus:     http.StatusNotFound,
 			ExpectedResponseStatus: responses.PasswordErr,
 		},
 	}
@@ -98,11 +98,11 @@ func Test_userController_LoginUser(t *testing.T) {
 
 			serviceMock.On("Login", mock.Anything).
 				Return(tt.MockResponse, tt.MockResponseStatus)
-				
+
 			// 使用工廠模式時的方法
 			// controller := controller.NewUserController(serviceMock)
 			controller := controller.UserController{
-			    UserService: serviceMock,
+				UserService: serviceMock,
 			}
 
 			// 設置 POST 請求的 Body
@@ -110,13 +110,13 @@ func Test_userController_LoginUser(t *testing.T) {
 
 			// create a request to test the controller
 			req, _ := http.NewRequest("POST", "/user/api/login", bytes.NewBuffer(jsonValue))
-			
+
 			// create a ResponseRecorder to record the response
 			w := httptest.NewRecorder()
 
 			// create a fake gin.Context
 			_, router := gin.CreateTestContext(w)
-			
+
 			// 將路由註冊到 gin 的引擎上
 			router.POST("/user/api/login", controller.LoginUser())
 
@@ -141,22 +141,21 @@ func Test_userController_LoginUser(t *testing.T) {
 
 func TestUserController_LogoutUser(t *testing.T) {
 	tests := []struct {
-		name string
-		authHeader     string
-		isBlacklisted  bool
-		h    *controller.UserController
-		expectedStatus int
-		expectedBodyMessage   string
+		name                   string
+		authHeader             string
+		isBlacklisted          bool
+		h                      *controller.UserController
+		expectedStatus         int
+		expectedBodyMessage    string
 		expectResponsesSuccess string
 	}{
 		{
-			name: "success_logout",
-			h: controller.NewUserController(),
-			expectedStatus: http.StatusOK,
-			expectedBodyMessage: "Logout Successfully.",
+			name:                   "success_logout",
+			h:                      controller.NewUserController(),
+			expectedStatus:         http.StatusOK,
+			expectedBodyMessage:    "Logout Successfully.",
 			expectResponsesSuccess: responses.Success,
 		},
-		
 	}
 
 	for _, tt := range tests {
@@ -173,7 +172,7 @@ func TestUserController_LogoutUser(t *testing.T) {
 
 			var response responses.Response
 			err := json.Unmarshal(w.Body.Bytes(), &response)
-		
+
 			assert.Nil(t, err)
 			assert.Equal(t, tt.expectedStatus, w.Code)
 			assert.Equal(t, tt.expectResponsesSuccess, response.Status)
