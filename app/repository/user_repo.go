@@ -3,7 +3,6 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
-	"log"
 	"time"
 
 	"gorm.io/gorm"
@@ -54,7 +53,6 @@ func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []int
 			studentInterface = append(studentInterface, studentSearch)
 		}
 	}
-	log.Println(studentInterface, studentSearch)
 	// 資料庫最後再關閉
 	defer rows.Close()
 	return studentInterface
