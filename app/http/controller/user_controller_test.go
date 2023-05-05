@@ -6,6 +6,7 @@ import (
 	"example1/app/http/controller"
 	"example1/app/model"
 	"example1/app/model/responses"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -58,9 +59,7 @@ func Test_userController_LoginUser(t *testing.T) {
 		},
 		{
 			name: "Failure_login_parameterErr",
-			PostBody: model.LoginStudent{
-				Name:     "Emily",
-				Password: "1234",
+			PostBody: model.LoginStudent{	
 			},
 			MockResponse: model.Student{
 				Id:       98,
