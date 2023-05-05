@@ -3,7 +3,8 @@ package database_test
 import (
 	"encoding/json"
 	"fmt"
-	"gorm.io/driver/postgres"
+	// "gorm.io/driver/postgres"
+	"example1/database"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
@@ -39,15 +40,17 @@ func DbSetup() (*gorm.DB, error) {
 		Port,
 		Database,
 	)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	db, err := database.DBInit(dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
+	DB = db
 
-	if err := db.AutoMigrate(&Book{}); err != nil {
-		log.Fatalf("failed to migrate database: %v", err)
+	if migrateError := DB.AutoMigrate(&Book{}); migrateError != nil {
+		log.Fatalf("failed to migrate database: %v", migrateError)
 	}
-	return db, err
+	return DB, err
 }
 
 func Test_UpdateData(t *testing.T) {
