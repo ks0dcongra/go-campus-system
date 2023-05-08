@@ -26,3 +26,6 @@
 
 # Go workspace file
 go.work
+
+# VSCode Extension
+.vscode/setting.json
