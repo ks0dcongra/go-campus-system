@@ -3,48 +3,31 @@ package repository
 import (
 	"example1/app/model"
 	"example1/database"
-	"example1/utils/token"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-type _UserRepository struct {
+type UserRepositoryInterface interface {
+	Login(condition *model.LoginStudent) (Student model.Student, DbError error)
+}
+type UserRepository struct {
 }
 
-func UserRepository() *_UserRepository {
-	return &_UserRepository{}
+func NewUserRepository() *UserRepository {
+	return &UserRepository{}
 }
-
 
 // Login Check
-func (h *_UserRepository) CheckUserPassword(condition *model.LoginStudent) (Student model.Student, result *gorm.DB, tokenResult string) {
+func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Student, DbError error) {
 	name := condition.Name
 	student := model.Student{}
-	result = database.DB.Where("name = ?", name).First(&student)
-	pwdMatch, err := comparePasswords(student.Password, condition.Password)
-	if !pwdMatch {
-		result.Error = err
-		tokenResult = "密碼錯誤"
-		return student, result, tokenResult
-	}
-
-	// 創建 JwtFactory 實例
-	JwtFactory := token.Newjwt()
-	// Token：若成功搜尋到呼叫 GenerateToken 方法來生成 Token
-	tokenResult, err = JwtFactory.GenerateToken(student.Id)
-
-	if err != nil {
-		tokenResult = "生成 Token 錯誤:"
-		return student, result, tokenResult
-	}
-
-	return student, result, tokenResult
+	result := database.DB.Where("name = ?", name).First(&student)
+	return student, result.Error
 }
 
 // Create User
-func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
+func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
 	student := model.Student{
 		Name:           data.Name,
 		Password:       data.Password,
@@ -56,9 +39,10 @@ func (h *_UserRepository) Create(data *model.CreateStudent) (id int, result *gor
 }
 
 // score search
-func (h *_UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}, studentSearch model.SearchStudent) {
+func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}) {
 	// 宣告student格式給rows的搜尋結果套用
 	student := model.Student{}
+	studentSearch := model.SearchStudent{}
 	// 將三張資料表join起來，去搜尋是否有id=requestData的人，並拿出指定欄位
 	rows, err := database.DB.Model(&student).Select("scores.score,students.name,courses.subject").
 		Joins("left join scores on students.id = scores.student_id").
@@ -72,16 +56,5 @@ func (h *_UserRepository) ScoreSearch(requestData string) (studentInterface []in
 	}
 	// 資料庫最後再關閉
 	defer rows.Close()
-	return studentInterface, studentSearch
-}
-
-// hash 方法
-func comparePasswords(hashedPwd string, plainPwd string) (bool, error) {
-	byteHash := []byte(hashedPwd)
-	byteHash2 := []byte(plainPwd)
-	err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
-	if err != nil {
-		return false, err
-	}
-	return true, err
+	return studentInterface
 }

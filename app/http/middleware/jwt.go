@@ -4,7 +4,6 @@ import (
 	"example1/app/model/responses"
 	"example1/utils/global"
 	"example1/utils/token"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,8 +17,7 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 		// 驗證Token合法是否
 		err := JwtFactory.TokenValid(c)
 		if err != nil {
-			log.Println("JwtAuthMiddleware() err:",err)
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenErr, err))
+			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenErr, nil))
 			c.Abort()
 			return
 		}
@@ -27,7 +25,7 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 		// 取得header检查 Token 是否在黑名单中
 		tokenString := c.GetHeader("Authorization")
 		if _, ok := global.Blacklist[tokenString]; ok {
-			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenInvalid, nil))
+			c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenExpired, nil))
 			c.Abort()
 			return
 		}

@@ -7,8 +7,6 @@ import (
 	"example1/routes"
 	"fmt"
 	"log"
-
-	// "log"
 	"time"
 
 	"github.com/gin-contrib/cors"

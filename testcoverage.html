@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>controller: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">example1/app/http/controller/user_controller.go (39.5%)</option>
+				
+				<option value="file1">example1/app/http/middleware/authorization.go (0.0%)</option>
+				
+				<option value="file2">example1/app/http/middleware/jwt.go (100.0%)</option>
+				
+				<option value="file3">example1/app/http/middleware/session.go (0.0%)</option>
+				
+				<option value="file4">example1/app/http/middleware/validator.go (0.0%)</option>
+				
+				<option value="file5">example1/app/repository/user_repo.go (29.4%)</option>
+				
+				<option value="file6">example1/app/service/user_service.go (39.3%)</option>
+				
+				<option value="file7">example1/database/myredis.go (66.7%)</option>
+				
+				<option value="file8">example1/database/postgres.go (83.3%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package controller
+
+import (
+        "example1/app/model"
+        "example1/app/model/responses"
+        "example1/app/service"
+        "example1/utils/global"
+        "example1/utils/token"
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+        _ "github.com/joho/godotenv/autoload"
+)
+
+type UserController struct {
+        UserService service.UserServiceInterface
+}
+
+func NewUserController() *UserController <span class="cov8" title="1">{
+        return &amp;UserController{
+                UserService: service.NewUserService(),
+        }
+}</span>
+
+// Login
+func (h *UserController) LoginUser() gin.HandlerFunc <span class="cov8" title="1">{
+        return func(c *gin.Context) </span><span class="cov8" title="1">{
+                requestData := new(model.LoginStudent)
+                // var login model.LoginStudent
+                if err := c.ShouldBindJSON(requestData); err != nil </span><span class="cov8" title="1">{
+                        c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
+                        return
+                }</span>
+                <span class="cov8" title="1">student, status := h.UserService.Login(requestData)
+                // student, status:= service.NewUserService().Login(requestData)
+                if status == responses.Success </span><span class="cov8" title="1">{
+                        c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+                                "Student": student,
+                                // [Session用]:拿到上面session暫存
+                                // [Session用]:用id存至session暫存
+                                // middleware.SaveSession(c, student.Id)
+                                // "Sessions": middleware.GetSession(c),
+                        }))
+                        return
+                }</span>
+                <span class="cov8" title="1">c.JSON(http.StatusNotFound, responses.Status(status, nil))</span>
+        }
+}
+
+// Logout
+func (h *UserController) LogoutUser() gin.HandlerFunc <span class="cov8" title="1">{
+        return func(c *gin.Context) </span><span class="cov8" title="1">{
+                // [Session用]:清除目前Session
+                // middleware.ClearSession(c)
+                // [Token用]:取得Header
+                tokenString := c.GetHeader("Authorization")
+                global.Blacklist[tokenString] = true // 将 Token 加入黑名单
+                c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
+                        "message": "Logout Successfully.",
+                }))
+        }</span>
+}
+
+// Create User
+func (h *UserController) CreateUser() gin.HandlerFunc <span class="cov0" title="0">{
+        return func(c *gin.Context) </span><span class="cov0" title="0">{
+                requestData := new(model.CreateStudent)
+                if err := c.ShouldBindJSON(requestData); err != nil </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
+                        return
+                }</span>
+                <span class="cov0" title="0">student_id, status := service.NewUserService().CreateUser(requestData)
+                if status != responses.Success </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusNotFound, responses.Status(responses.Error, nil))
+                        return
+                }</span>
+                <span class="cov0" title="0">c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))</span>
+        }
+}
+
+// ScoreSearch
+func (h *UserController) ScoreSearch() gin.HandlerFunc <span class="cov0" title="0">{
+        return func(c *gin.Context) </span><span class="cov0" title="0">{
+                requestData := c.Param("id")
+                if requestData == "0" || requestData == "" </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+                        return
+                }</span>
+
+                // 創建 JwtFactory 實例
+                <span class="cov0" title="0">JwtFactory := token.Newjwt()
+                // [Token用]:先將uint轉換成int再運用strconv轉換成string。
+                user_id, err := JwtFactory.ExtractTokenID(c)
+                // [Token用]:Token出錯了!
+                if err != nil </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusBadRequest, responses.Status(responses.TokenErr, nil))
+                }</span>
+
+                <span class="cov0" title="0">student, status := service.NewUserService().ScoreSearch(requestData, user_id)
+
+                if status == responses.SuccessDb || status == responses.SuccessRedis </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusOK, responses.Status(status, student))
+                }</span> else<span class="cov0" title="0"> {
+                        c.JSON(http.StatusNotFound, responses.Status(status, student))
+                }</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package middleware
+
+import (
+        "example1/app/model/responses"
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+)
+
+func AuthRequired(c *gin.Context) <span class="cov0" title="0">{
+        auth := c.GetHeader("Authorization")
+        if auth != "castles" </span><span class="cov0" title="0">{
+                c.JSON(http.StatusUnauthorized, gin.H{
+                        "status":  responses.Error,
+                        "message": "No access.",
+                })
+                c.Abort()
+                return
+        }</span>
+        <span class="cov0" title="0">c.Next()</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package middleware
+
+import (
+        "example1/app/model/responses"
+        "example1/utils/global"
+        "example1/utils/token"
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+)
+
+func JwtAuthMiddleware() gin.HandlerFunc <span class="cov8" title="1">{
+        return func(c *gin.Context) </span><span class="cov8" title="1">{
+                // 創建 JwtFactory 實例
+                JwtFactory := token.Newjwt()
+
+                // 驗證Token合法是否
+                err := JwtFactory.TokenValid(c)
+                if err != nil </span><span class="cov8" title="1">{
+                        c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenErr, nil))
+                        c.Abort()
+                        return
+                }</span>
+
+                // 取得header检查 Token 是否在黑名单中
+                <span class="cov8" title="1">tokenString := c.GetHeader("Authorization")
+                if _, ok := global.Blacklist[tokenString]; ok </span><span class="cov8" title="1">{
+                        c.JSON(http.StatusUnauthorized, responses.Status(responses.TokenExpired, nil))
+                        c.Abort()
+                        return
+                }</span>
+                <span class="cov8" title="1">c.Next()</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package middleware
+
+import (
+        "net/http"
+
+        "github.com/gin-contrib/sessions"
+        "github.com/gin-contrib/sessions/cookie"
+        "github.com/gin-gonic/gin"
+)
+
+const userkey = "session_id"
+
+func SetSession() gin.HandlerFunc <span class="cov0" title="0">{
+        store := cookie.NewStore([]byte(userkey))
+        return sessions.Sessions("mysession", store)
+}</span>
+
+// User Auth Session Middle
+func AuthSession() gin.HandlerFunc <span class="cov0" title="0">{
+        return func(c *gin.Context) </span><span class="cov0" title="0">{
+                // 拿到我在 userApi := router.Group("user/api", session.SetSession())所暫存在Default變數的session
+                session := sessions.Default(c)
+                // 拿到我在session所暫存的ID
+                sessionID := session.Get(userkey)
+                // 如果我所暫存的變數不存在代表該人沒有登入過
+                if sessionID == nil </span><span class="cov0" title="0">{
+                        c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+                                "message": "此頁面需要登入",
+                        })
+                        return
+                }</span>
+        }
+}
+
+// Save Session for User
+func SaveSession(c *gin.Context, userID int) <span class="cov0" title="0">{
+        // 拿到我在 userApi := router.Group("user/api", session.SetSession())所暫存在Default變數的session
+        session := sessions.Default(c)
+        // 用session來暫存userID
+        session.Set(userkey, userID)
+        // 將當下登入的sesison存入伺服器端
+        session.Save()
+}</span>
+
+// Clear Session for User
+func ClearSession(c *gin.Context) <span class="cov0" title="0">{
+        // 拿到我在 userApi := router.Group("user/api", session.SetSession())所暫存在Default變數的session
+        session := sessions.Default(c)
+        // 將目前session清除
+        session.Clear()
+        // 將當下登出的sesison存入伺服器端
+        session.Save()
+}</span>
+
+// Get Session for User
+func GetSession(c *gin.Context) int <span class="cov0" title="0">{
+        session := sessions.Default(c)
+        sessionID := session.Get(userkey)
+        if sessionID == nil </span><span class="cov0" title="0">{
+                return 0
+        }</span>
+        <span class="cov0" title="0">return sessionID.(int)</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package middleware
+
+import (
+        "github.com/go-playground/validator/v10"
+        "regexp"
+)
+
+func UserPasd(field validator.FieldLevel) bool <span class="cov0" title="0">{
+        if match, _ := regexp.MatchString(`^[A-Z]\w{4,10}$`, field.Field().String()); match </span><span class="cov0" title="0">{
+                return true
+        }</span>
+        <span class="cov0" title="0">return false</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package repository
+
+import (
+        "example1/app/model"
+        "example1/database"
+        "time"
+
+        "gorm.io/gorm"
+)
+
+type UserRepositoryInterface interface {
+        Login(condition *model.LoginStudent) (Student model.Student, DbError error)
+}
+type UserRepository struct {
+}
+
+func NewUserRepository() *UserRepository <span class="cov8" title="1">{
+        return &amp;UserRepository{}
+}</span>
+
+// Login Check
+func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Student, DbError error) <span class="cov8" title="1">{
+        name := condition.Name
+        student := model.Student{}
+        result := database.DB.Where("name = ?", name).First(&amp;student)
+        return student, result.Error
+}</span>
+
+// Create User
+func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) <span class="cov0" title="0">{
+        student := model.Student{
+                Name:           data.Name,
+                Password:       data.Password,
+                Student_number: data.Student_number,
+                CreatedTime:    time.Now(),
+                UpdatedTime:    time.Now()}
+        result = database.DB.Create(&amp;student)
+        return student.Id, result
+}</span>
+
+// score search
+func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}) <span class="cov0" title="0">{
+        // 宣告student格式給rows的搜尋結果套用
+        student := model.Student{}
+        studentSearch := model.SearchStudent{}
+        // 將三張資料表join起來，去搜尋是否有id=requestData的人，並拿出指定欄位
+        rows, err := database.DB.Model(&amp;student).Select("scores.score,students.name,courses.subject").
+                Joins("left join scores on students.id = scores.student_id").
+                Joins("left join courses on courses.id = scores.course_id").Where("students.id = ?", requestData).Rows()
+        // 如果rows沒找到就不循覽結果直接回傳空interface，如果rows找到就去尋覽結果並傳到新的studentInterface
+        if err == nil </span><span class="cov0" title="0">{
+                for rows.Next() </span><span class="cov0" title="0">{
+                        database.DB.ScanRows(rows, &amp;studentSearch)
+                        studentInterface = append(studentInterface, studentSearch)
+                }</span>
+        }
+        // 資料庫最後再關閉
+        <span class="cov0" title="0">defer rows.Close()
+        return studentInterface</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package service
+
+import (
+        "example1/app/model"
+        "example1/app/model/responses"
+        "example1/app/repository"
+        database "example1/database"
+        "example1/utils/token"
+        "fmt"
+        "log"
+        "strconv"
+
+        "github.com/gomodule/redigo/redis"
+        "github.com/pquerna/ffjson/ffjson"
+        "golang.org/x/crypto/bcrypt"
+)
+
+type UserServiceInterface interface {
+        Login(condition *model.LoginStudent) (student model.Student, status string)
+        CreateUser(data *model.CreateStudent) (student_id int, status string)
+        ScoreSearch(requestData string, user_id uint) (student []interface{}, status string)
+        GetRedisKey(redisKey string) ([]byte, error)
+        SetRedisKey(redisKey string, redisData []byte) error
+        ComparePasswords(hashedPwd string, plainPwd string) (bool, error)
+        HashAndSalt(pwd []byte) string
+}
+type UserService struct {
+        UserRepository repository.UserRepositoryInterface
+}
+
+func NewUserService() *UserService <span class="cov8" title="1">{
+        return &amp;UserService{
+                UserRepository: repository.NewUserRepository(),
+        }
+}</span>
+
+// Login
+func (h *UserService) Login(condition *model.LoginStudent) (student model.Student, status string) <span class="cov8" title="1">{
+        student, DbError := h.UserRepository.Login(condition)
+        // student, DbError := repository.NewUserRepository().Login(condition)
+        // 如果資料庫沒有搜尋到東西
+        if DbError != nil </span><span class="cov8" title="1">{
+                log.Println("DbError:", DbError)
+                return model.Student{}, responses.DbErr
+        }</span>
+        // 密碼錯誤
+        <span class="cov8" title="1">pwdMatch, pwdErr := NewUserService().ComparePasswords(student.Password, condition.Password)
+        if !pwdMatch </span><span class="cov8" title="1">{
+                log.Println("comparePasswordsError:", pwdErr)
+                return model.Student{}, responses.PasswordErr
+        }</span>
+
+        // Token：若密碼沒有錯誤並成功搜尋到，就呼叫 GenerateToken 方法來生成 Token，創建 JwtFactory 實例
+        <span class="cov8" title="1">JwtFactory := token.Newjwt()
+        tokenResult, tokenErr := JwtFactory.GenerateToken(student.Id)
+
+        if tokenErr != nil </span><span class="cov8" title="1">{
+                log.Println("TokenError:", tokenErr)
+                return model.Student{}, responses.TokenErr
+        }</span> else<span class="cov8" title="1"> {
+                student.Token = tokenResult
+                return student, responses.Success
+        }</span>
+}
+
+// hash 方法
+func (h *UserService) ComparePasswords(hashedPwd string, plainPwd string) (bool, error) <span class="cov8" title="1">{
+        byteHash := []byte(hashedPwd)
+        byteHash2 := []byte(plainPwd)
+        err := bcrypt.CompareHashAndPassword(byteHash, byteHash2)
+        if err != nil </span><span class="cov8" title="1">{
+                return false, err
+        }</span>
+        <span class="cov8" title="1">return true, err</span>
+}
+
+// CreateUser
+func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, status string) <span class="cov0" title="0">{
+        pwd := []byte(data.Password)
+        hash := NewUserService().HashAndSalt(pwd)
+        data.Password = hash
+        student_id, db := repository.NewUserRepository().Create(data)
+        if db.Error != nil </span><span class="cov0" title="0">{
+                return -1, responses.Error
+        }</span>
+        <span class="cov0" title="0">return student_id, responses.Success</span>
+}
+
+// scoreSearch
+func (h *UserService) ScoreSearch(requestData string, user_id uint) (student []interface{}, status string) <span class="cov0" title="0">{
+        str_user_id := strconv.Itoa(int(user_id))
+        // [Token用]:限制只有本人能查詢分數，如果Token login時所暫存的user_id與傳入c的user_id不相符，則回傳只限本人查詢分數。
+        if str_user_id != requestData </span><span class="cov0" title="0">{
+                return nil, responses.ScoreTokenErr
+        }</span>
+        <span class="cov0" title="0">redisKey := fmt.Sprintf("user_%s", requestData)
+
+        // 如果抓取redis的過程有error就跑進service並重新設置redis
+        dbData, err := NewUserService().GetRedisKey(redisKey)
+        if err != nil </span><span class="cov0" title="0">{
+                student := repository.NewUserRepository().ScoreSearch(requestData)
+                // 加密成JSON檔，用ffjson比普通的json還快
+                redisData, _ := ffjson.Marshal(student)
+                err = NewUserService().SetRedisKey(redisKey, redisData)
+                if err != nil </span><span class="cov0" title="0">{
+                        return student, responses.Error
+                }</span>
+                <span class="cov0" title="0">return student, responses.SuccessDb</span>
+        } else<span class="cov0" title="0"> {
+                var studentRedis []interface{}
+                // 將Byte解密映射到studentRedis上
+                ffjson.Unmarshal(dbData, &amp;studentRedis)
+                return studentRedis, responses.SuccessRedis
+        }</span>
+}
+
+func (h *UserService) GetRedisKey(redisKey string) ([]byte, error) <span class="cov0" title="0">{
+        // 連線redis資料庫
+        conn := database.RedisDefaultPool.Get()
+        // 函式程式碼執行完後才會關閉資料庫
+        defer conn.Close()
+        // 尋找redis裡面有沒有rediskey，如果撈到redis有暫存就不用去撈資料庫了，
+        // 如果沒有找到err就會存在就會進入if判斷，轉成Bytes是為了供ffjson套件使用
+        dbData, err := redis.Bytes(conn.Do("GET", redisKey))
+        return dbData, err
+}</span>
+
+func (h *UserService) SetRedisKey(redisKey string, redisData []byte) error <span class="cov0" title="0">{
+        // 第二次連線redis資料庫，設置redis的key、value，30秒後掰掰
+        conn := database.RedisDefaultPool.Get()
+        // 函式程式碼執行完後才會關閉資料庫
+        defer conn.Close()
+        _, err := conn.Do("SETEX", redisKey, 30, redisData)
+        return err
+}</span>
+
+func (h *UserService) HashAndSalt(pwd []byte) string <span class="cov0" title="0">{
+        // Use GenerateFromPassword to hash &amp; salt pwd.
+        // MinCost is just an integer constant provided by the bcrypt
+        // package along with DefaultCost &amp; MaxCost.
+        // The cost can be any value you want provided it isn't lower
+        // than the MinCost (4)
+        hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Panic(err)
+        }</span>
+        <span class="cov0" title="0">return string(hash)</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package database
+
+import (
+        "os"
+        "time"
+
+        "github.com/gomodule/redigo/redis"
+        _ "github.com/joho/godotenv/autoload"
+)
+
+var RedisDefaultPool *redis.Pool
+
+func newPool(addr string) *redis.Pool <span class="cov8" title="1">{
+        return &amp;redis.Pool{
+                MaxIdle:     3,
+                IdleTimeout: 240 * time.Second,
+                // Dial or DialContext must be set. When both are set, DialContext takes precedence over Dial.
+                Dial: func() (redis.Conn, error) </span><span class="cov0" title="0">{ return redis.Dial("tcp", addr) }</span>,
+        }
+}
+
+func init() <span class="cov8" title="1">{
+        RedisDefaultPool = newPool(os.Getenv("REDIS_HOST"))
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package database
+
+import (
+        "fmt"
+        "os"
+
+        _ "github.com/joho/godotenv/autoload"
+        "gorm.io/driver/postgres"
+        "gorm.io/gorm"
+        "gorm.io/gorm/logger"
+)
+
+// const (
+//         UserName string = "postgres"
+//         Password string = "postgres"
+//         Addr     string = "127.0.0.1"
+//         Port     int    = 5432
+//         Database string = "example"
+// )
+
+var (
+        UserName string = os.Getenv("DB_USER")
+        Password string = os.Getenv("DB_PASSWORD")
+        Addr     string = os.Getenv("DB_HOST")
+        Port     string = os.Getenv("DB_PORT")
+        Database string = os.Getenv("DB_NAME")
+)
+
+var DB *gorm.DB
+
+func initDatabase(dsn string) (*gorm.DB, error) <span class="cov8" title="1">{
+        db, err := gorm.Open(postgres.Open(dsn), &amp;gorm.Config{
+                Logger: logger.Default.LogMode(logger.Info),
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">fmt.Println("Database connected ...")
+
+        return db, nil</span>
+}
+
+func DBInit(dsn string) (*gorm.DB, error) <span class="cov8" title="1">{
+        return initDatabase(dsn)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
