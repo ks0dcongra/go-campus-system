@@ -32,7 +32,7 @@ func TestCourseScoreRelationship(t *testing.T) {
 		Port,
 		Database,
 	)
-		
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
@@ -59,9 +59,8 @@ func TestCourseScoreRelationship(t *testing.T) {
 		course := model.Course{Id: 1}
 		err = db.Create(&course).Error
 		assert.NoError(t, err)
-		fmt.Println(student.Id,course.Id)
+		fmt.Println(student.Id, course.Id)
 
-		
 		score := model.Score{
 			Id:         3,
 			Score:      90,
@@ -71,7 +70,7 @@ func TestCourseScoreRelationship(t *testing.T) {
 
 		err = db.Create(&score).Error
 		assert.NoError(t, err)
-		
+
 		// 測試 foreign key 是否正確
 		err = db.Where("student_id = ?", student.Id).First(&model.Score{}).Error
 		assert.NoError(t, err)
@@ -79,7 +78,7 @@ func TestCourseScoreRelationship(t *testing.T) {
 		err = db.Where("course_id = ?", course.Id).First(&model.Score{}).Error
 		assert.NoError(t, err)
 
-		if err := db.Migrator().DropTable(&course,&score,&student); err != nil {
+		if err := db.Migrator().DropTable(&course, &score, &student); err != nil {
 			t.Fatalf("failed to migrate database: %v", err)
 		}
 	})
@@ -91,9 +90,9 @@ func TestModelDataType(t *testing.T) {
 	t.Run("測試Course DataType", func(t *testing.T) {
 		// 建立測試資料
 		course := model.Course{
-			Id:         1,
-			Subject:    "Test subject",
-			Subject_id: "test123",
+			Id:          1,
+			Subject:     "Test subject",
+			Subject_id:  "test123",
 			CreatedTime: createdTime,
 			UpdatedTime: updatedTime,
 		}
@@ -112,15 +111,15 @@ func TestModelDataType(t *testing.T) {
 
 		// 檢查 UpdatedTime 欄位的類型是否為 time.Time
 		assert.Equal(t, reflect.TypeOf(course.UpdatedTime), reflect.TypeOf(time.Time{}))
-	})	
+	})
 
 	t.Run("測試Score DataType", func(t *testing.T) {
 		// 建立測試資料
 		score := model.Score{
-			Id:         1,
-			Score:    69,
-			Student_id : 2,
-			Course_id : 2,
+			Id:          1,
+			Score:       69,
+			Student_id:  2,
+			Course_id:   2,
 			CreatedTime: createdTime,
 			UpdatedTime: updatedTime,
 		}
@@ -147,14 +146,14 @@ func TestModelDataType(t *testing.T) {
 	t.Run("測試Student DataType", func(t *testing.T) {
 		// 建立測試資料
 		student := model.Student{
-			Id:         1,
-			Name :    "Andy",
-			Password: "Password",
+			Id:             1,
+			Name:           "Andy",
+			Password:       "Password",
 			Student_number: "AA123AA",
-			CreatedTime: createdTime,
-			UpdatedTime: updatedTime,
+			CreatedTime:    createdTime,
+			UpdatedTime:    updatedTime,
 		}
-		
+
 		// 檢查 Id 欄位的類型是否為 int
 		assert.Equal(t, reflect.TypeOf(student.Id), reflect.TypeOf(int(0)))
 
@@ -172,5 +171,5 @@ func TestModelDataType(t *testing.T) {
 
 		// 檢查 UpdatedTime 欄位的類型是否為 time.Time
 		assert.Equal(t, reflect.TypeOf(student.UpdatedTime), reflect.TypeOf(time.Time{}))
-	})	
+	})
 }
