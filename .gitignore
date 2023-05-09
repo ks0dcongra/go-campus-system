@@ -19,7 +19,7 @@
 /config
 
 # 忽略自己
-.gitignore
+!.gitignore
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
@@ -28,5 +28,14 @@
 go.work
 
 # VSCode Extension
-.vscode/setting.json
-*.setting.json
+.vscode/*      
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+settings.json
+.vscode/
+.vscode/settings.json
+*.settings.json
+
