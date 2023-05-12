@@ -63,6 +63,41 @@ services:
       - server
     links:
       - gin
+  drone-server:
+    image: drone/drone:2
+    container_name: drone-server
+    ports:
+      - 8000:80
+    volumes:
+      - ./drone:/data
+    restart: always
+    networks:
+      - server
+    environment:
+      - DRONE_SERVER_HOST=localhost:8000 # drone server
+      - DRONE_SERVER_PROTO=http
+      - DRONE_RPC_SECRET=4985adfef1cfc9e3adbed5d161d13b0 #共用密碼
+      - DRONE_GIT_ALWAYS_AUTH=true
+      # Gitea
+      - DRONE_GITEA_CLIENT_ID=508348f0-d581-4683-9d6c-3e774ea4f591 # client id
+      - DRONE_GITEA_CLIENT_SECRET=508348f0-d581-4683-9d6c-3e774ea4f591 #client secret
+      - DRONE_GITEA_SERVER=http://localhost:3000 # gitea server
+  gitea-server:
+    image: gitea/gitea:1.13.3
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - server
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "222:22"
 volumes:
   db:  
   gin:
@@ -70,3 +105,6 @@ volumes:
   proxy:
 networks:
   server:
+  gitea:
+    external: false
+ 
