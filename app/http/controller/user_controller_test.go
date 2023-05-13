@@ -176,5 +176,4 @@ func TestUserController_LogoutUser(t *testing.T) {
 			assert.Equal(t, tt.expectedBodyMessage, response.Data.(map[string]interface{})["message"])
 		})
 	}
-	// test
 }
