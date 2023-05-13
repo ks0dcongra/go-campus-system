@@ -3,7 +3,7 @@ name: production
 
 trigger:
   branch:
-    - feat/testCommit3
+    - test/ci
 
 steps:
   - name: build
