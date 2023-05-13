@@ -2,6 +2,11 @@ kind: pipeline
 name: deploy
 
 steps:
+  - name: hello
+      image: dockerfile/nginx
+      script: 
+      - echo hello world
+      
   - name: build
     image: golang:1.16.3
     commands:
@@ -11,3 +16,5 @@ steps:
     image: alpine
     commands:
       - apk add --update openssh-client
+
+
