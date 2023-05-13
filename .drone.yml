@@ -1,14 +1,13 @@
-# .drone.yml
 kind: pipeline
-name: default
+name: production
+
+trigger:
+  branch:
+    - feat/testCommit3
 
 steps:
-- name: test
-  image: golang
-  commands:
-  - go test
-
-- name: build
-  image: golang
-  commands:
-  - go build
+  - name: build
+    image: golang
+    commands:
+      - go build
+      - go test
