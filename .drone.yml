@@ -1,13 +1,14 @@
+# .drone.yml
 kind: pipeline
-name: production
-
-trigger:
-  branch:
-    - test/ci
+name: default
 
 steps:
-  - name: build
-    image: golang
-    commands:
-      - go build
-      - go test
+- name: test
+  image: golang
+  commands:
+  - go test
+
+- name: build
+  image: golang
+  commands:
+  - go build
