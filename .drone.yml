@@ -1,13 +1,12 @@
 kind: pipeline
-name: production
-
-trigger:
-  branch:
-    - feat/testCommit3
+name: deploy
 
 steps:
-  - name: build
-    image: golang
+  - name: backend
+    image: golang:latest
     commands:
       - go build
-      - go test
+      - go test 
+      - echo hello world
+      - echo $USERNAME > a.txt
+      - cat a.txt
