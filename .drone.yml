@@ -14,4 +14,3 @@ steps:
       - go test 
       - echo $USERNAME > a.txt
       - cat a.txt
-
