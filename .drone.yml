@@ -15,5 +15,3 @@ steps:
       - echo $USERNAME > a.txt
       - cat a.txt
 
-
-
