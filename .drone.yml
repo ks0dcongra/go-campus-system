@@ -5,10 +5,7 @@ steps:
   - name: Clone repository0
     image: plugins/git
     settings:
-      ssh_key:
-        from_secret: ssh_private_key
-      ssh_known_hosts:
-        - castlestech.cloud
+      url: https://andy_101398:9f156f6176df8d05a5d6f2e41da40daa14332d94@git-scm.castlestech.cloud/andy_101398/AndyTraining.git
     commands:
       - git fetch origin +refs/heads/test/ci
 
