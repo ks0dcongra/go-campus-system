@@ -1,12 +1,8 @@
 kind: pipeline
-name: deploy
-
+name: default
 steps:
-  - name: backend
+  - name: build
     image: golang:latest
     commands:
       - go build
-      - go test 
-      - echo hello world
-      - echo $USERNAME > a.txt
-      - cat a.txt
+      - go test
