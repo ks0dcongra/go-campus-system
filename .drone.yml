@@ -3,6 +3,16 @@ type: docker
 name: default
 steps:
   - name: Clone repository
+  image: plugins/git
+  settings:
+    ssh_key:
+      from_secret: ssh_private_key
+    ssh_known_hosts:
+      - castlestech.cloud
+  commands:
+    - git fetch origin +refs/heads/test/ci
+steps:
+  - name: Clone repository
     image: plugins/git
     settings:
       skip_verify: true
@@ -10,7 +20,7 @@ steps:
       Username: andy_101398
       username: andy_101398
       password: ${DRONE_SECRET_PASSWORD}
-      token: ${DRONE_SECRET_TOKEN}
+      token: 9f156f6176df8d05a5d6f2e41da40daa14332d94
     commands:
       - git fetch origin +refs/heads/test/ci:refs/remotes/origin/test/ci
     when:
