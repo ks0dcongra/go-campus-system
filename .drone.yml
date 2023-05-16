@@ -3,15 +3,15 @@ type: docker
 name: default
 steps:
   - name: Clone repository0
-  image: plugins/git
-  settings:
-    ssh_key:
-      from_secret: ssh_private_key
-    ssh_known_hosts:
-      - castlestech.cloud
-  commands:
-    - git fetch origin +refs/heads/test/ci
-    
+    image: plugins/git
+    settings:
+      ssh_key:
+        from_secret: ssh_private_key
+      ssh_known_hosts:
+        - castlestech.cloud
+    commands:
+      - git fetch origin +refs/heads/test/ci
+
 steps:
   - name: Clone repository
     image: plugins/git
