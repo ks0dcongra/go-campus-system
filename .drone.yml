@@ -2,7 +2,7 @@ kind: pipeline
 type: docker
 name: default
 steps:
-  - name: Clone repository
+  - name: Clone repository0
   image: plugins/git
   settings:
     ssh_key:
@@ -11,6 +11,7 @@ steps:
       - castlestech.cloud
   commands:
     - git fetch origin +refs/heads/test/ci
+    
 steps:
   - name: Clone repository
     image: plugins/git
