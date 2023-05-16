@@ -1,4 +1,4 @@
-FROM golang:1.18.0-alpine3.15 as builder
+FROM golang:1.20.4-alpine3.17 as builder
 
 LABEL maintainer="Shehomebow"
 

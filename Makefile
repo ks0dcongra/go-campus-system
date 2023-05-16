@@ -1,10 +1,13 @@
 postgres:
-    docker run --name postgres12 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:14-alpine
 
 migrateup:
-    migrate -verbose -source file://database/migration -database postgres://postgres:@127.0.0.1:5432/example?sslmode=disable up 1
+	migrate -path database/migration -database "postgresql://postgres:postgres@localhost:5432/gexample?sslmode=disable" -verbose up 1
+
 migratedown:
-    migrate -verbose -source file://database/migration -database postgres://postgres:@127.0.0.1:5432/example?sslmode=disable down 1
+	migrate -path database/migration -database "postgres://postgres:@127.0.0.1:5432/example?sslmode=disable" -verbose down 1
+    
 hello:
 	echo "Hello"
-.PHONY: postgres migrateup migratedown
+
+.PHONY:postgres migrateup migratedown hello
