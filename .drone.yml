@@ -25,10 +25,4 @@ steps:
       event:
         - push
         - pull_request
-steps:
-- name: test
-  image: alpine
-  commands:
-  - echo hello
-  - echo world
   
