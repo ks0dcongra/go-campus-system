@@ -2,16 +2,11 @@ kind: pipeline
 name: deploy
 
 steps:
-  - name: hello
-    image: dockerfile/nginx
-    script: 
-    - echo hello world
-
   - name: backend
-    image: golang:1.16.3
+    image: golang:latest
     commands:
       - go build
       - go test 
+      - echo hello world
       - echo $USERNAME > a.txt
       - cat a.txt
-      
