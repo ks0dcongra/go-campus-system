@@ -1,20 +1,10 @@
 kind: pipeline
-name: deploy
-with:
-  repository: andy_101398/AndyTraining
-  ref: test/ci
-  token: aa544cb7a50acdeac5279698f4fc62ff74030bad
+type: docker
+name: default
+   
 steps:
-  - name: backend
-    image: golang:latest
-    commands:
-      - git config --local user.email "andy_101398@castech.com.tw"
-      - git config --local user.name "andy_101398"
-      - git diff-index --quiet HEAD || git commit -a -m "Test"
-      - gut push https://andy_101398:aa544cb7a50acdeac5279698f4fc62ff74030bad@git-scm.castlestech.cloud/andy_101398/AndyTraining.git
-      - go build
-      - go test 
-      - echo hello world
-      - echo $USERNAME > a.txt
-      
-
+- name: test
+  image: alpine
+  commands:
+  - echo hello
+  - echo world
