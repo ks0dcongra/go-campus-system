@@ -9,7 +9,7 @@ steps:
       password: ${DRONE_SECRET_PASSWORD}
       token: ${DRONE_SECRET_TOKEN}
     commands:
-      - git fetch origin +refs/heads/test/ci:
+      - git fetch origin +refs/heads/test/ci:refs/remotes/origin/test/ci
     when:
       event:
         - push
