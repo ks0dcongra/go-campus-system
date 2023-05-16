@@ -5,7 +5,7 @@ steps:
   - name: Clone repository
     image: plugins/git
     settings:
-     skip_verify: true
+      skip_verify: true
       netrc: true
       Username: andy_101398
       username: andy_101398
