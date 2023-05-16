@@ -2,8 +2,7 @@ kind: pipeline
 name: default
 
 steps:
-  - name: build
+  - name: test
     image: golang:latest
     commands:
-      - go build
-      - go test
+      - go test ./...
