@@ -78,7 +78,7 @@ services:
       - DRONE_GITEA_CLIENT_ID=508348f0-d581-4683-9d6c-3e774ea4f591 # client id
       - DRONE_GITEA_CLIENT_SECRET=EarwpCJYICSOqOOy2IX8KA6B5XSzkDAwhzHHZIGlLmgx #client secret
       - DRONE_GITEA_SERVER=https://git-scm.castlestech.cloud/  # gitea server
-      # - DRONE_GIT_ALWAYS_AUTH=false
+      - DRONE_GIT_ALWAYS_AUTH=true
       # Drone
       - DRONE_SERVER_HOST=b510-61-31-138-103.ngrok-free.app   # drone server
       - DRONE_SERVER_PROTO=http
