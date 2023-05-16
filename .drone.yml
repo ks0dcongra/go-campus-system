@@ -1,34 +1,15 @@
-kind: pipeline
-type: docker      # 在 Docker 內部執行管道命令
-name: clone       # 可自行定義的名稱
-
 steps:
-  # 事件一
-  - name: host                           # 事件一：可自行定義的名稱
-    image: alpine                        # 使用 alpine 容器
-    commands:                            # 預執行的 shell 指令，這邊印出 hosts 內容
-      - cat /etc/hosts
-    when:                                # 無論 clone 成功或失敗，都會跑該事件
-      status: [ success, failure ]
-  # 事件二
-  - name: echo                           # 事件二：可自行定義的名稱
-    image: plugins/git                   # 使用 plugins/git  容器
-    commands:                            # 預執行的 shell 指令，這邊印出 78523 內容
-    - echo "78523"
-    when:                                # 當觸發條件為 master 分支時會執行的動作
-      branch:
-      - test/ci
-  # 事件三
-  - name: dev_action                     # 事件三：可自行定義的名稱
-    image: plugins/git                   # 使用 plugins/git  容器
-    commands:                            # 預執行的 shell 指令，這邊印出 111111 內容
-    - echo "111111"
-    when:                                # 當觸發條件為 develop 分支時會執行的動作
-      branch:
-      - test/ci
-
-trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
-  branch: 
-  - test/ci
-  event:
-  - push
+- name: test
+  image: alpine, plugins/git
+  settings:
+    skip_verify: true
+    netrc: true
+    Username: andy_101398
+    username: andy_101398
+    password: ${DRONE_SECRET_PASSWORD}
+    token: 9f156f6176df8d05a5d6f2e41da40daa14332d94
+    url: https://andy_101398:9f156f6176df8d05a5d6f2e41da40daa14332d94@git-scm.castlestech.cloud/andy_101398/AndyTraining.git
+  commands:
+  - echo hello
+  - echo world
+  
