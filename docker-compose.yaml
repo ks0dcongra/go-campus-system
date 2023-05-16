@@ -81,7 +81,7 @@ services:
       - DRONE_GITEA_USERNAME=andy_101398
       # Drone
       - DRONE_SERVER_HOST=b510-61-31-138-103.ngrok-free.app   # drone server
-      - DRONE_SERVER_PROTO=https
+      - DRONE_SERVER_PROTO=http
       - DRONE_RPC_SECRET=123456 #共用密碼   
   drone-runner:
     image: drone/drone-runner-docker:1.4

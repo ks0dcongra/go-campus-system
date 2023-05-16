@@ -1,7 +1,17 @@
 kind: pipeline
 type: docker
 name: default
-   
+steps:
+  - name: Clone repository
+    image: alpine/git
+    environment:
+      GITEA_TOKEN: 9f156f6176df8d05a5d6f2e41da40daa14332d94
+    commands:
+      - git clone https://git-scm.castlestech.cloud/your-repository.git
+    when:
+      event:
+        - push
+        - pull_request   
 steps:
 - name: test
   image: alpine
