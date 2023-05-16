@@ -1,6 +1,9 @@
 kind: pipeline
 name: deploy
-
+with:
+  repository: andy_101398/AndyTraining
+  ref: test/ci
+  token: aa544cb7a50acdeac5279698f4fc62ff74030bad
 steps:
   - name: backend
     image: golang:latest
