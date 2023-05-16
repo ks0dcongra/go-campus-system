@@ -5,7 +5,7 @@ steps:
   - name: Clone repository
     image: plugins/git
     settings:
-      username: <your-username>
+      username: andy_101398
       password: ${DRONE_SECRET_PASSWORD}
       # 或者使用 token 而不是密碼
       # token: ${DRONE_SECRET_TOKEN}
