@@ -80,7 +80,7 @@ services:
       - DRONE_GITEA_SERVER=https://git-scm.castlestech.cloud/  # gitea server
       - DRONE_GIT_ALWAYS_AUTH=true
       # Drone
-      - DRONE_SERVER_HOST=b510-61-31-138-103.ngrok-free.app  # drone server
+      - DRONE_SERVER_HOST=e296-61-31-138-103.ngrok-free.app # drone server
       - DRONE_SERVER_PROTO=http
       - DRONE_RPC_SECRET=123456 #共用密碼   
   drone-runner:
@@ -108,4 +108,5 @@ networks:
   server:
   gitea:
     external: false
+    
  

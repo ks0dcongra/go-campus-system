@@ -1,8 +1,36 @@
 kind: pipeline
+type: docker      # 在 Docker 內部執行管道命令
 name: default
-steps:
-  - name: build
+
+steps:   
+  - name: Build
+    image: golang
+    commands:
+      - go build -v
+
+  - name: test
     image: golang:latest
     commands:
-      - go build
-      - go test
+      - go test ./app/http/controller
+      - go test ./app/http/middleware
+      - go test ./app/repository
+      - go test ./app/service
+
+  - name: self-plugin                    # 事件一：可自行定義的名稱
+    image: andy_trainings    # 使用 neil605164/drone-plugin-ex  容器
+    settings:
+      hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
+    commands:                            # 驗證是否有接收到帶入的值
+    - docker login
+    - echo $PLUGIN_HELLO                 
+trigger:
+  branch:
+    include:
+    - master
+    - feature/*
+    - fix/*
+    - develop
+  event:
+    include:
+    - push
+    - pull_request

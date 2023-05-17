@@ -407,3 +407,4 @@
 172.28.0.1 - - [10/Apr/2023:07:06:50 +0000] "GET /user/api/search/1 HTTP/1.1" 200 145 "-" "PostmanRuntime/7.31.3"
 172.28.0.1 - - [10/Apr/2023:07:06:52 +0000] "GET /user/api/search/1 HTTP/1.1" 200 145 "-" "PostmanRuntime/7.31.3"
 172.28.0.1 - - [10/Apr/2023:07:06:54 +0000] "GET /user/api/search/1 HTTP/1.1" 200 145 "-" "PostmanRuntime/7.31.3"
+172.27.0.1 - - [17/May/2023:02:37:44 +0000] "GET / HTTP/1.0" 502 157 "-" "-"

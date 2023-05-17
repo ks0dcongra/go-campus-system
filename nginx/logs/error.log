@@ -4139,3 +4139,4 @@
 2023/04/10 07:03:18 [emerg] 1#1: unknown directive "content_by_lua_block" in /etc/nginx/nginx.conf:11
 2023/04/10 07:03:36 [emerg] 1#1: unknown directive "content_by_lua_block" in /etc/nginx/nginx.conf:11
 2023/04/10 07:03:54 [emerg] 1#1: host not found in upstream "os.getenv("REVERSE_NGINX"):9528" in /etc/nginx/nginx.conf:11
+2023/05/17 02:37:44 [error] 29#29: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.27.0.1, server: _, request: "GET / HTTP/1.0", upstream: "http://172.28.0.1:9528/"
