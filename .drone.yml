@@ -14,12 +14,13 @@ steps:
       - go test ./app/repository
       - go test ./app/service
       - go test ./app/model
-    # when:    # 當觸發條件為fix/ci分支時會執行的動作
-    #   branch:
-    #   - fix/ci
+    when:    # 當觸發條件為fix/ci分支時會執行的動作
+      branch:
+      - fix/ci
+
 trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
   branch: 
-  - fix/ci
+  - origin/fix/ci
   event:
   - push
   
