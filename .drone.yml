@@ -10,12 +10,8 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-    when:    # 當觸發條件為 develop 分支時會執行的動作
-      branch:
-      - fix/ci
-trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
+trigger:    
   branch: 
   - fix/ci
   event:
   - push
-  
