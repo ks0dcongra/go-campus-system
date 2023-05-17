@@ -29,7 +29,3 @@ trigger:
     - fix/*
     - fix/ci_v2
     - develop
-    ref:
-    include:
-    - refs/heads/fix-*
-    - refs/heads/*
