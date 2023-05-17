@@ -10,8 +10,7 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-trigger:    
-  branch: 
-  - fix/ci
-  event:
-  - push
+    when:    # 當觸發條件為 develop 分支時會執行的動作
+      branch:
+      - fix/ci
+
