@@ -3,29 +3,32 @@ type: docker      # 在 Docker 內部執行管道命令
 name: default
 
 trigger:
+  repo:
+  - andy_101398/AndyTraining
   branch:
-    - master
-    - fix/*
-    - feature/*
-    - fix/ci_v2
-    - develop
-    - refs/heads/fix/ci_v2
-    - refs/heads/fix-*
-    - origin/fix/ci_v2
-    - origin/fix/*
+  - master
+  - fix/*
+  - feature/*
+  - fix/ci_v2
+  - develop
+  - refs/heads/fix/ci_v2
+  - refs/heads/fix-*
+  - origin/fix/ci_v2
+  - origin/fix/*
+  - received
 
 steps:   
 
   - name: test
     image: golang:latest
     commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
+    - go test ./app/http/controller
+    - go test ./app/http/middleware
+    - go test ./app/repository
+    - go test ./app/service
 
   - name: deploy
     image: docker:latest
     commands:
-      - echo "helloworld"
+    - echo "helloworld"
 
