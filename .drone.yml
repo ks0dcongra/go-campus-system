@@ -15,7 +15,7 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-           
+
   - name: self-plugin                    # 事件一：可自行定義的名稱
     image: andy_trainings    # 使用 neil605164/drone-plugin-ex  容器
     settings:
@@ -23,9 +23,9 @@ steps:
     commands:                            # 驗證是否有接收到帶入的值
     - docker login
     - echo $PLUGIN_HELLO                 
-
 trigger:
   branch:
+  - refs/heads/fix/ci
   - develop
   - feature/*
   - fix/*
@@ -34,5 +34,3 @@ trigger:
     include:
     - push
     - pull_request
-
-  
