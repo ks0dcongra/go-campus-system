@@ -18,3 +18,4 @@ trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
   - fix/ci
   event:
   - push
+  
