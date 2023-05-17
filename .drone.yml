@@ -4,5 +4,14 @@ steps:
   - name: test
     image: golang:latest
     commands:
-      - go build
+      - echo helloworld
+      - cat /etc/hosts
       - go test ./...
+    when:    # 當觸發條件為 develop 分支時會執行的動作
+      branch:
+      - fix/ci
+trigger:     # 觸發 pipeline 條件，分支為 master，且進行 push 行為
+  branch: 
+  - fix/ci
+  event:
+  - push
