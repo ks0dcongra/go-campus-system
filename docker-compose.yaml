@@ -76,14 +76,13 @@ services:
     environment:
       # Gitea
       - DRONE_GITEA_CLIENT_ID=83865b2b-bc97-4cb7-950f-512dc8016357 # client id
-      - DRONE_GITEA_CLIENT_SECRET=UWjCnFmUEe8pj465FySxyU0CETicW1sQPamAY0bamfAK #client secret
+      - DRONE_GITEA_CLIENT_SECRET=YNXpnwjiHDOhby1xoJbu4goYwFboDjfMbSUsI5PYQge1 #client secret
       - DRONE_GITEA_SERVER=https://git-scm.castlestech.cloud/  # gitea server
       - DRONE_GIT_ALWAYS_AUTH=true
       # Drone
-      - DRONE_SERVER_HOST=3ffb-61-31-138-103.ngrok-free.app # drone server
+      - DRONE_SERVER_HOST=460e-2001-b011-6-365d-9c39-73e2-cba8-b86a.ngrok-free.app # drone server
       - DRONE_SERVER_PROTO=http
       - DRONE_RPC_SECRET=123456 #共用密碼   
-      - ALLOWED_HOST_LIST = *
   drone-runner:
     image: drone/drone-runner-docker:1.4
     container_name: drone-runner
