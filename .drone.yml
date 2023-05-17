@@ -13,7 +13,6 @@ trigger:
   - refs/heads/fix-*
   - origin/fix/ci_v2
   - origin/fix/*
-  - received
 
 steps:   
   - name: test
@@ -23,9 +22,3 @@ steps:
     - go test ./app/http/middleware
     - go test ./app/repository
     - go test ./app/service
-
-  - name: deploy
-    image: docker:latest
-    commands:
-    - echo "helloworld"
-
