@@ -3,11 +3,6 @@ type: docker      # 在 Docker 內部執行管道命令
 name: default
 
 steps:   
-  - name: Build
-    image: golang
-    commands:
-      - go build -v
-
   - name: test
     image: golang:latest
     commands:
@@ -22,11 +17,19 @@ steps:
       hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
     commands:                            # 驗證是否有接收到帶入的值
     - docker login
-    - echo $PLUGIN_HELLO    
+    - echo $PLUGIN_HELLO   
 
+  - name: deploy
+      image: docker:latest
+      commands:
+      - echo "helloworld"
+      
 trigger:
+  ref:
+    include:
+    - refs/heads/fix-*
+    - refs/heads/*
   branch:
+    - fix/*
     - fix/ci_v2
-  event:
-    - push
-    - custom
+    - develop
