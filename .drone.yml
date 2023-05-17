@@ -24,9 +24,9 @@ steps:
     commands:                            # 驗證是否有接收到帶入的值
     - echo $PLUGIN_HELLO                 
 
-trigger:     # 觸發 pipeline 條件，分支為 develop，且進行 push 行為
-  branch: 
-  - develop
-  event:
-  - push
+# trigger:     # 觸發 pipeline 條件，分支為 develop，且進行 push 行為
+#   branch: 
+#   - develop
+#   event:
+#   - push
   
