@@ -29,3 +29,4 @@ trigger:
     - fix/ci_v2
   event:
     - push
+    - custom
