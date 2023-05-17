@@ -25,17 +25,7 @@ steps:
     - echo $PLUGIN_HELLO    
 
 trigger:
-  ref:
-  - refs/heads/master
-  - refs/heads/fix-*
-  - refs/heads/fix/ci_v2
   branch:
-    include:
-    - master
-    - feature/*
-    - fix/*
-    - develop
+    - fix/ci_v2
   event:
-    include:
     - push
-    - pull_request
