@@ -25,11 +25,11 @@ steps:
     - echo $PLUGIN_HELLO                 
 trigger:
   branch:
-  - refs/heads/fix/ci
-  - develop
-  - feature/*
-  - fix/*
-  - refs/heads/fix-*
+    include:
+    - master
+    - feature/*
+    - fix/*
+    - develop
   event:
     include:
     - push
