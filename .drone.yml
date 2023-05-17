@@ -20,16 +20,16 @@ steps:
     - echo $PLUGIN_HELLO   
 
   - name: deploy
-      image: docker:latest
-      commands:
-      - echo "helloworld"
-      
+    image: docker:latest
+    commands:
+    - echo "helloworld"
+
 trigger:
-  ref:
-    include:
-    - refs/heads/fix-*
-    - refs/heads/*
   branch:
     - fix/*
     - fix/ci_v2
     - develop
+    ref:
+    include:
+    - refs/heads/fix-*
+    - refs/heads/*
