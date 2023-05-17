@@ -3,8 +3,6 @@ type: docker      # 在 Docker 內部執行管道命令
 name: default
 
 trigger:
-  repo:
-  - andy_101398/AndyTraining
   branch:
   - master
   - fix/*
@@ -18,7 +16,6 @@ trigger:
   - received
 
 steps:   
-
   - name: test
     image: golang:latest
     commands:
