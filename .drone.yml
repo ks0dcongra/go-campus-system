@@ -22,3 +22,5 @@ steps:
     - go test ./app/http/middleware
     - go test ./app/repository
     - go test ./app/service
+
+signature: your-secret-key
