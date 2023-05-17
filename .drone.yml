@@ -6,7 +6,10 @@ steps:
     commands:
       - echo helloworld
       - cat /etc/hosts
-      - go test ./...
+      - go test ./app/http/controller
+      - go test ./app/http/middleware
+      - go test ./app/repository
+      - go test ./app/service
     when:    # 當觸發條件為 develop 分支時會執行的動作
       branch:
       - fix/ci
