@@ -33,4 +33,4 @@ RUN apk --no-cache add bash
 COPY update.sh /bin/
 
 ## 啟動容器後執行
-CMD ["/bin/update.sh"]
+CMD ["/app/bin/update.sh"]

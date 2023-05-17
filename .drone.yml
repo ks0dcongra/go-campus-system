@@ -1,7 +1,16 @@
 kind: pipeline
 type: docker      # 在 Docker 內部執行管道命令
-name: default
 
+name: CI
+
+trigger:
+  branch:
+    - fix/*
+    - fix/ci_v2
+    - develop
+  event:
+    - custom
+    - push
 steps:   
   - name: test
     image: golang:latest
@@ -16,16 +25,10 @@ steps:
     settings:
       hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
     commands:                            # 驗證是否有接收到帶入的值
-    - docker login
-    - echo $PLUGIN_HELLO   
+      - echo $PLUGIN_HELLO   
 
   - name: deploy
     image: docker:latest
     commands:
-    - echo "helloworld"
+      - echo "helloworld"
 
-trigger:
-  branch:
-    - fix/*
-    - fix/ci_v2
-    - develop
