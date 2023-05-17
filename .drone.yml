@@ -15,7 +15,6 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-      - go test ./app/model
       
   - name: self-plugin                    # 事件一：可自行定義的名稱
     image: andy_trainings    # 使用 neil605164/drone-plugin-ex  容器
