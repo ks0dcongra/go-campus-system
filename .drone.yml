@@ -22,8 +22,13 @@ steps:
       hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
     commands:                            # 驗證是否有接收到帶入的值
     - docker login
-    - echo $PLUGIN_HELLO                 
+    - echo $PLUGIN_HELLO    
+
 trigger:
+  ref:
+  - refs/heads/master
+  - refs/heads/fix-*
+  - refs/heads/fix/ci_v2
   branch:
     include:
     - master
