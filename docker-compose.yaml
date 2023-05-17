@@ -82,7 +82,6 @@ services:
       # Drone
       - DRONE_LOGS_DEBUG=true
       - DRONE_GITEA=true
-      - DRONE_GITEA_URL=https://git-scm.castlestech.cloud/
       - DRONE_SERVER_HOST=e296-61-31-138-103.ngrok-free.app # drone server
       - DRONE_SERVER_PROTO=http
       - DRONE_RPC_SECRET=123456 #共用密碼   
