@@ -5,14 +5,9 @@ name: default
 trigger:
   branch:
   - master
+  - develop
   - fix/*
   - feature/*
-  - fix/ci_v2
-  - develop
-  - refs/heads/fix/ci_v2
-  - refs/heads/fix-*
-  - origin/fix/ci_v2
-  - origin/fix/*
 
 steps:   
   - name: test
