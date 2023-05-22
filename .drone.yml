@@ -22,7 +22,7 @@ steps:
     image: plugins/docker
     settings:
       registry: 697d-61-31-138-103.ngrok-free.app
-      repo: ./
+      repo: 697d-61-31-138-103.ngrok-free.app/app
 
   - name: publish
     pull: always
