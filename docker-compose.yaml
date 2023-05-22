@@ -76,7 +76,7 @@ services:
     environment:
       # Gitea
       - DRONE_GITEA_CLIENT_ID=83865b2b-bc97-4cb7-950f-512dc8016357 # client id
-      - DRONE_GITEA_CLIENT_SECRET=YNXpnwjiHDOhby1xoJbu4goYwFboDjfMbSUsI5PYQge1 #client secret
+      - DRONE_GITEA_CLIENT_SECRET=xqBGH6PAQgN3o5pFKokeY6dwuqnDE2eg5YpJTXrS2aG2 #client secret
       - DRONE_GITEA_SERVER=https://git-scm.castlestech.cloud/  # gitea server
       - DRONE_GIT_ALWAYS_AUTH=true
       # Drone
