@@ -10,4 +10,7 @@ migratedown:
 hello:
 	echo "Hello"
 
+build_linux_amd64:
+	go build -v -a -o \ release/${GOOS}/${GOARCH}/helloworld
+
 .PHONY:postgres migrateup migratedown hello

@@ -17,3 +17,62 @@ steps:
     - go test ./app/http/middleware
     - go test ./app/repository
     - go test ./app/service
+  - name: build
+    image: alpine
+    environment:
+      GOOS: linux
+      GOARCH: amd64
+      CGO_ENABLED: 0
+    commands:
+    -make build_linux_amd64
+steps:
+  - name: publish_to_prod
+    image: plugins/docker
+    settings:
+      registry: 697d-61-31-138-103.ngrok-free.app
+      repo: ./
+    when:
+      event:
+        - deployment
+      environment:
+        - production
+
+  - name: publish
+    pull: always
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      cache_from: appleboy/gorush
+      daemon_off: false
+      dockerfile: docker/Dockerfile.linux.amd64
+      password:
+        from_secret: docker_password
+      repo: appleboy/rush
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - deployment
+      environment:
+        - staging
+
+# kind: pipeline
+# type: docker      # 在 Docker 內部執行管道命令
+# name: default
+
+# trigger:
+#   branch:
+#   - master
+#   - develop
+#   - fix/*
+#   - feature/*
+
+# steps:   
+#   - name: test
+#     image: golang:latest
+#     commands:
+#     - go test ./app/http/controller
+#     - go test ./app/http/middleware
+#     - go test ./app/repository
+#     - go test ./app/service
