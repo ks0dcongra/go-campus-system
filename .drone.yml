@@ -25,7 +25,6 @@ steps:
       CGO_ENABLED: 0
     commands:
     - make build_linux_amd64
-steps:
   - name: publish_to_prod
     image: plugins/docker
     settings:
@@ -36,7 +35,6 @@ steps:
         - deployment
       environment:
         - production
-
   - name: publish
     pull: always
     image: plugins/docker
