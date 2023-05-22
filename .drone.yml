@@ -18,7 +18,7 @@ steps:
     - go test ./app/repository
     - go test ./app/service
   - name: build
-    image: alpine
+    image: plugins/make
     environment:
       GOOS: linux
       GOARCH: amd64
@@ -30,11 +30,7 @@ steps:
     settings:
       registry: 697d-61-31-138-103.ngrok-free.app
       repo: ./
-    when:
-      event:
-        - deployment
-      environment:
-        - production
+
   - name: publish
     pull: always
     image: plugins/docker
@@ -49,11 +45,6 @@ steps:
       repo: appleboy/rush
       username:
         from_secret: docker_username
-    when:
-      event:
-        - deployment
-      environment:
-        - staging
 
 # kind: pipeline
 # type: docker      # 在 Docker 內部執行管道命令
