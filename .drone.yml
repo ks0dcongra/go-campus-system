@@ -17,14 +17,7 @@ steps:
     - go test ./app/http/middleware
     - go test ./app/repository
     - go test ./app/service
-  - name: build
-    image: plugins/make
-    environment:
-      GOOS: linux
-      GOARCH: amd64
-      CGO_ENABLED: 0
-    commands:
-    - make build_linux_amd64
+  
   - name: publish_to_prod
     image: plugins/docker
     settings:
