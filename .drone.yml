@@ -10,19 +10,19 @@ trigger:
   - feature/*
 
 steps:   
+  - name: publish_to_prod
+    image: plugins/docker
+    settings:
+      registry: 697d-61-31-138-103.ngrok-free.app
+      
   - name: test
-    image: golang:latest
+    image: golang
     commands:
     - go test ./app/http/controller
     - go test ./app/http/middleware
     - go test ./app/repository
     - go test ./app/service
   
-  - name: publish_to_prod
-    image: plugins/docker
-    settings:
-      registry: 697d-61-31-138-103.ngrok-free.app
-      repo: 697d-61-31-138-103.ngrok-free.app/app
 
   - name: publish
     pull: always
