@@ -14,7 +14,7 @@ steps:
     image: plugins/docker
     settings:
       registry: 697d-61-31-138-103.ngrok-free.app
-      
+      repo: 697d-61-31-138-103.ngrok-free.app
   - name: test
     image: golang
     commands:
