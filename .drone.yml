@@ -15,7 +15,7 @@ steps:
     image: postgres:9-alpine
     commands:
       - sleep 5 #give the service some time to start
-      - psql -U postgres -d test
+      - psql -U postgres -d example
 
   - name: docker start
     image: plugins/docker
