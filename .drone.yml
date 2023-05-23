@@ -12,10 +12,10 @@ trigger:
 
 steps:
   - name: testpostgres
-    image: postgres
+    image: postgres:9-alpine
     commands:
       - sleep 10 #give the service some time to start
-      - psql -U postgres -d dbexample -h database
+      - psql -U postgres -d test -h database
 
   - name: docker start
     image: plugins/docker
@@ -49,11 +49,11 @@ steps:
 
 services:
   - name: database
-    image: postgres
+    image: postgres:9-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Aa123456
-      POSTGRES_DB: dbexample
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: test
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
