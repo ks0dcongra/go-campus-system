@@ -11,7 +11,7 @@ trigger:
 
 
 steps:
-  - name: test
+  - name: testpostgres
     image: postgres:9-alpine
     commands:
       - sleep 5 #give the service some time to start
