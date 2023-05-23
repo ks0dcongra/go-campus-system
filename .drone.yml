@@ -32,24 +32,24 @@ steps:
       DB_PORT: 5432
     commands:
       - ./main -h database deploy
-  - name: deploy-staging
-    image: drone/drone-deploy
-    settings:
-      server: http://a7e0-61-31-138-103.ngrok-free.app
-      token:
-        from_secret: drone_token
-      repo: octocat/hello-world
-      build: 24
-      environment: staging
-  - name: deploy-production
-    image: drone/drone-deploy
-    settings:
-      server: http://a7e0-61-31-138-103.ngrok-free.app
-      token:
-        from_secret: drone_token
-      repo: octocat/hello-world
-      build: 24
-      environment: production
+  # - name: deploy-staging
+  #   image: drone/drone-deploy
+  #   settings:
+  #     server: http://a7e0-61-31-138-103.ngrok-free.app
+  #     token:
+  #       from_secret: drone_token
+  #     repo: octocat/hello-world
+  #     build: 24
+  #     environment: staging
+  # - name: deploy-production
+  #   image: drone/drone-deploy
+  #   settings:
+  #     server: http://a7e0-61-31-138-103.ngrok-free.app
+  #     token:
+  #       from_secret: drone_token
+  #     repo: octocat/hello-world
+  #     build: 24
+  #     environment: production
 
 services:
   - name: database
@@ -59,7 +59,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dbexample
       POSTGRES_HOST_AUTH_METHOD: trust
-      
+
   # - name: test
   #   image: golang:latest
   #   commands:
