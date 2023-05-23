@@ -23,8 +23,8 @@ steps:
   - name: publish_to_prod
     image: plugins/docker
     settings:
-      registry: registry.heroku.com
-      repo: registry.heroku.com/my-staging-app/web
+      registry: localhost:8000
+      repo: localhost:8000/app
 
   - name: deploy
     image: golang:latest
