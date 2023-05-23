@@ -10,14 +10,6 @@ trigger:
     - feature/*
 
 steps:
-  - name: test
-    image: golang:latest
-    commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
-
   - name: build
     image: golang:latest
     commands:
@@ -26,4 +18,41 @@ steps:
   - name: deploy
     image: golang:latest
     commands:
-      - ./myapp
+      - ./app/myapp
+
+  - name: test
+    image: golang:latest
+    commands:
+      - go test ./app/http/controller
+      - go test ./app/http/middleware
+      - go test ./app/repository
+      - go test ./app/service
+# steps:   
+#   - name: publish_to_prod
+#     image: plugins/docker
+#     settings:
+#       registry: 697d-61-31-138-103.ngrok-free.app
+#       repo: 697d-61-31-138-103.ngrok-free.app
+#   - name: test
+#     image: golang
+#     commands:
+#     - go test ./app/http/controller
+#     - go test ./app/http/middleware
+#     - go test ./app/repository
+#     - go test ./app/service
+  
+#   - name: publish
+#     pull: always
+#     image: plugins/docker
+#     settings:
+#       auto_tag: true
+#       auto_tag_suffix: linux-amd64
+#       cache_from: appleboy/gorush
+#       daemon_off: false
+#       dockerfile: docker/Dockerfile.linux.amd64
+#       password:
+#         from_secret: docker_password
+#       repo: appleboy/rush
+#       username:
+#         from_secret: docker_username
+  
