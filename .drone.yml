@@ -23,7 +23,8 @@ steps:
   - name: publish_to_prod
     image: plugins/docker
     settings:
-      registry: http://e2b5-61-31-138-103.ngrok-free.app
+      registry: registry.heroku.com
+      repo: registry.heroku.com/my-staging-app/web
 
   - name: deploy
     image: golang:latest
