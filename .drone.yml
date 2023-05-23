@@ -15,7 +15,7 @@ steps:
     image: postgres
     commands:
       - sleep 20 #give the service some time to start
-      - psql -U postgres -d dbexample -W Aa123456 -h database
+      - psql -U postgres -d dbexample -WAa123456 -h database
 
   - name: docker start
     image: plugins/docker
