@@ -8,26 +8,13 @@ trigger:
     - develop
     - fix/*
     - feature/*
-
-
+    
 steps:
   - name: testpostgres
     image: postgres:9-alpine
     commands:
       - sleep 5 #give the service some time to start
       - psql -U postgres -d example -h database
-
-  - name: docker start
-    image: plugins/docker
-    settings:
-      auto_tag: true
-      cache_from: andy_trainings
-      daemon_off: false
-      password:
-        from_secret: docker_password
-      repo: andy_trainings
-      username:
-        from_secret: docker_username
 
   - name: build
     image: golang:latest
@@ -37,10 +24,7 @@ steps:
   - name: deploy
     image: golang:latest
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: example
-      DB_HOST: db
+      DB_HOST: database
       DB_DRIVER: postgres
       DB_USER: postgres
       DB_PASSWORD: Aa123456
@@ -63,8 +47,20 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: example
+      POSTGRES_DB: dbexample
       POSTGRES_HOST_AUTH_METHOD: trust
+
+  # - name: docker start
+  #   image: plugins/docker
+  #   settings:
+  #     auto_tag: true
+  #     cache_from: andy_trainings
+  #     daemon_off: false
+  #     password:
+  #       from_secret: docker_password
+  #     repo: andy_trainings
+  #     username:
+  #       from_secret: docker_username
 
 # steps:   
 #   - name: publish_to_prod
