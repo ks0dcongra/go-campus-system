@@ -16,7 +16,7 @@ steps:
       access_key: AKIAXSGBHJZXTRQ44OD5
       secret_key: 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
       repo: andy_trainings
-      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com/andy_trainings
+      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
 
   - name: testpostgres
