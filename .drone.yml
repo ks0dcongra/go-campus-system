@@ -13,10 +13,10 @@ steps:
   - name: publish  
     image: plugins/ecr
     settings:
-      access_key: AKIAXSGBHJZXTRQ44OD5
-      secret_key: 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
+      access_key: AKIAXSGBHJZXTRQ44OD50
+      secret_key: I+9fiMKgbzsKSrwwSdnG4BLMjfRe9gbmshYeC+qH0
       repo: bar
-      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com/example1
+      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com/example10
       region: us-east-1
 
 
