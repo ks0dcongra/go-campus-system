@@ -41,6 +41,28 @@ steps:
       - go test ./app/repository
       - go test ./app/service
 
+  - name: deploy-staging
+    image: drone/drone-deploy
+    settings:
+      server: http://a7e0-61-31-138-103.ngrok-free.app
+      token:
+        from_secret: drone_token
+      repo: octocat/hello-world
+      build: 24
+      environment: staging
+
+
+  - name: deploy-production
+    image: drone/drone-deploy
+    settings:
+      server: http://a7e0-61-31-138-103.ngrok-free.app
+      token:
+        from_secret: drone_token
+      repo: octocat/hello-world
+      build: 24
+      environment: production
+
+
 services:
   - name: database
     image: postgres:9-alpine
@@ -49,18 +71,6 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dbexample
       POSTGRES_HOST_AUTH_METHOD: trust
-
-  # - name: docker start
-  #   image: plugins/docker
-  #   settings:
-  #     auto_tag: true
-  #     cache_from: andy_trainings
-  #     daemon_off: false
-  #     password:
-  #       from_secret: docker_password
-  #     repo: andy_trainings
-  #     username:
-  #       from_secret: docker_username
 
 # steps:   
 #   - name: publish_to_prod
@@ -86,3 +96,26 @@ services:
 #       username:
 #         from_secret: docker_username
   
+# - name: deploy-staging
+#   image: drone/drone-deploy
+#   settings:
+#     server: http://a7e0-61-31-138-103.ngrok-free.app
+#     token:
+#     from_secret: drone_token
+#     repo: octocat/hello-world
+#     build: 24
+#     environment: staging
+#   when:
+#     event: deployment
+
+# - name: deploy-production
+#   image: drone/drone-deploy
+#   settings:
+#     server: htts://a7e0-61-31-138-103.ngrok-free.app
+#     token:
+#       from_secret: drone_token
+#     repo: octocat/hello-world
+#     build: 24
+#     environment: production
+#   when:
+#      event: deployment
