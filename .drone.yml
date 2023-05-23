@@ -8,14 +8,8 @@ trigger:
     - develop
     - fix/*
     - feature/*
-    
-services:
-  - name: database
-    image: postgres:9-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: example
+
+
 steps:
   - name: test
       image: postgres:9-alpine
@@ -52,6 +46,14 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
+      
+services:
+  - name: database
+    image: postgres:9-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: example
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
