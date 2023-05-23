@@ -19,6 +19,7 @@ steps:
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com/example1
       region: us-east-1
 
+
   - name: testpostgres
     image: postgres:9-alpine
     commands:
