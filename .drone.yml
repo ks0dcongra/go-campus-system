@@ -52,7 +52,9 @@ services:
     image: postgres:9-alpine
     environment:
       POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: example
+      POSTGRES_HOST_AUTH_METHOD: trust
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
