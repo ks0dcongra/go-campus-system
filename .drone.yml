@@ -40,8 +40,14 @@ steps:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: example
+      DB_HOST: db
+      DB_DRIVER: postgres
+      DB_USER: postgres
+      DB_PASSWORD: Aa123456
+      DB_NAME: dbexample
+      DB_PORT: 5432
     commands:
-      - ./main
+      - ./main -h database deploy
 
   - name: test
     image: golang:latest
@@ -59,7 +65,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: example
       POSTGRES_HOST_AUTH_METHOD: trust
-      
+
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
