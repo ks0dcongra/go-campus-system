@@ -8,8 +8,21 @@ trigger:
     - develop
     - fix/*
     - feature/*
-
+    
+services:
+  - name: database
+    image: postgres:9-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: example
 steps:
+  - name: test
+      image: postgres:9-alpine
+      commands:
+        - sleep 5 #give the service some time to start
+        - psql -U postgres -d test
+
   - name: docker start
     image: plugins/docker
     settings:
