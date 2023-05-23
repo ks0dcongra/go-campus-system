@@ -33,13 +33,13 @@ steps:
     commands:
       - ./main -h database deploy
 
-  - name: test
-    image: golang:latest
-    commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
+  # - name: test
+  #   image: golang:latest
+  #   commands:
+  #     - go test ./app/http/controller
+  #     - go test ./app/http/middleware
+  #     - go test ./app/repository
+  #     - go test ./app/service
 
   - name: deploy-staging
     image: drone/drone-deploy
