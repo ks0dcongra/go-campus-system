@@ -14,7 +14,7 @@ steps:
   - name: testpostgres
     image: postgres:9-alpine
     commands:
-      - sleep 10 #give the service some time to start
+      - sleep 5 #give the service some time to start
       - psql -U postgres -d example -h database
 
   - name: docker start
@@ -36,6 +36,10 @@ steps:
 
   - name: deploy
     image: golang:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: example
     commands:
       - ./main
 
@@ -55,6 +59,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: example
       POSTGRES_HOST_AUTH_METHOD: trust
+      
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
