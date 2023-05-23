@@ -12,10 +12,10 @@ trigger:
 
 steps:
   - name: test
-      image: postgres:9-alpine
-      commands:
-        - sleep 5 #give the service some time to start
-        - psql -U postgres -d test
+    image: postgres:9-alpine
+    commands:
+      - sleep 5 #give the service some time to start
+      - psql -U postgres -d test
 
   - name: docker start
     image: plugins/docker
@@ -46,7 +46,7 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-      
+
 services:
   - name: database
     image: postgres:9-alpine
