@@ -10,15 +10,29 @@ trigger:
     - feature/*
 
 steps:
+  - name: docker start
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      cache_from: andy_trainings
+      daemon_off: false
+      password:
+        from_secret: docker_password
+      repo: andy_trainings
+      username:
+        from_secret: docker_username
+    commands:
+      - docker compose up
+
   - name: build
     image: golang:latest
     commands:
-      - go build
+      - go build main.go
 
   - name: deploy
     image: golang:latest
     commands:
-      - ./app/myapp
+      - ./main
 
   - name: test
     image: golang:latest
@@ -30,16 +44,11 @@ steps:
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
+#       commands:
+#         - docker compose up
 #     settings:
 #       registry: 697d-61-31-138-103.ngrok-free.app
 #       repo: 697d-61-31-138-103.ngrok-free.app
-#   - name: test
-#     image: golang
-#     commands:
-#     - go test ./app/http/controller
-#     - go test ./app/http/middleware
-#     - go test ./app/repository
-#     - go test ./app/service
   
 #   - name: publish
 #     pull: always
