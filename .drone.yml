@@ -15,7 +15,7 @@ steps:
     image: postgres:9-alpine
     commands:
       - sleep 10 #give the service some time to start
-      - psql -U postgres -d test -h database
+      - psql -U postgres -d example
 
   - name: docker start
     image: plugins/docker
@@ -52,8 +52,8 @@ services:
     image: postgres:9-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 
-      POSTGRES_DB: test
+      POSTGRES_PASSWORD:
+      POSTGRES_DB: example
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
