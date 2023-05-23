@@ -8,13 +8,13 @@ trigger:
     - develop
     - fix/*
     - feature/*
-    
+
 steps:
   - name: testpostgres
     image: postgres:9-alpine
     commands:
       - sleep 5 #give the service some time to start
-      - psql -U postgres -d example -h database
+      - psql -U postgres -d dbexample -h database
 
   - name: build
     image: golang:latest
