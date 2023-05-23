@@ -10,6 +10,15 @@ trigger:
     - feature/*
 
 steps:
+  - name: publish  
+    image: plugins/ecr
+    settings:
+      access_key: AKIAXSGBHJZXTRQ44OD5
+      secret_key: I+9fiMKgbzsKSrwwSdnG4BLMjfRe9gbmshYeC+qH
+      repo: bar
+      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com/example1
+      region: us-east-1
+
   - name: testpostgres
     image: postgres:9-alpine
     commands:
@@ -20,11 +29,6 @@ steps:
     image: golang:latest
     commands:
       - go build main.go
-  - name: publish_to_prod
-    image: plugins/docker
-    settings:
-      registry: localhost:8000
-      repo: localhost:8000/app
 
   - name: deploy
     image: golang:latest
@@ -54,7 +58,12 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dbexample
       POSTGRES_HOST_AUTH_METHOD: trust
-
+      
+  # - name: publish_to_prod
+  #   image: plugins/docker
+  #   settings:
+  #     registry: localhost:8000
+  #     repo: localhost:8000/app
 # steps:   
 #   - name: publish_to_prod
 #     image: plugins/docker
