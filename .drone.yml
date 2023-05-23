@@ -14,8 +14,8 @@ steps:
   - name: testpostgres
     image: postgres
     commands:
-      - sleep 20 #give the service some time to start
-      - psql -U postgres -d dbexample -WAa123456 -h database
+      - sleep 10 #give the service some time to start
+      - psql -U postgres -d dbexample -h database
 
   - name: docker start
     image: plugins/docker
@@ -52,7 +52,6 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Aa123456
       POSTGRES_DB: dbexample
 # steps:   
 #   - name: publish_to_prod
