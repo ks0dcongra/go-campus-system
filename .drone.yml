@@ -52,6 +52,7 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Aa123456
       POSTGRES_DB: dbexample
 # steps:   
 #   - name: publish_to_prod
