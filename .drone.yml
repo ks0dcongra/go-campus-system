@@ -32,15 +32,6 @@ steps:
       DB_PORT: 5432
     commands:
       - ./main -h database deploy
-
-  # - name: test
-  #   image: golang:latest
-  #   commands:
-  #     - go test ./app/http/controller
-  #     - go test ./app/http/middleware
-  #     - go test ./app/repository
-  #     - go test ./app/service
-
   - name: deploy-staging
     image: drone/drone-deploy
     settings:
@@ -50,8 +41,6 @@ steps:
       repo: octocat/hello-world
       build: 24
       environment: staging
-
-
   - name: deploy-production
     image: drone/drone-deploy
     settings:
@@ -62,7 +51,6 @@ steps:
       build: 24
       environment: production
 
-
 services:
   - name: database
     image: postgres:9-alpine
@@ -71,6 +59,17 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dbexample
       POSTGRES_HOST_AUTH_METHOD: trust
+      
+  # - name: test
+  #   image: golang:latest
+  #   commands:
+  #     - go test ./app/http/controller
+  #     - go test ./app/http/middleware
+  #     - go test ./app/repository
+  #     - go test ./app/service
+
+
+
 
 # steps:   
 #   - name: publish_to_prod
