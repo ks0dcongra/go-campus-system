@@ -13,11 +13,20 @@ steps:
   - name: publish  
     image: plugins/ecr
     settings:
-      access_key: AKIAXSGBHJZXTRQ44OD5
-      secret_key: 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
+      access_key: 
+        from_secret: access_key
+      secret_key: 
+        from_secret: secret_key
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
+    commands:
+    - echo "You can call the secrets like this examples below."
+    - echo $access_key
+    - echo $secret_key
+    - echo $ACCESS_KEY
+    - echo $SECRET_KEY
+    - echo "In both cases, and for security reasons, you will see asteriks '*******' instead the value under the echo command."
 
   - name: testpostgres
     image: postgres:9-alpine
