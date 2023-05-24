@@ -20,18 +20,7 @@ steps:
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-    commands:
-    - echo "You can call the secrets like this examples below."
-    - echo "Helloworld!"
-    - echo docker_username
-    - echo $docker_username
-    - echo $docker_password
-    - echo $access_key
-    - echo $secret_key  
-    - echo $ACCESS_KEY
-    - echo $SECRET_KEY
-    - echo "In both cases, and for security reasons, you will see asteriks '*******' instead the value under the echo command."
-
+    
   - name: testpostgres
     image: postgres:9-alpine
     commands:
