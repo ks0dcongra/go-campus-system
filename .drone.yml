@@ -14,16 +14,17 @@ steps:
     image: plugins/ecr
     settings:
       access_key: 
-        from_secret: access_key
+        from_secret: docker_username
       secret_key: 
-        from_secret: secret_key
+        from_secret: docker_password
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
     commands:
     - echo "You can call the secrets like this examples below."
+    - echo "Helloworld!"
     - echo $access_key
-    - echo $secret_key
+    - echo $secret_key  
     - echo $ACCESS_KEY
     - echo $SECRET_KEY
     - echo "In both cases, and for security reasons, you will see asteriks '*******' instead the value under the echo command."
@@ -47,17 +48,17 @@ steps:
       - go test ./app/repository
       - go test ./app/service
 
-  - name: testdeploydatabase
-    image: golang:latest
-    environment:
-      DB_HOST: database
-      DB_DRIVER: postgres
-      DB_USER: postgres
-      DB_PASSWORD: Aa123456
-      DB_NAME: dbexample
-      DB_PORT: 5432
-    commands:
-      - ./main -h database deploy
+  # - name: testdeploydatabase
+  #   image: golang:latest
+  #   environment:
+  #     DB_HOST: database
+  #     DB_DRIVER: postgres
+  #     DB_USER: postgres
+  #     DB_PASSWORD: Aa123456
+  #     DB_NAME: dbexample
+  #     DB_PORT: 5432
+  #   commands:
+  #     - ./main -h database deploy
 
 services:
   - name: database
