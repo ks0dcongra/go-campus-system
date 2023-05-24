@@ -23,6 +23,9 @@ steps:
     commands:
     - echo "You can call the secrets like this examples below."
     - echo "Helloworld!"
+    - echo docker_username
+    - echo $docker_username
+    - echo $docker_password
     - echo $access_key
     - echo $secret_key  
     - echo $ACCESS_KEY
