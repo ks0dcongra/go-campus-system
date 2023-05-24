@@ -10,10 +10,13 @@ trigger:
     - feature/*
 
 steps:
-  - name: Load Secret to app.env
-    image: alpine
-    commands:
-      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+  - name: Load aws-cli
+    image: mesosphere/aws-cli
+   
+  - name: Load jq and using AWS Secret to app.env
+    image: stedolan/jq
+      commands:
+        - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
 
   - name: publish  
     image: plugins/ecr
