@@ -13,8 +13,10 @@ steps:
   - name: publish  
     image: plugins/ecr
     settings:
-      access_key: AKIAXSGBHJZXTRQ44OD5
-      secret_key: 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
+      access_key: 
+        from_secret: AKIAXSGBHJZXTRQ44OD5
+      secret_key: 
+        from_secret: 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
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
@@ -30,6 +32,14 @@ steps:
     commands:
       - go build main.go
 
+  - name: test
+    image: golang:latest
+    commands:
+      - go test ./app/http/controller
+      - go test ./app/http/middleware
+      - go test ./app/repository
+      - go test ./app/service
+
   - name: testdeploydatabase
     image: golang:latest
     environment:
@@ -41,15 +51,7 @@ steps:
       DB_PORT: 5432
     commands:
       - ./main -h database deploy
-
-  - name: test
-    image: golang:latest
-    commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
-
+      
 services:
   - name: database
     image: postgres:9-alpine
