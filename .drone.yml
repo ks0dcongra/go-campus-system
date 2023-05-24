@@ -13,10 +13,8 @@ steps:
   - name: publish  
     image: plugins/ecr
     settings:
-      access_key: 
-        from_secret: AKIAXSGBHJZXTRQ44OD5
-      secret_key: 
-        from_secret: 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
+      access_key: AKIAXSGBHJZXTRQ44OD5
+      secret_key: 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
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
@@ -51,7 +49,7 @@ steps:
       DB_PORT: 5432
     commands:
       - ./main -h database deploy
-      
+
 services:
   - name: database
     image: postgres:9-alpine
