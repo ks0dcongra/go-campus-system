@@ -14,7 +14,7 @@ steps:
     image: alpine:latest
     commands:
       - apk update
-      - apk add --no-cache awscli
+      - apk add --no-cache aws-cli
       - apk add --no-cache jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       
