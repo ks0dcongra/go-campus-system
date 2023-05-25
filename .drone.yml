@@ -18,14 +18,19 @@ secrets:
 steps:
   - name: Load aws-cli
     image: alpine:latest
+    environment:
+      AWS_ACCESS_KEY_ID: ${aws_access_key}
+      AWS_SECRET_ACCESS_KEY: ${aws_secret_key}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_OUTPUT: json
     commands:
       - apk update
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
-      - aws configure set aws_access_key_id ${aws_access_key}
-      - aws configure set aws_secret_access_key ${aws_secret_key}
-      - aws configure set region us-east-1
-      - aws configure set output json
+      # - aws configure set aws_access_key_id ${aws_access_key}
+      # - aws configure set aws_secret_access_key ${aws_secret_key}
+      # - aws configure set region us-east-1
+      # - aws configure set output json
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       - cat app.env
 
