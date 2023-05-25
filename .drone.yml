@@ -17,12 +17,8 @@ steps:
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
-      - ls 
-      - cat go.mod
-      - echo "hello"
-      - cat ./app.env
       - cat app.env
-      - echo "world"
+
   - name: publish  
     image: plugins/ecr
     settings:
@@ -33,25 +29,37 @@ steps:
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
+     commands:
+      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+      - cat app.env
     
-  - name: testpostgres
-    image: postgres:9-alpine
-    commands:
-      - sleep 5 #give the service some time to start
-      - psql -U postgres -d dbexample -h database
+  # - name: testpostgres
+  #   image: postgres:9-alpine
+  #   commands:
+  #     - sleep 5 #give the service some time to start
+  #     - psql -U postgres -d dbexample -h database
 
-  - name: build
-    image: golang:latest
-    commands:
-      - go build main.go
+  # - name: build
+  #   image: golang:latest
+  #   commands:
+  #     - go build main.go
 
-  - name: test
-    image: golang:latest
-    commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
+  # - name: test
+  #   image: golang:latest
+  #   commands:
+  #     - go test ./app/http/controller
+  #     - go test ./app/http/middleware
+  #     - go test ./app/repository
+  #     - go test ./app/service
+
+# services:
+#   - name: database
+#     image: postgres:9-alpine
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: dbexample
+#       POSTGRES_HOST_AUTH_METHOD: trust
 
   # - name: testdeploydatabase
   #   image: golang:latest
@@ -65,14 +73,7 @@ steps:
   #   commands:
   #     - ./main -h database deploy
 
-services:
-  - name: database
-    image: postgres:9-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: dbexample
-      POSTGRES_HOST_AUTH_METHOD: trust
+
       
   # - name: publish_to_prod
   #   image: plugins/docker
