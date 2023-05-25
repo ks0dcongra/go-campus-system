@@ -19,20 +19,20 @@ steps:
   - name: Load aws-cli
     image: alpine:latest
     environment:
-      AWS_ACCESS_KEY_ID: ${aws_access_key}
-      AWS_SECRET_ACCESS_KEY: ${aws_secret_key}
+      hello: ${aws_access_key}
+      world: ${aws_secret_key}
     commands:
-      - apk update
-      - apk add --no-cache aws-cli
-      - apk add --no-cache jq
-      - export AWS_ACCESS_KEY_ID=$aws_access_key
-      - export AWS_SECRET_ACCESS_KEY=$aws_secret_key
+      - export AWS_ACCESS_KEY_ID=$hello
+      - export AWS_SECRET_ACCESS_KEY=$world
       - echo $aws_access_key
       - echo $AWS_ACCESS_KEY_ID
       - echo AWS_ACCESS_KEY_ID
       - echo aws_access_key
       - printenv | grep AWS_ACCESS_KEY_ID
       - printenv | grep AWS_SECRET_ACCESS_KEY
+      - apk update
+      - apk add --no-cache aws-cli
+      - apk add --no-cache jq
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws configure set region us-east-1
