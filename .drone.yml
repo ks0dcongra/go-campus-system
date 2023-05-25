@@ -13,9 +13,9 @@ steps:
   - name: Load aws-cli
     image: alpine
     command:
-      - apt-get update
-      - apt-get install -y awscli
-      - apt-get install -y jq
+      - apk update
+      - apk install -y awscli
+      - apk install -y jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
   - name: publish  
     image: plugins/ecr
