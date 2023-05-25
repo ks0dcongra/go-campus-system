@@ -19,11 +19,15 @@ steps:
   - name: Load aws-cli
     image: alpine:latest
     environment:
-      hello: ${docker_username}
-      world: ${docker_password}
+      access_key:
+        from_secret: docker_username
+      secret_key:
+        from_secret: docker_password
     commands:
-      - export AWS_ACCESS_KEY_ID=${hello}
-      - export AWS_SECRET_ACCESS_KEY=${world}
+      - echo ${access_key}
+      - echo $access_key
+      - export AWS_ACCESS_KEY_ID=${access_key}
+      - export AWS_SECRET_ACCESS_KEY=${secret_key}
       - echo $AWS_ACCESS_KEY_ID
       - echo $AWS_SECRET_ACCESS_KEY
       - printenv | grep AWS_ACCESS_KEY_ID
