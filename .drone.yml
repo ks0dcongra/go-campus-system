@@ -11,11 +11,11 @@ trigger:
 
 steps:
   - name: Load aws-cli
-    image: ubuntu:latest
+    image: alpine:latest
     commands:
-      - apt-get update -y
-      - apt-get install -y awscli
-      - apt-get install -y jq
+      - apk update
+      - apk add --no-cache awscli
+      - apk add --no-cache jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       
   - name: publish  
