@@ -27,8 +27,8 @@ steps:
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws configure set region us-east-1
       - aws configure set output json
-      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
-      - cat app.env
+      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+      - cat .env
 
   - name: publish  
     image: plugins/ecr
