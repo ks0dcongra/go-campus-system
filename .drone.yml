@@ -22,12 +22,12 @@ steps:
       hello: ${aws_access_key}
       world: ${aws_secret_key}
     commands:
-      - export AWS_ACCESS_KEY_ID=$hello
-      - export AWS_SECRET_ACCESS_KEY=$world
-      - echo $aws_access_key
+      - export AWS_ACCESS_KEY_ID=hello
+      - export AWS_SECRET_ACCESS_KEY=world
+      - echo $hello
+      - echo ${world}
       - echo $AWS_ACCESS_KEY_ID
-      - echo AWS_ACCESS_KEY_ID
-      - echo aws_access_key
+      - echo ${aws_access_key}
       - printenv | grep AWS_ACCESS_KEY_ID
       - printenv | grep AWS_SECRET_ACCESS_KEY
       - apk update
