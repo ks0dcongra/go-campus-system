@@ -17,8 +17,11 @@ steps:
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+      - ls 
+      - echo "hello"
       - cat ./app.env
       - cat app.env
+      - echo "world"
   - name: publish  
     image: plugins/ecr
     settings:
