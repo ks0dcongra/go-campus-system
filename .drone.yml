@@ -15,8 +15,8 @@ trigger:
 
 steps:
   - name: Load aws-cli
-    image: ubuntu:18.04
-    command:
+    image: ubuntu:latest
+    commands:
       - apt-get update -y
       - apt-get install -y awscli
       - apt-get install -y jq
