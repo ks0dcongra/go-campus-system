@@ -1,36 +1,138 @@
 kind: pipeline
-type: docker      # 在 Docker 內部執行管道命令
+type: docker
 name: default
 
-steps:   
-  - name: Build
-    image: golang
-    commands:
-      - go build -v
-
-  - name: test
-    image: golang:latest
-    commands:
-      - go test ./app/http/controller
-      - go test ./app/http/middleware
-      - go test ./app/repository
-      - go test ./app/service
-
-  - name: self-plugin                    # 事件一：可自行定義的名稱
-    image: andy_trainings    # 使用 neil605164/drone-plugin-ex  容器
-    settings:
-      hello: "Wow"                       # 提供 hello 值為「Wow」，若不提供則為「default」值
-    commands:                            # 驗證是否有接收到帶入的值
-    - docker login
-    - echo $PLUGIN_HELLO                 
 trigger:
   branch:
-    include:
     - master
-    - feature/*
-    - fix/*
     - develop
-  event:
-    include:
-    - push
-    - pull_request
+    - fix/*
+    - feature/*
+
+steps:
+  - name: Load aws-cli
+    image: alpine:latest
+    environment:
+      access_key:
+        from_secret: docker_username
+      secret_key:
+        from_secret: docker_password
+    commands:
+      - apk update
+      - apk add --no-cache aws-cli
+      - apk add --no-cache jq
+      - export AWS_ACCESS_KEY_ID=$access_key
+      - export AWS_SECRET_ACCESS_KEY=$secret_key
+      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - aws configure set region us-east-1
+      - aws configure set output json
+      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+      - cat .env
+
+  - name: publish  
+    image: plugins/ecr
+    settings:
+      access_key: 
+        from_secret: docker_username
+      secret_key: 
+        from_secret: docker_password
+      repo: andy_trainings
+      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
+      region: us-east-1
+
+    
+  # - name: testpostgres
+  #   image: postgres:9-alpine
+  #   commands:
+  #     - sleep 5 #give the service some time to start
+  #     - psql -U postgres -d dbexample -h database
+
+  # - name: build
+  #   image: golang:latest
+  #   commands:
+  #     - go build main.go
+
+  # - name: test
+  #   image: golang:latest
+  #   commands:
+  #     - go test ./app/http/controller
+  #     - go test ./app/http/middleware
+  #     - go test ./app/repository
+  #     - go test ./app/service
+
+# services:
+#   - name: database
+#     image: postgres:9-alpine
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: dbexample
+#       POSTGRES_HOST_AUTH_METHOD: trust
+
+  # - name: testdeploydatabase
+  #   image: golang:latest
+  #   environment:
+  #     DB_HOST: database
+  #     DB_DRIVER: postgres
+  #     DB_USER: postgres
+  #     DB_PASSWORD: Aa123456
+  #     DB_NAME: dbexample
+  #     DB_PORT: 5432
+  #   commands:
+  #     - ./main -h database deploy
+
+
+      
+  # - name: publish_to_prod
+  #   image: plugins/docker
+  #   settings:
+  #     registry: localhost:8000
+  #     repo: localhost:8000/app
+# steps:   
+#   - name: publish_to_prod
+#     image: plugins/docker
+#       commands:
+#         - docker compose up
+#     settings:
+#       registry: 697d-61-31-138-103.ngrok-free.app
+#       repo: 697d-61-31-138-103.ngrok-free.app
+  
+#   - name: publish
+#     pull: always
+#     image: plugins/docker
+#     settings:
+#       auto_tag: true
+#       auto_tag_suffix: linux-amd64
+#       cache_from: appleboy/gorush
+#       daemon_off: false
+#       dockerfile: docker/Dockerfile.linux.amd64
+#       password:
+#         from_secret: docker_password
+#       repo: appleboy/rush
+#       username:
+#         from_secret: docker_username
+  
+# - name: deploy-staging
+#   image: drone/drone-deploy
+#   settings:
+#     server: http://a7e0-61-31-138-103.ngrok-free.app
+#     token:
+#     from_secret: drone_token
+#     repo: octocat/hello-world
+#     build: 24
+#     environment: staging
+#   when:
+#     event: deployment
+
+# - name: deploy-production
+#   image: drone/drone-deploy
+#   settings:
+#     server: htts://a7e0-61-31-138-103.ngrok-free.app
+#     token:
+#       from_secret: drone_token
+#     repo: octocat/hello-world
+#     build: 24
+#     environment: production
+#   when:
+#      event: deployment
