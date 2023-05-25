@@ -12,8 +12,7 @@ trigger:
 steps:
   - name: Load aws-cli
     image: amazon/aws-cli
-      commands:
-        - echo "hello"
+
   - name: Load jq and using AWS Secret to app.env
     image: stedolan/jq
       commands:
