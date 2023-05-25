@@ -9,12 +9,6 @@ trigger:
     - fix/*
     - feature/*
 
-secrets:
-  docker_username:
-    from_secret: docker_username
-  docker_password:
-    from_secret: docker_password
-
 steps:
   - name: Load aws-cli
     image: alpine:latest
@@ -24,21 +18,15 @@ steps:
       secret_key:
         from_secret: docker_password
     commands:
-      - echo $access_key
-      - AWS_ACCESS_KEY_ID=$access_key
-      - AWS_SECRET_ACCESS_KEY=$secret_key
-      - echo $AWS_ACCESS_KEY_ID
-      - echo $AWS_SECRET_ACCESS_KEY
-      - printenv | grep AWS_ACCESS_KEY_ID
-      - printenv | grep AWS_SECRET_ACCESS_KEY
       - apk update
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
+      - export AWS_ACCESS_KEY_ID=$access_key
+      - export AWS_SECRET_ACCESS_KEY=$secret_key
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws configure set region us-east-1
       - aws configure set output json
-      - aws configure list
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       - cat app.env
 
