@@ -11,9 +11,9 @@ trigger:
 
 steps:
   - name: Load aws-cli
-    image: mesosphere/aws-cli
+    image: amazon/aws-cli
       commands:
-        - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+        - echo "hello"
   - name: Load jq and using AWS Secret to app.env
     image: stedolan/jq
       commands:
