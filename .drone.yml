@@ -10,20 +10,20 @@ trigger:
     - feature/*
 
 secrets:
-  aws_access_key:
+  docker_username:
     from_secret: docker_username
-  aws_secret_key:
+  docker_password:
     from_secret: docker_password
 
 steps:
   - name: Load aws-cli
     image: alpine:latest
     environment:
-      hello: ${aws_access_key}
-      world: ${aws_secret_key}
+      hello: ${docker_username}
+      world: ${docker_password}
     commands:
-      - export AWS_ACCESS_KEY_ID=${aws_access_key}
-      - export AWS_SECRET_ACCESS_KEY=${aws_secret_key}
+      - export AWS_ACCESS_KEY_ID=${hello}
+      - export AWS_SECRET_ACCESS_KEY=${world}
       - echo $AWS_ACCESS_KEY_ID
       - echo $AWS_SECRET_ACCESS_KEY
       - printenv | grep AWS_ACCESS_KEY_ID
