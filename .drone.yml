@@ -25,6 +25,9 @@ steps:
       - apk update
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
+      - echo ${aws_access_key}
+      - echo ${docker_username}
+      - echo ${AWS_ACCESS_KEY_ID}
       - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
       - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
       - aws configure set region us-east-1
