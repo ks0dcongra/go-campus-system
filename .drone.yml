@@ -9,6 +9,12 @@ trigger:
     - fix/*
     - feature/*
 
+secrets:
+  aws_access_key:
+    from_secret: docker_username
+  aws_secret_key:
+    from_secret: docker_password
+
 steps:
   - name: Load aws-cli
     image: alpine:latest
@@ -16,6 +22,10 @@ steps:
       - apk update
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
+      - aws configure set aws_access_key_id ${aws_access_key}
+      - aws configure set aws_secret_access_key ${aws_secret_key}
+      - aws configure set region us-east-1
+      - aws configure set output json
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       - cat app.env
 
@@ -29,9 +39,7 @@ steps:
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-    commands:
-      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
-      - cat app.env
+
     
   # - name: testpostgres
   #   image: postgres:9-alpine
