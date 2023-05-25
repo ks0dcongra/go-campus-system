@@ -13,6 +13,7 @@ steps:
   - name: Load aws-cli
     image: ubuntu:latest
     commands:
+      - apt-get update -y
       - apt-get install -y awscli
       - apt-get install -y jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
