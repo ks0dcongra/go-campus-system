@@ -11,12 +11,14 @@ trigger:
 
 steps:
   - name: Load aws-cli
-    image: amazon/aws-cli
-
-  - name: Load jq and using AWS Secret to app.env
-    image: stedolan/jq
-      commands:
+    image: alpine
+    command:
+        - sudo apt-get update
+        - sudo apt-get install -y awscli
+        - sudo apt-get install -y jq
         - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+  # - name: Load jq and using AWS Secret to app.env
+  #   commands:
 
   - name: publish  
     image: plugins/ecr
