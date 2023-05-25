@@ -18,6 +18,7 @@ steps:
       - apk add --no-cache jq
       - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
       - ls 
+      - cat go.mod
       - echo "hello"
       - cat ./app.env
       - cat app.env
