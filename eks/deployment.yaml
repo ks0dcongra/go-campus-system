@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone-api-deployment
+  labels:
+    app: drone-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drone-api
+  template:
+    metadata:
+      labels:
+        app: drone-api
+    spec:
+      containers:
+      - name: drone-api
+        image: 520096271983.dkr.ecr.us-east-1.amazonaws.com/andy_trainings:latest
+        ports:
+        - containerPort: 9528
