@@ -14,9 +14,9 @@ steps:
     image: alpine:latest
     environment:
       access_key:
-        from_secret: docker_username
+        from_secret: AWS_access
       secret_key:
-        from_secret: docker_password
+        from_secret: AWS_secret
     commands:
       - apk update
       - apk add --no-cache aws-cli
@@ -34,9 +34,9 @@ steps:
     image: plugins/ecr
     settings:
       access_key: 
-        from_secret: docker_username
+        from_secret: AWS_access
       secret_key: 
-        from_secret: docker_password
+        from_secret: AWS_secret
       repo: andy_trainings
       registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
