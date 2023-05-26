@@ -36,7 +36,8 @@ steps:
       - apk add --update ca-certificates
       - apk add -t deps
       - apk add --update curl
-      - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" -o /root/bin/kubectl
+      - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
+      - chmod +x /usr/local/bin/kubectl
       - apk del --purge deps
       - rm /var/cache/apk/*
       - export AWS_ACCESS_KEY_ID=$access_key_EKS
