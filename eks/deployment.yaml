@@ -5,7 +5,7 @@ metadata:
   labels:
     app: drone-api
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: drone-api
