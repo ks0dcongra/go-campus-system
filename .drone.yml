@@ -24,16 +24,22 @@ steps:
     commands:
       - apk update
       - apk add --no-cache aws-cli
-      - apk add --no-cache jq
-      - export AWS_ACCESS_KEY_ID=$access_key
-      - export AWS_SECRET_ACCESS_KEY=$secret_key
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - aws configure set region us-east-1
-      - aws configure set output json
-      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
-      - cat .env
-      - apk add --no-cache curl
+      # - apk add --no-cache jq
+      # - export AWS_ACCESS_KEY_ID=$access_key
+      # - export AWS_SECRET_ACCESS_KEY=$secret_key
+      # - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      # - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      # - aws configure set region us-east-1
+      # - aws configure set output json
+      # - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+      # - cat .env
+      - apk add --update ca-certificates
+      - apk add -t deps
+      - apk add --update curl
+      - export ARCH="$(uname -m)" && if [[ ${ARCH} == "x86_64" ]]; then export ARCH="amd64"; elif [[ ${ARCH} == "aarch64" ]]; then export ARCH="arm64"; fi && curl -L https://dl.k8s.io/release/${KUBE_LATEST_VERSION}/bin/linux/${ARCH}/kubectl -o /usr/local/bin/kubectl \
+      - chmod +x /usr/local/bin/kubectl
+      - apk del --purge deps
+      - rm /var/cache/apk/*
       - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
       - export AWS_ACCESS_KEY_ID=$access_key_EKS
       - export AWS_SECRET_ACCESS_KEY=$secret_key_EKS
