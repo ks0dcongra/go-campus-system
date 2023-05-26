@@ -17,6 +17,10 @@ steps:
         from_secret: AWS_access
       secret_key:
         from_secret: AWS_secret
+      access_key_EKS:
+        from_secret: AWS_access_EKS
+      secret_key_EKS:
+        from_secret: AWS_secret_EKS
     commands:
       - apk update
       - apk add --no-cache aws-cli
