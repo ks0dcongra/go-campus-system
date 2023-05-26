@@ -7,7 +7,7 @@ trigger:
     - master
     - develop
     - fix/*
-    - feature/*
+    - feat/*
 
 steps:
   - name: Load aws-cli
