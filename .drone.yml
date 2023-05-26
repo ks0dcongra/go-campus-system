@@ -17,33 +17,18 @@ steps:
         from_secret: AWS_access
       secret_key:
         from_secret: AWS_secret
-      access_key_EKS:
-        from_secret: AWS_access_EKS
-      secret_key_EKS:
-        from_secret: AWS_secret_EKS
     commands:
       - apk update
       - apk add --no-cache aws-cli
-      - apk add --update ca-certificates
-      - apk add -t deps
-      - apk add --update curl
-      - curl -L "https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
-      - chmod +x /usr/local/bin/kubectl
-      - head -n 5 /usr/local/bin/kubectl
-      - apk del --purge deps
-      - rm /var/cache/apk/*
-      - kubectl version --client
-      - export AWS_ACCESS_KEY_ID=$access_key_EKS
-      - export AWS_SECRET_ACCESS_KEY=$secret_key_EKS
+      - apk add --no-cache jq
+      - export AWS_ACCESS_KEY_ID=$access_key
+      - export AWS_SECRET_ACCESS_KEY=$secret_key
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - aws configure set region us-east-2
+      - aws configure set region us-east-1
       - aws configure set output json
-      - aws eks update-kubeconfig --name drone --region us-east-2 
-      - kubectl cluster-info
-      - kubectl apply -f eks/aws-auth.yaml
-      - kubectl apply -f eks/deployment.yaml
-      - kubectl apply -f eks/service.yaml
+      - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+      - cat .env
 
   - name: publish-to-ecr
     image: plugins/ecr
@@ -65,15 +50,14 @@ steps:
         from_secret: AWS_secret_EKS
     commands:
       - apk update
-      - apk add --update aws-cli
+      - apk add --no-cache aws-cli
       - apk add --update ca-certificates
       # - apk add -t deps
       # - apk add --update curl
       - curl -L "https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
       - chmod +x /usr/local/bin/kubectl
-      - apk del --purge deps
-      - rm /var/cache/apk/*
-      - kubectl version --client
+      # - apk del --purge deps
+      # - rm /var/cache/apk/*
       - export AWS_ACCESS_KEY_ID=$access_key_EKS
       - export AWS_SECRET_ACCESS_KEY=$secret_key_EKS
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
