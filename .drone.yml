@@ -73,16 +73,6 @@ steps:
       - kubectl apply -f eks/aws-auth.yaml
       - kubectl apply -f eks/deployment.yaml
       - kubectl apply -f eks/service.yaml
-      - kubectl apply -f eks/kompose/db-deployment.yaml
-      - kubectl apply -f eks/kompose/db-service.yaml
-      - kubectl apply -f eks/kompose/env-configmap.yaml
-      - kubectl apply -f eks/kompose/gin-claim0-persistentvolumeclaim.yaml
-      - kubectl apply -f eks/kompose/gin-pod.yaml
-      - kubectl apply -f eks/kompose/gin-service.yaml
-      - kubectl apply -f eks/kompose/redis-claim0-persistentvolumeclaim.yaml
-      - kubectl apply -f eks/kompose/redis-deployment.yaml
-      - kubectl apply -f eks/kompose/redis-service.yaml
-      - kubectl apply -f eks/kompose/server-networkpolicy.yaml
       - kubectl describe svc
     
   # - name: testpostgres
