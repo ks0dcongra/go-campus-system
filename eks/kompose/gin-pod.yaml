@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\Shehomebow\AndyTrainingGift\example1\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/server: "true"
+    io.kompose.service: gin
+  name: gin
+spec:
+  containers:
+    - env:
+        - name: API_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: API_SECRET
+              name: env
+        - name: DB_DRIVER
+          valueFrom:
+            configMapKeyRef:
+              key: DB_DRIVER
+              name: env
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: env
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: env
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PASSWORD
+              name: env
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PORT
+              name: env
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USER
+              name: env
+        - name: DRONE_SECRET_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              key: DRONE_SECRET_TOKEN
+              name: env
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: env
+        - name: REVERSE_NGINX
+          valueFrom:
+            configMapKeyRef:
+              key: REVERSE_NGINX
+              name: env
+        - name: TOKEN_HOUR_LIFESPAN
+          valueFrom:
+            configMapKeyRef:
+              key: TOKEN_HOUR_LIFESPAN
+              name: env
+        - name: access_key
+          valueFrom:
+            configMapKeyRef:
+              key: access_key
+              name: env
+        - name: secret_key
+          valueFrom:
+            configMapKeyRef:
+              key: secret_key
+              name: env
+      image: andy_trainings
+      name: gin
+      ports:
+        - containerPort: 8080
+      resources: {}
+      volumeMounts:
+        - mountPath: /usr/src/app/
+          name: gin-claim0
+  restartPolicy: OnFailure
+  volumes:
+    - name: gin-claim0
+      persistentVolumeClaim:
+        claimName: gin-claim0
+status: {}

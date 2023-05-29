@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\Shehomebow\AndyTrainingGift\example1\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: drone-runner
+  name: drone-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: drone-runner
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\Shehomebow\AndyTrainingGift\example1\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/server: "true"
+        io.kompose.service: drone-runner
+    spec:
+      containers:
+        - env:
+            - name: DRONE_RPC_HOST
+              value: drone-server
+            - name: DRONE_RPC_PROTO
+              value: http
+            - name: DRONE_RPC_SECRET
+              value: "123456"
+            - name: DRONE_RUNNER_CAPACITY
+              value: "3"
+            - name: DRONE_RUNNER_NAME
+              value: my-first-runner
+          image: drone/drone-runner-docker:1.4
+          name: drone-runner
+          ports:
+            - containerPort: 3000
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: drone-runner-claim0
+      restartPolicy: Always
+      volumes:
+        - name: drone-runner-claim0
+          persistentVolumeClaim:
+            claimName: drone-runner-claim0
+status: {}

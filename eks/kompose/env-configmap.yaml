@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  API_SECRET: b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+  DB_DRIVER: postgres
+  DB_HOST: db
+  DB_NAME: dbexample
+  DB_PASSWORD: Aa123456
+  DB_PORT: "5432"
+  DB_USER: postgres
+  DRONE_SECRET_TOKEN: 9f156f6176df8d05a5d6f2e41da40daa14332d94
+  REDIS_HOST: redis:6379
+  REVERSE_NGINX: 172.28.0.1
+  TOKEN_HOUR_LIFESPAN: "1"
+  access_key: AKIAXSGBHJZXTRQ44OD5
+  secret_key: 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
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: db-env
+  name: env
