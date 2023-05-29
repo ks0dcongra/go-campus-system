@@ -17,7 +17,7 @@ steps:
       - go test ./app/http/middleware
       - go test ./app/repository
       - go test ./app/service
-      
+
   - name: Load-aws-cli
     image: alpine:latest
     environment:
@@ -73,7 +73,7 @@ steps:
       - kubectl apply -f eks/aws-auth.yaml
       - kubectl apply -f eks/deployment.yaml
       - kubectl apply -f eks/service.yaml
-      - kubectl apply -f eks/db-deployment.yaml
+      - kubectl apply -f eks/kompose/db-deployment.yaml
       - kubectl apply -f eks/kompose/db-deployment.yaml
       - kubectl apply -f eks/kompose/db-service.yaml
       - kubectl apply -f eks/kompose/env-configmap.yaml
