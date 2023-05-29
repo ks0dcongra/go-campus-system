@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: drone-api-deployment
-  labels:
-    app: drone-api
+  name: gin
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: drone-api
+      app: gin
   template:
     metadata:
       labels:
-        app: drone-api
+        app: gin
     spec:
       containers:
-      - name: drone-api
+      - name: gin
         image: 520096271983.dkr.ecr.us-east-1.amazonaws.com/andy_trainings:latest
         ports:
-        - containerPort: 9528
+          - containerPort: 80     
+      - name: redis
+        image: redis
+        ports:
+          - containerPort: 6379
