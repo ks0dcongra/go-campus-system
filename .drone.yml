@@ -59,16 +59,16 @@ steps:
       # - aws secretsmanager get-secret-value --secret-id drone --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
       - cat .env
 
-  # - name: publish-to-ecr
-  #   image: plugins/ecr
-  #   settings:
-  #     access_key: 
-  #       from_secret: AWS_access
-  #     secret_key: 
-  #       from_secret: AWS_secret
-  #     repo: andy_trainings
-  #     registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
-  #     region: us-east-1
+  - name: publish-to-ecr
+    image: plugins/ecr
+    settings:
+      access_key: 
+        from_secret: AWS_access
+      secret_key: 
+        from_secret: AWS_secret
+      repo: andy_trainings
+      registry: 520096271983.dkr.ecr.us-east-1.amazonaws.com
+      region: us-east-1
 
   - name: deploy-to-eks
     image: alpine:latest
