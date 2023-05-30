@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gin
+  template:
+    metadata:
+      labels:
+        app: gin
+    spec:
+      containers:
+      - name: gin
+        image: 520096271983.dkr.ecr.us-east-1.amazonaws.com/andy_trainings:latest
+        ports:
+          - containerPort: 80     
+      - name: redis
+        image: redis
+        ports:
+          - containerPort: 6379

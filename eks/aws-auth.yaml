@@ -1,0 +1,11 @@
+apiVersion: v1 
+kind: ConfigMap 
+metadata: 
+  name: aws-auth 
+  namespace: kube-system 
+data: 
+  mapUsers: | 
+    - userarn: arn:aws:iam::520096271983:user/Drone-ci
+      username: Drone-ci
+      groups:
+        - system:development
