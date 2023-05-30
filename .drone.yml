@@ -42,7 +42,7 @@ steps:
       - apk add --no-cache aws-cli
       - apk add --no-cache jq
       - echo "DB_HOST=$DB_HOST" >> .env
-      # - echo "DB_DRIVER=$DB_DRIVER" >> .env
+      - echo "DB_DRIVER=$DB_DRIVER" >> .env
       # - echo "DB_USER=$DB_USER" >> .env
       # - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
       # - echo "DB_NAME=$DB_NAME" >> .env
