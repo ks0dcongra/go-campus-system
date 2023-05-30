@@ -21,10 +21,10 @@ steps:
   - name: Load-aws-cli
     image: alpine:latest
     environment:
-      access_key:
-        from_secret: AWS_access
-      secret_key:
-        from_secret: AWS_secret
+      # access_key:
+      #   from_secret: AWS_access
+      # secret_key:
+      #   from_secret: AWS_secret
       DB_PASSWORD:
         from_secret: DB_PASSWORD
       DB_HOST:
@@ -37,10 +37,16 @@ steps:
         from_secret: DB_NAME
       DB_PORT:
         from_secret: DB_PORT
+      API_SECRET:
+        from_secret: API_SECRET
+      REDIS_HOST:
+        from_secret: REDIS_HOST
+      TOKEN_HOUR_LIFESPAN:
+        from_secret: TOKEN_HOUR_LIFESPAN
     commands:
       - apk update
-      - apk add --no-cache aws-cli
-      - apk add --no-cache jq
+      # - apk add --no-cache aws-cli
+      # - apk add --no-cache jq
       - echo "DB_HOST=$DB_HOST" >> .env
       - echo "DB_DRIVER=$DB_DRIVER" >> .env
       - echo "DB_USER=$DB_USER" >> .env
