@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	jwt "github.com/golang-jwt/jwt/v4"
 	"github.com/gin-gonic/gin"
+	jwt "github.com/golang-jwt/jwt/v4"
 	_ "github.com/joho/godotenv/autoload"
 )
 

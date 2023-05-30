@@ -44,7 +44,7 @@ steps:
       TOKEN_HOUR_LIFESPAN:
         from_secret: TOKEN_HOUR_LIFESPAN
     commands:
-      - apk update
+      # - apk update
       # - apk add --no-cache aws-cli
       # - apk add --no-cache jq
       - echo "DB_HOST=$DB_HOST" >> .env
@@ -56,7 +56,7 @@ steps:
       - echo "API_SECRET=$API_SECRET" >> .env
       - echo "REDIS_HOST=$REDIS_HOST" >> .env
       - echo "TOKEN_HOUR_LIFESPAN=$TOKEN_HOUR_LIFESPAN" >> .env 
-      - cat .env
+      # - cat .env
       # - export AWS_ACCESS_KEY_ID=$access_key 
       # - export AWS_SECRET_ACCESS_KEY=$secret_key
       # - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
@@ -97,6 +97,7 @@ steps:
       - aws configure set region us-east-2
       - aws eks update-kubeconfig --name drone --region us-east-2 
       - kubectl cluster-info
+      - kubectl delete deployment gin 
       - kubectl apply -f eks/aws-auth.yaml
       - kubectl apply -f eks/deployment.yaml
       - kubectl apply -f eks/service.yaml
