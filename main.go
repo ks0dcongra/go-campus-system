@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -55,7 +54,7 @@ func main() {
 	// 連接Router
 	routes.ApiRoutes(mainServer)
 
-	//Migration Init
+	// Migration Init
 	migration.Init()
 
 	// 註冊Validator Func
@@ -63,11 +62,14 @@ func main() {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
 
+	// TSL協定
 	// go func() {
 	//     if err := mainServer.RunTLS(":443","./cert/server.pem", "./cert/server.key"); err != nil {
 	//         log.Fatal("HTTPS service failed: ", err)
 	//     }
 	// }()
+
+	// 開啟port
 	if err := mainServer.Run(":8080"); err != nil {
 		log.Fatal("HTTP service failed: ", err)
 	}

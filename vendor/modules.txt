@@ -81,6 +81,9 @@ github.com/gomodule/redigo/redis
 # github.com/gorilla/context v1.1.1
 ## explicit
 github.com/gorilla/context
+# github.com/gorilla/csrf v1.7.1
+## explicit; go 1.13
+github.com/gorilla/csrf
 # github.com/gorilla/securecookie v1.1.1
 ## explicit
 github.com/gorilla/securecookie
@@ -142,6 +145,9 @@ github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib

@@ -38,6 +38,13 @@ func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm
 	return student.Id, result
 }
 
+// 模擬CSRF：Delete User
+func (h *UserRepository) Delete(requestData string) (bool) {
+	student := model.Student{}
+	result := database.DB.Where("id = ?", requestData).Delete(&student)
+	return result.RowsAffected > 0
+}
+
 // score search
 func (h *UserRepository) ScoreSearch(requestData string) (studentInterface []interface{}) {
 	// 宣告student格式給rows的搜尋結果套用

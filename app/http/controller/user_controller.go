@@ -78,6 +78,24 @@ func (h *UserController) CreateUser() gin.HandlerFunc {
 	}
 }
 
+// 模擬CSRF：Delete User 
+func (h *UserController) DeleteUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requestData := c.Param("id")
+		// if requestData == "0" || requestData == "" {
+		// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+		// 	return
+		// }
+		_, status := service.NewUserService().DeleteUser(requestData)
+
+		if status == responses.Error {
+			c.JSON(http.StatusNotFound, responses.Status(status, "Delete student fail"))	
+		} else {
+			c.JSON(http.StatusOK, responses.Status(status, "Successfully"))	
+		}
+	}
+}
+
 // ScoreSearch
 func (h *UserController) ScoreSearch() gin.HandlerFunc {
 	return func(c *gin.Context) {
