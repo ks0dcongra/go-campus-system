@@ -3,8 +3,6 @@ package routes
 import (
 	"example1/app/http/controller"
 	"example1/app/http/middleware"
-	// "example1/app/service"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,8 +14,8 @@ func ApiRoutes(router *gin.Engine) {
 	// 设置HTML模板文件目录（可选）
 	router.LoadHTMLGlob("view/*")
 
-	router.Use(middleware.CSRF())
-	router.Use(middleware.CSRFToken())
+	// router.Use(middleware.CSRF())
+	// router.Use(middleware.CSRFToken())
 
 	// 測試HTML
 	router.GET("/index", func(c *gin.Context) {
@@ -45,11 +43,14 @@ func ApiRoutes(router *gin.Engine) {
 	// [Session用]:Session Auth
 	// userApi.Use(session.AuthSession())
 	// {
-	// 	//logout
+	// // logout
 	// 	userApi.GET("logout", controller.UserController().LogoutUser())
-	// 	// score search
+	// // score search
 	// 	userApi.GET("search/:id", controller.UserController().ScoreSearch())
 	// }
+
+	// 模擬CSRF攻擊手法：delete
+	userApi.DELETE("delete/:id", controller.NewUserController().DeleteUser())
 
 	// [Token用]:驗證JWT是否正確設置?
 	userApi.Use(middleware.JwtAuthMiddleware())
@@ -58,7 +59,5 @@ func ApiRoutes(router *gin.Engine) {
 		userApi.GET("logout", controller.NewUserController().LogoutUser())
 		// score search
 		userApi.GET("search/:id", controller.NewUserController().ScoreSearch())
-		// 模擬CSRF攻擊手法：delete
-		userApi.DELETE("delete/:id", controller.NewUserController().DeleteUser())
 	}
 }

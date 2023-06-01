@@ -6,6 +6,7 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
+	"example1/utils/cookie"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -34,6 +35,7 @@ func (h *UserController) LoginUser() gin.HandlerFunc {
 		student, status := h.UserService.Login(requestData)
 		// student, status:= service.NewUserService().Login(requestData)
 		if status == responses.Success {
+			cookie.SetJWTTokenCookie(c, "pass")
 			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 				"Student": student,
 				// [Session用]:拿到上面session暫存
@@ -81,13 +83,17 @@ func (h *UserController) CreateUser() gin.HandlerFunc {
 // 模擬CSRF：Delete User 
 func (h *UserController) DeleteUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 如果取得的cookie與本地端不符則報錯
+		if ok := cookie.GetJWTTokenCookie(c); !ok{
+			c.JSON(http.StatusNotFound, responses.Status(responses.Error, nil))
+			return
+		} 
 		requestData := c.Param("id")
-		// if requestData == "0" || requestData == "" {
-		// 	c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
-		// 	return
-		// }
+		if requestData == "0" || requestData == "" {
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+			return
+		}
 		_, status := service.NewUserService().DeleteUser(requestData)
-
 		if status == responses.Error {
 			c.JSON(http.StatusNotFound, responses.Status(status, "Delete student fail"))	
 		} else {

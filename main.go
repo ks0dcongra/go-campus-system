@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -41,15 +42,21 @@ func main() {
 	// 連接伺服器
 	mainServer := gin.New()
 
-	// 定義router呼叫格式
+	// 定義router呼叫格式與跨域限制
 	mainServer.Use(cors.New(cors.Config{
-		AllowAllOrigins:  true,
-		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT"},
+		AllowAllOrigins:  true, 
+		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"},
 		AllowHeaders:     []string{"*"},
-		ExposeHeaders:    []string{"Content-Type"},
-		AllowCredentials: false,
+		ExposeHeaders:    []string{"Content-Type","Origin"},
+		AllowCredentials: true, // 允許前端應用發送帶有身份驗證信息（如 Cookie 或 Authorization 標頭）的請求。
 		MaxAge:           12 * time.Hour,
 	}))
+	// mainServer.Use(func(c *gin.Context) {
+    //     c.Header("Access-Control-Allow-Origin", "*") // 允許所有來源
+    //     c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+    //     c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
+    //     c.Next()
+    // })
 
 	// 連接Router
 	routes.ApiRoutes(mainServer)

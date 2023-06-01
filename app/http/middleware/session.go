@@ -12,7 +12,7 @@ const userkey = "session_id"
 
 func SetSession() gin.HandlerFunc {
 	store := cookie.NewStore([]byte(userkey))
-	return sessions.Sessions("mysession", store)
+	return sessions.Sessions("mysession22", store)
 }
 
 // User Auth Session Middle

