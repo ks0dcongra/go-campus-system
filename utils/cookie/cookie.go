@@ -1,7 +1,9 @@
 package cookie
 
 import (
+	"log"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +22,7 @@ func SetJWTTokenCookie(c *gin.Context, token string) {
 
 func GetJWTTokenCookie(c *gin.Context) bool {
 	cookie, err := c.Cookie("jwt-token")
+	log.Println(cookie)
 	if err != nil {
 		return false
 	}
