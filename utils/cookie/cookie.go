@@ -11,11 +11,11 @@ func SetJWTTokenCookie(c *gin.Context, token string) {
 	cookie := &http.Cookie{
 		Name:     "jwt-token",
 		Value:    token,
-		HttpOnly: false,
-		Secure:   false, // Set to true if using HTTPS
+		HttpOnly: true,
+		Secure:   true, // Set to true if using HTTPS
 		Path:     "/",
 		MaxAge:   3600, // Expiration time in seconds
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(c.Writer, cookie)
 }

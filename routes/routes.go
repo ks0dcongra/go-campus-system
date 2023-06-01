@@ -14,8 +14,8 @@ func ApiRoutes(router *gin.Engine) {
 	// 设置HTML模板文件目录（可选）
 	router.LoadHTMLGlob("view/*")
 
-	// router.Use(middleware.CSRF())
-	// router.Use(middleware.CSRFToken())
+	router.Use(middleware.CSRF())
+	router.Use(middleware.CSRFToken())
 
 	// 測試HTML
 	router.GET("/index", func(c *gin.Context) {
