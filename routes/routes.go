@@ -16,7 +16,7 @@ func ApiRoutes(router *gin.Engine) {
 	router.Use(middleware.CSRF())
 	router.Use(middleware.CSRFToken())
 
-	// 獲得CSRF Token
+	// 獲得CSRF Token 與 攻擊CSRF之網頁
 	router.GET("/index", func(c *gin.Context) {
 		// 設定CSRF
 		// cookie.SetJWTTokenCookie(c, token)
