@@ -9,12 +9,16 @@ import (
 
 func SetJWTTokenCookie(c *gin.Context, token string) {
 	cookie := &http.Cookie{
-		Name:     "jwt-token",
-		Value:    token,
+		Name:  "x-csrf-token",
+		Value: token,
+		// 使得 JavaScript 无法访问该 Cookie，提高安全性。
 		HttpOnly: true,
-		Secure:   true, // Set to true if using HTTPS
-		Path:     "/",
-		MaxAge:   3600, // Expiration time in seconds
+		// 仅在使用 HTTPS 连接时发送该 Cookie。
+		Secure: false,
+		// 表示对整个网站的所有路径都可见
+		Path:   "/",
+		MaxAge: 3600, // Expiration time in seconds
+		// 仅允许与当前站点具有相同顶级域的请求发送该 Cookie。有 http.SameSiteNoneMode、http.SameSiteLaxMode 和 http.SameSiteStrictMode
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(c.Writer, cookie)
@@ -26,7 +30,7 @@ func GetJWTTokenCookie(c *gin.Context) bool {
 	if err != nil {
 		return false
 	}
-	if cookie != "pass"{
+	if cookie != "pass" {
 		return false
 	}
 	return true

@@ -90,6 +90,9 @@ github.com/gorilla/securecookie
 # github.com/gorilla/sessions v1.2.1
 ## explicit
 github.com/gorilla/sessions
+# github.com/gwatts/gin-adapter v1.0.0
+## explicit; go 1.18
+github.com/gwatts/gin-adapter
 # github.com/jackc/pgpassfile v1.0.0
 ## explicit; go 1.12
 github.com/jackc/pgpassfile

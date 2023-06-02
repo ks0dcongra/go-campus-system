@@ -10,6 +10,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/gorilla/csrf v1.7.1
+	github.com/gwatts/gin-adapter v1.0.0
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/crypto v0.6.0
 	gorm.io/driver/postgres v1.5.0

@@ -39,7 +39,7 @@ func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm
 }
 
 // 模擬CSRF：Delete User
-func (h *UserRepository) Delete(requestData string) (bool) {
+func (h *UserRepository) Delete(requestData string) bool {
 	student := model.Student{}
 	result := database.DB.Where("id = ?", requestData).Delete(&student)
 	return result.RowsAffected > 0

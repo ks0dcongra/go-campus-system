@@ -4,9 +4,9 @@ import (
 	"example1/app/model"
 	"example1/app/model/responses"
 	"example1/app/service"
-	"example1/utils/cookie"
 	"example1/utils/global"
 	"example1/utils/token"
+	"github.com/gorilla/csrf"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +26,8 @@ func NewUserController() *UserController {
 // Login
 func (h *UserController) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		token := csrf.Token(c.Request)
+		c.Header("X-CSRF-Token", token)
 		requestData := new(model.LoginStudent)
 		// var login model.LoginStudent
 		if err := c.ShouldBindJSON(requestData); err != nil {
@@ -35,7 +37,6 @@ func (h *UserController) LoginUser() gin.HandlerFunc {
 		student, status := h.UserService.Login(requestData)
 		// student, status:= service.NewUserService().Login(requestData)
 		if status == responses.Success {
-			cookie.SetJWTTokenCookie(c, "pass")
 			c.JSON(http.StatusOK, responses.Status(responses.Success, gin.H{
 				"Student": student,
 				// [Session用]:拿到上面session暫存
@@ -80,14 +81,9 @@ func (h *UserController) CreateUser() gin.HandlerFunc {
 	}
 }
 
-// 模擬CSRF：Delete User 
+// 模擬CSRF：Delete User
 func (h *UserController) DeleteUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 如果取得的cookie與本地端不符則報錯
-		if ok := cookie.GetJWTTokenCookie(c); !ok{
-			c.JSON(http.StatusBadRequest, responses.Status(responses.Error, nil))
-			return
-		} 
 		requestData := c.Param("id")
 		if requestData == "0" || requestData == "" {
 			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
@@ -95,9 +91,9 @@ func (h *UserController) DeleteUser() gin.HandlerFunc {
 		}
 		_, status := service.NewUserService().DeleteUser(requestData)
 		if status == responses.Error {
-			c.JSON(http.StatusBadGateway, responses.Status(status, "Delete student fail"))	
+			c.JSON(http.StatusBadGateway, responses.Status(status, "Delete student fail"))
 		} else {
-			c.JSON(http.StatusOK, responses.Status(status, "Successfully"))	
+			c.JSON(http.StatusOK, responses.Status(status, "Successfully"))
 		}
 	}
 }
