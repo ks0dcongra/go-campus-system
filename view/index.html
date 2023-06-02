@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF Attack Demo</title>
+    
+</head>
+<body>
+    <h1>CSRF Attack Demo</h1>
+    <h1>
+        csrf-token:
+        <br/>
+        {{ .title }}
+    </h1>
+    <iframe style="" name="csrf-frame"></iframe>
+    <form method='POST' action='http://localhost:8080/user/api/create' target="csrf-frame" id="csrfForm">
+        {{ .csrfField}}
+        <h1>請輸入帳號：</h1><input type='name'>
+        <h1>請輸入密碼：</h1><input type='password'>
+        <br/>
+        <br/>
+        <input type='submit' value='submit'>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+        // axios
+        document.getElementById("csrfForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+            let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+            const instance = axios.create({
+                baseURL: "http://localhost:8080/",
+                timeout: 1000,
+                headers: { "X-CSRF-Token": csrfToken }
+            })
+            instance.delete("user/api/delete/102")
+            .then(response => {
+                 // 请求成功，处理响应数据
+                console.log(response.data);
+            })
+            .catch(error => {
+                // 请求失败，处理错误
+                console.error(error);
+            });
+        })
+        
+        // xhr 寫法複習
+        // document.getElementById("csrfForm").addEventListener("submit", function(event) {
+        //     event.preventDefault(); // 阻止表单的默认提交行为
+        //     // 設置 Cookie
+        //     // document.cookie = "jwt-token=pass; expires=Sat, 31 Dec 2023 23:59:59 UTC; path=/";
+        //     // 讀取 Cookie
+        //     // var cookieValue = document.cookie;
+        //     // console.log("cookieValue:",cookieValue);
+        //     // 构建DELETE请求
+        //     // var xhr = new XMLHttpRequest();
+        //     // xhr.open("DELETE", "http://localhost:8080/user/api/delete/100");
+
+        //     // 发送请求
+        //     xhr.withCredentials = true; // 允許攜帶 cookie
+        //     xhr.send();
+        //     console.log(xhr)
+        //     // 可选：处理响应
+        //     xhr.onload = function() {
+        //         if (xhr.status === 200) {
+        //             console.log("Request successful");
+        //         } else {
+        //             console.log("Request failed");
+        //         }
+        //     };
+        // });
+    </script>
+
+</body>
+</html>

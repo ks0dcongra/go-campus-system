@@ -9,6 +9,8 @@ require (
 	github.com/go-gormigrate/gormigrate/v2 v2.0.2
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/gorilla/csrf v1.7.1
+	github.com/gwatts/gin-adapter v1.0.0
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/crypto v0.6.0
 	gorm.io/driver/postgres v1.5.0
@@ -24,6 +26,7 @@ require (
 	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect

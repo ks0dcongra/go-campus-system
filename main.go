@@ -42,20 +42,24 @@ func main() {
 	// 連接伺服器
 	mainServer := gin.New()
 
-	// 定義router呼叫格式
+	// 定義router呼叫格式與跨域限制
 	mainServer.Use(cors.New(cors.Config{
-		AllowAllOrigins:  true,
-		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT"},
-		AllowHeaders:     []string{"*"},
-		ExposeHeaders:    []string{"Content-Type"},
-		AllowCredentials: false,
+		// 只允许来自 "http://localhost:8000" 的请求访问该服务器。
+		AllowOrigins: []string{"http://localhost:8000", "http://localhost:8080"},
+		AllowMethods: []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"},
+		// 只允许 "Content-Type" 请求头。
+		AllowHeaders: []string{"Content-Type"},
+		// 允许暴露给客户端的响应头列表。在这个例子中，允许 "Content-Type" 和 "Origin" 响应头。
+		ExposeHeaders: []string{"Content-Type"},
+		// 是否允许前端应用程序发送带有身份验证信息（如 Cookie 或 Authorization 标头）的请求。
+		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
 
 	// 連接Router
 	routes.ApiRoutes(mainServer)
 
-	//Migration Init
+	// Migration Init
 	migration.Init()
 
 	// 註冊Validator Func
@@ -63,11 +67,14 @@ func main() {
 		v.RegisterValidation("userpasd", middleware.UserPasd)
 	}
 
+	// TSL協定
 	// go func() {
 	//     if err := mainServer.RunTLS(":443","./cert/server.pem", "./cert/server.key"); err != nil {
 	//         log.Fatal("HTTPS service failed: ", err)
 	//     }
 	// }()
+
+	// 開啟port
 	if err := mainServer.Run(":8080"); err != nil {
 		log.Fatal("HTTP service failed: ", err)
 	}

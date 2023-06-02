@@ -86,6 +86,15 @@ func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, sta
 	return student_id, responses.Success
 }
 
+// 模擬CSRF：Delete User
+func (h *UserService) DeleteUser(requestData string) (deleteFlag bool, status string) {
+	deleteFlag = repository.NewUserRepository().Delete(requestData)
+	if !deleteFlag {
+		return deleteFlag, responses.Error
+	}
+	return deleteFlag, responses.Success
+}
+
 // scoreSearch
 func (h *UserService) ScoreSearch(requestData string, user_id uint) (student []interface{}, status string) {
 	str_user_id := strconv.Itoa(int(user_id))

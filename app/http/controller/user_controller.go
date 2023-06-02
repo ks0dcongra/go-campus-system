@@ -6,6 +6,7 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
+	"github.com/gorilla/csrf"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,8 @@ func NewUserController() *UserController {
 // Login
 func (h *UserController) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		token := csrf.Token(c.Request)
+		c.Header("X-CSRF-Token", token)
 		requestData := new(model.LoginStudent)
 		// var login model.LoginStudent
 		if err := c.ShouldBindJSON(requestData); err != nil {
@@ -75,6 +78,23 @@ func (h *UserController) CreateUser() gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, responses.Status(responses.Success, student_id))
+	}
+}
+
+// 模擬CSRF：Delete User
+func (h *UserController) DeleteUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requestData := c.Param("id")
+		if requestData == "0" || requestData == "" {
+			c.JSON(http.StatusOK, responses.Status(responses.ParameterErr, nil))
+			return
+		}
+		_, status := service.NewUserService().DeleteUser(requestData)
+		if status == responses.Error {
+			c.JSON(http.StatusBadGateway, responses.Status(status, "Delete student fail"))
+		} else {
+			c.JSON(http.StatusOK, responses.Status(status, "Successfully"))
+		}
 	}
 }
 
