@@ -11,14 +11,15 @@ var csrfMd func(http.Handler) http.Handler
 
 func CSRF() gin.HandlerFunc {
 	csrfMd = csrf.Protect(
-		// 是用于生成 CSRF 令牌的密钥。请注意，这只是示例密钥，实际应用中应使用更长且更安全的密钥。
+		// 是用於生成 CSRF 令牌的密鑰。請注意，這只是示例密鑰，實際應用中應使用更長且更安全的密鑰。
 		[]byte("32-byte-long-auth-key"),
-		// 设置 CSRF 中间件在非 HTTPS 连接上也起作用，
+		// 設置 CSRF 中間件在非 HTTPS 連接上也起作用，
 		csrf.Secure(false),
-		// 将 CSRF 令牌设置为 HttpOnly，以便 JavaScript 无法访问该令牌，从而提高安全性。
+		// 將 CSRF 令牌設置為 HttpOnly，以便 JavaScript 無法訪問該令牌，從而提高安全性。
 		csrf.HttpOnly(true),
+		// 完全禁止第三方的 Cookie 請求，基本上只有在網域和 URL 中的網域相同，才會傳遞 Cookie 請求
 		csrf.SameSite(csrf.SameSiteStrictMode),
-		// 设置 CSRF 错误处理程序，当 CSRF 令牌验证失败时调用该处理程序。在此示例中，返回一个包含错误信息的 HTTP 响应。
+		// 設置 CSRF 錯誤處理程序，當 CSRF 令牌驗證失敗時調用該處理程序。在此示例中，返回一個包含錯誤信息的 HTTP 響應。
 		csrf.ErrorHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusForbidden)
 			w.Write([]byte(`{"message": "Forbidden - CSRF token invalid"}`))

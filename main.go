@@ -47,11 +47,10 @@ func main() {
 		// 只允许来自 "http://localhost:8000" 的请求访问该服务器。
 		AllowOrigins: []string{"http://localhost:8000", "http://localhost:8080"},
 		AllowMethods: []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"},
-		// 只允许 "Content-Type" 请求头。
-		AllowHeaders: []string{"Content-Type"},
-		// 允许暴露给客户端的响应头列表。在这个例子中，允许 "Content-Type" 和 "Origin" 响应头。
-		ExposeHeaders: []string{"Content-Type"},
-		// 是否允许前端应用程序发送带有身份验证信息（如 Cookie 或 Authorization 标头）的请求。
+		// AddAllowHeaders 允許添加自定義標頭
+		AllowHeaders: []string{"Origin"},
+		// 允許添加自定義公開標頭
+		ExposeHeaders: []string{"Content-Type","application/javascript"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))

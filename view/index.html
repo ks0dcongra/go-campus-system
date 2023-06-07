@@ -5,33 +5,45 @@
     
 </head>
 <body>
-    <h1>CSRF Attack Demo</h1>
+    
+    <form id="csrfForm">
+        {{ .csrfField}}
+        <input type='submit' value='刪除使用者'>
+    </form>
     <h1>
         csrf-token:
+        {{ .csrf }}
         <br/>
-        {{ .title }}
+        hello! {{ .name }}
+        <br/>
     </h1>
-    <iframe style="" name="csrf-frame"></iframe>
-    <form method='POST' action='http://localhost:8080/user/api/create' target="csrf-frame" id="csrfForm">
-        {{ .csrfField}}
-        <h1>請輸入帳號：</h1><input type='name'>
-        <h1>請輸入密碼：</h1><input type='password'>
-        <br/>
-        <br/>
-        <input type='submit' value='submit'>
-    </form>
+    <h5>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr> 
+        {{range .students}}    
+                <tr>
+                    <th>{{.Id}}</th>
+                    <th>{{.Name}}</th>
+                </tr>     
+        {{end}}
+        </table>
+    </h5>
+    <!-- <iframe style="display:none;" name="csrf-frame"></iframe> -->
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script>
         // axios
         document.getElementById("csrfForm").addEventListener("submit", function(event) {
             event.preventDefault(); // 阻止表单的默认提交行为
-            let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+            
             const instance = axios.create({
                 baseURL: "http://localhost:8080/",
                 timeout: 1000,
-                headers: { "X-CSRF-Token": csrfToken }
+                
             })
-            instance.delete("user/api/delete/102")
+            instance.delete("user/api/delete/16")
             .then(response => {
                  // 请求成功，处理响应数据
                 console.log(response.data);
@@ -68,6 +80,5 @@
         //     };
         // });
     </script>
-
 </body>
 </html>
