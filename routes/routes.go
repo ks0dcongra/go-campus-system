@@ -3,6 +3,9 @@ package routes
 import (
 	"example1/app/http/controller"
 	"example1/app/http/middleware"
+	"example1/app/model"
+	"example1/database"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/csrf"
 )
@@ -20,13 +23,19 @@ func ApiRoutes(router *gin.Engine) {
 	router.GET("/index", func(c *gin.Context) {
 		// 設定CSRF
 		// cookie.SetJWTTokenCookie(c, token)
+		name := c.Query("name")
+		var students []model.Student
+		database.DB.Find(&students)
 		token := csrf.Token(c.Request)
 		c.Header("X-CSRF-Token", token)
 		c.HTML(200, "index.html", gin.H{
-			"title":          token,
+			"name" :		  name,
+			"csrf":          token,
+			"students":		  students,
 			csrf.TemplateTag: csrf.TemplateField(c.Request),
 		})
 	})
+	
 	userApi := router.Group("user/api")
 	// [Session用]:每次進行user相關操作都會產生一個Session
 	// userApi := router.Group("user/api", session.SetSession())
