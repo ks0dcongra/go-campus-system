@@ -5,11 +5,12 @@
     
 </head>
 <body>
-    
+    <h1>CSRF Attack Demo 可信任的原網站</h1>
     <form id="csrfForm">
         {{ .csrfField}}
         <input type='submit' value='刪除使用者'>
     </form>
+    <h1>
     <h1>
         csrf-token:
         {{ .csrf }}
@@ -37,13 +38,13 @@
         // axios
         document.getElementById("csrfForm").addEventListener("submit", function(event) {
             event.preventDefault(); // 阻止表单的默认提交行为
-            
+            let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
             const instance = axios.create({
                 baseURL: "http://localhost:8080/",
                 timeout: 1000,
-                
+                headers: { "X-CSRF-Token": csrfToken },
             })
-            instance.delete("user/api/delete/16")
+            instance.delete("user/api/delete/134")
             .then(response => {
                  // 请求成功，处理响应数据
                 console.log(response.data);
