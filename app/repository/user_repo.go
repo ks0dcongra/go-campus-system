@@ -27,7 +27,7 @@ func (h *UserRepository) Login(condition *model.LoginStudent) (Student model.Stu
 }
 
 // Create User
-func (h *UserRepository) Create(data *model.CreateStudent) (id int, result *gorm.DB) {
+func (h *UserRepository) Create(data *model.Student) (id int, result *gorm.DB) {
 	student := model.Student{
 		Name:           data.Name,
 		Password:       data.Password,

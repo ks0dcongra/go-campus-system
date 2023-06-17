@@ -17,7 +17,7 @@ import (
 
 type UserServiceInterface interface {
 	Login(condition *model.LoginStudent) (student model.Student, status string)
-	CreateUser(data *model.CreateStudent) (student_id int, status string)
+	CreateUser(data *model.Student) (student_id int, status string)
 	ScoreSearch(requestData string, user_id uint) (student []interface{}, status string)
 	GetRedisKey(redisKey string) ([]byte, error)
 	SetRedisKey(redisKey string, redisData []byte) error
@@ -75,7 +75,7 @@ func (h *UserService) ComparePasswords(hashedPwd string, plainPwd string) (bool,
 }
 
 // CreateUser
-func (h *UserService) CreateUser(data *model.CreateStudent) (student_id int, status string) {
+func (h *UserService) CreateUser(data *model.Student) (student_id int, status string) {
 	pwd := []byte(data.Password)
 	hash := NewUserService().HashAndSalt(pwd)
 	data.Password = hash
