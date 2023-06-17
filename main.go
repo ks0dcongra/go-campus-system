@@ -50,7 +50,7 @@ func main() {
 		// AddAllowHeaders 允許添加自定義標頭
 		AllowHeaders: []string{"Origin"},
 		// 允許添加自定義公開標頭
-		ExposeHeaders: []string{"Content-Type","application/javascript"},
+		ExposeHeaders:    []string{"Content-Type", "application/javascript"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))

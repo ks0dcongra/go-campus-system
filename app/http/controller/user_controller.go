@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/csrf"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/csrf"
 	_ "github.com/joho/godotenv/autoload"
 )
 
@@ -70,7 +70,7 @@ func (h *UserController) CreateUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestData := new(model.Student)
 		if err := c.ShouldBindJSON(&requestData); err != nil {
-			fmt.Println("Error:"+err.Error())
+			fmt.Println("Error:" + err.Error())
 			c.JSON(http.StatusNotAcceptable, responses.Status(responses.ParameterErr, nil))
 			return
 		}

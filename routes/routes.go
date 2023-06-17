@@ -24,7 +24,7 @@ func ApiRoutes(router *gin.Engine) {
 
 	router.Use(middleware.CSRF())
 	router.Use(middleware.CSRFToken())
-	
+
 	userApi := router.Group("user/api")
 	// [Session用]:每次進行user相關操作都會產生一個Session
 	// userApi := router.Group("user/api", session.SetSession())
@@ -69,9 +69,9 @@ func ApiRoutes(router *gin.Engine) {
 		token := csrf.Token(c.Request)
 		c.Header("X-CSRF-Token", token)
 		c.HTML(200, "index.html", gin.H{
-			"name" :		  name,
+			"name":           name,
 			"csrf":           token,
-			"students":		  students,
+			"students":       students,
 			csrf.TemplateTag: csrf.TemplateField(c.Request),
 		})
 	})
@@ -90,9 +90,9 @@ func ApiRoutes(router *gin.Engine) {
 		database.DB.Raw(query).Scan(&specStudents)
 
 		c.HTML(200, "SQLinjection.html", gin.H{
-			"csrf":      token,
-			"students":	 students,
-			"specStudents" : specStudents,
+			"csrf":           token,
+			"students":       students,
+			"specStudents":   specStudents,
 			csrf.TemplateTag: csrf.TemplateField(c.Request),
 		})
 	})
@@ -101,8 +101,8 @@ func ApiRoutes(router *gin.Engine) {
 	router.POST("/PostSQLinjection", func(c *gin.Context) {
 		username := c.PostForm("username")
 		password := c.PostForm("password")
-		log.Println("password:",password)
-		randomNum := random.RandInt(1,100)
+		log.Println("password:", password)
+		randomNum := random.RandInt(1, 100)
 		student := model.Student{
 			Name:           username,
 			Password:       password,
@@ -110,7 +110,7 @@ func ApiRoutes(router *gin.Engine) {
 			CreatedTime:    time.Now(),
 			UpdatedTime:    time.Now()}
 		log.Println(student)
-		
+
 		database.DB.Create(&student)
 		c.Redirect(http.StatusMovedPermanently, "/GetSQLinjection")
 	})
