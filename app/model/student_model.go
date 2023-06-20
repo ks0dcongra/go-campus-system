@@ -24,3 +24,8 @@ type SearchStudent struct {
 	Subject string `binding:"required"`
 	Score   int    `binding:"required"`
 }
+
+type SQLinjectionStudent struct {
+	Id             int    `json:"Id" gorm:"primaryKey;uniqueIndex;autoIncrement;column:id"`
+	Name           string `json:"Name" binding:"required,userpasd"`
+}

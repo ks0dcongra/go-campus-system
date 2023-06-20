@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+	"html/template"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/csrf"
@@ -76,19 +77,36 @@ func ApiRoutes(router *gin.Engine) {
 		})
 	})
 
+	// OWASP ZAP SQLinjection Testing
+	userApi.POST("/SQLinJSON", func(c *gin.Context) {
+		var specStudents model.SQLinjectionStudent
+		var students []model.Student
+		if err := c.ShouldBindJSON(&specStudents); err != nil {
+			c.JSON(http.StatusNotAcceptable, err.Error())
+			return
+		}
+		// 對輸入進行 HTML 轉義
+		escapedName := template.HTMLEscapeString(specStudents.Name)
+		fmt.Println(escapedName)
+		database.DB.Where("name = ?", escapedName).Find(&students)
+
+		c.JSON(http.StatusOK,gin.H{
+			"students":students,
+			},
+		)
+	})
+
 	// 獲得SQL injection 網頁
 	router.GET("/GetSQLinjection", func(c *gin.Context) {
 		var students []model.Student
 		// Get All Students
 		database.DB.Find(&students)
 		token := csrf.Token(c.Request)
-
 		var specStudents []model.Student
 		// Get Specific Students
-		keyword := c.Query("name")
-		query := fmt.Sprintf("SELECT * FROM students WHERE name='%s'", keyword)
+		name := c.Query("name")
+		query := fmt.Sprintf("SELECT * FROM students WHERE name='%s'", name)
 		database.DB.Raw(query).Scan(&specStudents)
-
 		c.HTML(200, "SQLinjection.html", gin.H{
 			"csrf":           token,
 			"students":       students,
