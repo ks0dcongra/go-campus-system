@@ -103,6 +103,9 @@ func TestJwtAuthMiddleware(t *testing.T) {
 }
 
 func generateJwtToken() string {
+	// 傳給interface好像好一點?
+	// var g1 token.TokenInterface = token.Newjwt()
+	// token, _ := g1.GenerateToken(1)
 	jwtFactory := token.Newjwt()
 	token, _ := jwtFactory.GenerateToken(1)
 	return token

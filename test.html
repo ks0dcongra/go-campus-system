@@ -1,0 +1,935 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP Scanning Report</title>
+<link
+	href="2023-06-21-ZAP-Report-3/normalize/normalize.css" rel="stylesheet">
+<link
+	href="2023-06-21-ZAP-Report-3/themes/original/main.css" rel="stylesheet">
+<link
+	href="2023-06-21-ZAP-Report-3/themes/original/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP Scanning Report</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org"><img
+				src="2023-06-21-ZAP-Report-3/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on 週三 21 6月 2023, at 18:17:52</span>
+		</p>
+		<p>ZAP Version: 2.12.0</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a
+						href="#about-this-report">About this report</a>
+						<ol>
+							
+							<li><a
+								href="#report-parameters">Report parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert counts by risk and confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert counts by site and risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert counts by alert type</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-3-confidence-1"><span>Risk</span>=<span
+									class="risk-level">High</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+							 
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-1-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(1)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-0-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Informational</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section
+			id="about-this-report" class="about-this-report">
+			<h2>About this report</h2>
+
+			
+
+			<section
+				id="report-parameters">
+				<h3>Report parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">http://localhost:8080</span></li>
+						<li><span class="site">https://localhost:9530</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">High</span>, <span class="risk-level">Medium</span>, <span class="risk-level">Low</span>, <span class="risk-level">Informational</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span>, <span class="confidence-level">False Positive</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert counts by risk and confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">User Confirmed</th>
+							<th scope="col">High</th>
+							<th scope="col">Medium</th>
+							<th scope="col">Low</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="5">Risk</th>
+							<th scope="row">High</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Medium</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Low</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Informational</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(66.7%)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert counts by site and risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>High</span><br>  <span
+									class="additional-info-percentages">(= High)</span>  
+							</th>
+							<th scope="col">
+								<span>Medium</span><br>   <span
+									class="additional-info-percentages">(&gt;= Medium)</span> 
+							</th>
+							<th scope="col">
+								<span>Low</span><br>   <span
+									class="additional-info-percentages">(&gt;= Low)</span> 
+							</th>
+							<th scope="col">
+								<span>Informational</span><br>   <span
+									class="additional-info-percentages">(&gt;= Informational)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="1">Site</th>
+							<th scope="row">https://localhost:9530</th>
+							
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(2)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(3)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert counts by alert type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">Path Traversal</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-1">X-Content-Type-Options Header Missing</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-2">Re-examine Cache-control Directives</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>3</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				
+				
+				
+				
+				
+				
+				<li id="alerts--risk-3-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">High</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://localhost:9530</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">Path Traversal</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://localhost:9530/amk/api/full-attestation</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include">WSTG-v42-ATHZ-01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">OWASP_2017_A05</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The Path Traversal attack technique allows an attacker access to files, directories, and commands that potentially reside outside the web document root directory. An attacker may manipulate a URL in such a way that the web site will execute or reveal the contents of arbitrary files anywhere on the web server. Any device that exposes an HTTP-based interface is potentially vulnerable to Path Traversal.</p>
+
+<p>Most web sites restrict user access to a specific portion of the file-system, typically called the &quot;web document root&quot; or &quot;CGI root&quot; directory. These directories contain the files intended for user access and the executable necessary to drive web application functionality. To access files or execute commands anywhere on the file-system, Path Traversal attacks will utilize the ability of special-characters sequences.</p>
+
+<p>The most basic Path Traversal attack uses the &quot;../&quot; special-character sequence to alter the resource location requested in the URL. Although most popular web servers will prevent this technique from escaping the web document root, alternate encodings of the &quot;../&quot; sequence may help bypass the security filters. These method variations include valid and invalid Unicode-encoding (&quot;..%u2216&quot; or &quot;..%c0%af&quot;) of the forward slash character, backslash characters (&quot;..\&quot;) on Windows-based servers, URL encoded characters &quot;%2e%2e%2f&quot;), and double URL encoding (&quot;..%255c&quot;) of the backslash character.</p>
+
+<p>Even if the web server properly restricts Path Traversal attempts in the URL path, a web application itself may still be vulnerable due to improper handling of user-supplied input. This is a common problem of web applications that use template mechanisms or load static text from files. In variations of the attack, the original URL parameter value is substituted with the file name of one of the web application&#39;s dynamic scripts. Consequently, the results can reveal source code because the file is interpreted as text instead of an executable script. These techniques often employ additional special characters such as the dot (&quot;.&quot;) to reveal the listing of the current working directory, or &quot;%00&quot; NULL characters in order to bypass rudimentary file extension checks.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (292 bytes)</summary>
+				
+				<pre><code>POST https://localhost:9530/amk/api/full-attestation HTTP/1.1
+Content-Type: application/json
+User-Agent: PostmanRuntime/7.32.3
+Accept: */*
+Cache-Control: no-cache
+Postman-Token: ee6d54f1-c7c3-4309-9ff6-760eca9f9f45
+Host: localhost:9530
+Connection: keep-alive
+Content-Length: 15593
+
+</code></pre>
+				
+				
+			</details> <details class="request-body">
+				<summary>Request body (15593 bytes)</summary>
+				
+				<pre><code>{&quot;application&quot;:{&quot;appPermissionrequested&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS AND 1=1 -- &quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appPermissionsGranted&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS&quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appVersionCode&quot;:2,&quot;appVersionName&quot;:&quot;1.0.1&quot;,&quot;isAdbOpen&quot;:false,&quot;isDebug&quot;:false,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;transactionInitiationVolume&quot;:0,&quot;transactionSuccessVolume&quot;:0,&quot;transactionFailureVolume&quot;:0,&quot;instanceID&quot;:&quot;e4RAPX8oSE-RaDmMTIMeDI&quot;,&quot;ctEmvCl&quot;:&quot;v9.0.010701-20230511-00000001&quot;,&quot;kms&quot;:&quot;v1.1.2-de1&quot;,&quot;ctPay&quot;:&quot;CTPAY.CtSoftPos_0.0.01&quot;,&quot;csp&quot;:&quot;1.0.0.20230512-00000001&quot;,&quot;csi&quot;:&quot;1.0.0&quot;,&quot;isKeyInSecureHardware&quot;:true},&quot;device_id&quot;:&quot;full-attestation&quot;,&quot;platform&quot;:{&quot;NFCDetail&quot;:{&quot;NFCApps&quot;:[{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;}],&quot;NFCEnable&quot;:true,&quot;NFCStatus&quot;:true},&quot;SDK_INT&quot;:&quot;32&quot;,&quot;androidID&quot;:&quot;7576aa67c1cf61fd&quot;,&quot;appList&quot;:[{&quot;appName&quot;:&quot;Tethering&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.tethering&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9467362&quot;},{&quot;appName&quot;:&quot;OemDmTrigger&quot;,&quot;packageName&quot;:&quot;com.google.omadm.trigger&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Carrier Setup&quot;,&quot;packageName&quot;:&quot;com.google.android.carriersetup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Services Library&quot;,&quot;packageName&quot;:&quot;com.google.android.ext.services&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_ext_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¥ÂÂÃ§ÂÂ­Ã¤Â¿Â¡Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.telephony&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Dynamic System Updates&quot;,&quot;packageName&quot;:&quot;com.android.dynsystem&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ConnMO&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.connmo&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Cell Broadcast Service&quot;,&quot;packageName&quot;:&quot;com.google.android.cellbroadcastservice&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ¥Ã¥ÂÂÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.calendar&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.providers.media&quot;,&quot;packageName&quot;:&quot;com.android.providers.media&quot;,&quot;versionCode&quot;:1024,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;packageName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¶ÂÃ§ÂºÂ§Ã§ÂÂÃ§ÂÂµÃ¦Â¨Â¡Ã¥Â¼Â&quot;,&quot;packageName&quot;:&quot;com.google.android.flipendo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¤ÂÃ©ÂÂ¨Ã¥Â­ÂÃ¥ÂÂ¨Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.externalstorage&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã©ÂÂÃ¥Â¥ÂÃ¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.companiondevicemanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;MmsService&quot;,&quot;packageName&quot;:&quot;com.android.mms.service&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥ÂÂÃ¥Â®Â¹Ã¤Â¸ÂÃ¨Â½Â½Ã§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;USCC&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.usccdm&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¥ÂªÂÃ¤Â½Â&quot;,&quot;packageName&quot;:&quot;com.google.android.providers.media.module&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9427200&quot;},{&quot;appName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;packageName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;packageName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Factory OTA Mode&quot;,&quot;packageName&quot;:&quot;com.google.android.factoryota&quot;,&quot;versionCode&quot;:11000133,&quot;versionName&quot;:&quot;1.0.417357988&quot;},{&quot;appName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;packageName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;versionCode&quot;:10000000,&quot;versionName&quot;:&quot;1.0.0.0&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¨Â½Â½&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads.ui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;,&quot;versionCode&quot;:83471010,&quot;versionName&quot;:&quot;34.7.10-21 [0] [PR] 512129822&quot;},{&quot;appName&quot;:&quot;PacProcessor&quot;,&quot;packageName&quot;:&quot;com.android.pacprocessor&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¯ÂÃ¤Â¹Â¦Ã¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.certinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Ã§Â³Â»Ã§Â»Â&quot;,&quot;packageName&quot;:&quot;android&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android S Easter Egg&quot;,&quot;packageName&quot;:&quot;com.android.egg&quot;,&quot;versionCode&quot;:12,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;MTP Ã¤Â¸Â»Ã¦ÂÂº&quot;,&quot;packageName&quot;:&quot;com.android.mtp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.ons&quot;,&quot;packageName&quot;:&quot;com.android.ons&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SIM Ã¥ÂÂ¡Ã¥Â·Â¥Ã¥ÂÂ·Ã¥ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.stk&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.backupconfirm&quot;,&quot;packageName&quot;:&quot;com.android.backupconfirm&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RadioConfigService&quot;,&quot;packageName&quot;:&quot;com.samsung.slsi.telephony.oem.oemrilhookservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Intent Filter Verification Service&quot;,&quot;packageName&quot;:&quot;com.android.statementservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Device Health Services Adapter&quot;,&quot;packageName&quot;:&quot;com.google.android.turboadapter&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂÃ©ÂÂÃ¦ÂÂ§Ã¥ÂÂ¶Ã¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.permissioncontroller&quot;,&quot;versionCode&quot;:331411000,&quot;versionName&quot;:&quot;aml_per_331411000&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;packageName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.iwlan&quot;,&quot;packageName&quot;:&quot;com.google.android.iwlan&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SecureElementApplication&quot;,&quot;packageName&quot;:&quot;com.android.se&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¾ÂÃ¥ÂÂ¥Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.inputdevices&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ°Ã¥Â­ÂÃ¥ÂÂ¥Ã¥ÂºÂ·&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.wellbeing&quot;,&quot;versionCode&quot;:329097,&quot;versionName&quot;:&quot;1.0.410515141 (329097)&quot;},{&quot;appName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;packageName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã§Â½ÂÃ§Â»ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_net_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯Â&quot;,&quot;packageName&quot;:&quot;com.android.server.telecom&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¯ÂÃ©ÂÂ¥Ã©ÂÂ¾&quot;,&quot;packageName&quot;:&quot;com.android.keychain&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â½Â¯Ã¤Â»Â¶Ã¥ÂÂÃ¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.google.android.packageinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;,&quot;versionCode&quot;:230815044,&quot;versionName&quot;:&quot;23.08.15 (190400-512743456)&quot;},{&quot;appName&quot;:&quot;Google Ã¦ÂÂÃ¥ÂÂ¡Ã¦Â¡ÂÃ¦ÂÂ¶&quot;,&quot;packageName&quot;:&quot;com.google.android.gsf&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Ã¨Â¯Â­Ã©ÂÂ³Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.tts&quot;,&quot;versionCode&quot;:210414469,&quot;versionName&quot;:&quot;googletts.google-speech-apk_20230206.01_p2.509666633&quot;},{&quot;appName&quot;:&quot;Call Log Backup\/Restore&quot;,&quot;packageName&quot;:&quot;com.android.calllogbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;CameraExtensionsProxy&quot;,&quot;packageName&quot;:&quot;com.android.cameraextensions&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.localtransport&quot;,&quot;packageName&quot;:&quot;com.android.localtransport&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;packageName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¿ÂÃ¨ÂÂ¥Ã¥ÂÂÃ©Â»ÂÃ¨Â®Â¤Ã¥ÂºÂÃ§ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.carrierdefaultapp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RilConfig&quot;,&quot;packageName&quot;:&quot;com.google.RilConfigService&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ProxyHandler&quot;,&quot;packageName&quot;:&quot;com.android.proxyhandler&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;packageName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;,&quot;versionCode&quot;:22,&quot;versionName&quot;:&quot;Retail Demo Mode&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â£Â°Ã©ÂÂ³&quot;,&quot;packageName&quot;:&quot;com.android.soundpicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SystemUIGX&quot;,&quot;packageName&quot;:&quot;com.google.android.systemui.gxoverlay&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Carrier OMADM&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.dcmo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Pixel Ã§ÂÂ¸Ã¦ÂÂºÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.camera.services&quot;,&quot;versionCode&quot;:124657,&quot;versionName&quot;:&quot;1.0.491427692.03&quot;},{&quot;appName&quot;:&quot;Live Wallpaper Picker&quot;,&quot;packageName&quot;:&quot;com.android.wallpaper.livepicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;versionCode&quot;:6,&quot;versionName&quot;:&quot;6.1.407437803&quot;},{&quot;appName&quot;:&quot;com.android.server.NetworkPermissionConfig&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.permissionconfig&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;2019-09&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.omadm.service&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0.0&quot;},{&quot;appName&quot;:&quot;Connectivity Thermal Power Manager&quot;,&quot;packageName&quot;:&quot;com.google.android.connectivitythermalpowermanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;VpnDialogs&quot;,&quot;packageName&quot;:&quot;com.android.vpndialogs&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.angle&quot;,&quot;packageName&quot;:&quot;com.android.angle&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.phone&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0.1&quot;},{&quot;appName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;packageName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â­ÂÃ¥ÂÂ¨Ã¥Â·Â²Ã¥Â±ÂÃ¨ÂÂ½Ã§ÂÂÃ¥ÂÂ·Ã§ Â&quot;,&quot;packageName&quot;:&quot;com.android.providers.blockednumber&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂ¨Ã¦ÂÂ·Ã¥Â­ÂÃ¥ÂÂ¸&quot;,&quot;packageName&quot;:&quot;com.android.providers.userdictionary&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Emergency information&quot;,&quot;packageName&quot;:&quot;com.android.emergency&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¤Â½ÂÃ¥ÂÂÃ¤Â½ÂÃ§Â½Â®Ã¤Â¿Â¡Ã¦ÂÂ¯&quot;,&quot;packageName&quot;:&quot;com.android.location.fused&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§Â³Â»Ã§Â»ÂÃ§ÂÂÃ©ÂÂ¢&quot;,&quot;packageName&quot;:&quot;com.android.systemui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.bluetooth&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§Â³Â»Ã¤ÂºÂºÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.contacts&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.verizon.llkagent&quot;,&quot;packageName&quot;:&quot;com.verizon.llkagent&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;}],&quot;buildInfo&quot;:{&quot;CurCpuFreq&quot;:&quot;1803000&quot;,&quot;MaxCpuFreq&quot;:&quot;1803000&quot;,&quot;MinCpuFreq&quot;:&quot;300000&quot;,&quot;availableMemory&quot;:&quot;2449870848&quot;,&quot;availableRomSpace&quot;:&quot;108794150912&quot;,&quot;base_OS&quot;:&quot;&quot;,&quot;board&quot;:&quot;bluejay&quot;,&quot;bootloader&quot;:&quot;bluejay-1.1-8419703&quot;,&quot;brand&quot;:&quot;google&quot;,&quot;codeNAME&quot;:&quot;REL&quot;,&quot;display&quot;:&quot;SD2A.220601.003.B1&quot;,&quot;fingerprint&quot;:&quot;google\/bluejay\/bluejay:12\/SD2A.220601.003.B1\/8836721:user\/release-keys&quot;,&quot;incremental&quot;:&quot;8836721&quot;,&quot;manufacturer&quot;:&quot;Google&quot;,&quot;model&quot;:&quot;Pixel 6a&quot;,&quot;product&quot;:&quot;bluejay&quot;,&quot;radio&quot;:&quot;unknown&quot;,&quot;release&quot;:&quot;12&quot;,&quot;scaling_available_frequencies&quot;:&quot;300000 574000 738000 930000 1098000 1197000 1328000 1401000 1598000 1704000 1803000 &quot;,&quot;scaling_available_governors&quot;:&quot;sched_pixel conservative powersave performance schedutil &quot;,&quot;totalMemory&quot;:&quot;5851979776&quot;,&quot;totalRomSpace&quot;:&quot;128000000000&quot;},&quot;emulatorStatus&quot;:{&quot;hasGenyFiles&quot;:false,&quot;hasKnownPhoneNumber&quot;:false,&quot;hasPipes&quot;:false,&quot;hasQEmuFiles&quot;:false,&quot;hasqemuDrivers&quot;:false,&quot;isOperatorNameAndroid&quot;:false},&quot;googlePlayServiceVersion&quot;:&quot;23.08.15 (190400-512743456)&quot;,&quot;hasCameraPermission&quot;:true,&quot;hasLigntSensor&quot;:true,&quot;hasMicroPhonePermission&quot;:true,&quot;hookStatus&quot;:false,&quot;isGooglePlayServiceAvailable&quot;:true,&quot;macAddress&quot;:&quot;&quot;,&quot;rootStatus&quot;:{&quot;ForRWPATHS&quot;:false,&quot;SUBinary&quot;:false,&quot;busyBoxbinary&quot;:false,&quot;dangerousProps&quot;:false,&quot;potentiallyDangerousApp &quot;:false,&quot;rootCloakingApps&quot;:false,&quot;rootManagementApp&quot;:false,&quot;testkeys&quot;:false},&quot;security_patch&quot;:&quot;2022-06-01&quot;},&quot;freshnessIndicator&quot;:{&quot;ts&quot;:1684394408340,&quot;verifyCode&quot;:&quot;94c759bf-417e-44d7-82f8-0f8dd2e4e01f&quot;},&quot;rngHealth&quot;:{&quot;number&quot;:&quot;b4f8246b0dcdb8f79adc76a1e4bd1588d610dcc75859465137fa43e521ea5f8c&quot;,&quot;keyLen&quot;:32,&quot;entropy&quot;:&quot;780dc264ddf16ac9a2eec6c694ac54ef021a0e2c4e1fa236dd234099af4f2d28&quot;,&quot;nonce&quot;:&quot;8d0ec1c5bbf98486cd3fbfaec75b00eb&quot;,&quot;perStr&quot;:&quot;9e915c31a070a81329f317a8dd896b85&quot;},&quot;playIntegrityToken&quot;:&quot;eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2R0NNIn0.tFBagCyamgRx7bwkxIC7EB8-ReHTglnpFevrxXmVxqQE0g1OY0D-xg.oGpHiuoCqxbXnoyp.OIBppjJ15_TtAGZ2N0e9tKjPjqdJEXz8pvULzFxWGYTBOj6Wfl6fr07PRT8znkmAguSoHP6RkjTvH-GRTEuiVDG_CNrW5bRFwzBO5fB3x61R-12238oE7Qp1z20cTPaeRFb6kyxXBKQJ8wJa78Adb0h_oJWTuxIc2vp8dYsVbw0i1aNgbMXGHkyc3xw3cSSqHV2q41PpHCWT3by4A7Nz-aAHL_BhtffkuFZ7au05Utr1eAysTRnPWVm5BGhm8RLK8OqEYdaOmUcWR15iVVKFkmA4Ae7UA8Ghq6loIPj5BSEsTjEXBXTsiyTLWsffZvvh77AEKFS__af_b6dRc6mdvVy9gQB-P57Qh3_f7QaXT3LlYkfQSQ4z1tGR7p5I8N7OIfZPrajeI5doHvwM2jAXUOz6AIO192NfuAE-97B6VYpGJWkBH4FjwXx8bWEd7wDBIwNo9B2u6QnR7lOr0SPt1ykePBGxV7MJ0HTilwY23g92iZ_l7SylIZTsMiPH6QnNPWlS6mjDAeLldXEcbLLvAFccewJ86FmUUCrDcPXSsFIYq3GPeubColQQtbgxx8T7wnglIV1Bkv-XpF6Qimk7mnsvSU0NQsEnpFkFbSGZFoPe1sPbBDqv73OmPtDpo5Tnt4OXqdcLhvkipvHlp91NgRXES1kZw4ibP7wc3XlPoybtYqBrOmsniCi9BhCLg2KwdQRb6QlonCsR4gGH6eJEykl_CCxa5uVtc8SzksuDmepmC12s4Qo1qHGCPVA_uj1idXR7iGoVji83y0MqzFD0qNde0Hs-KLfgbs8fid3VIot1Pr5d95wT51Li4dAcLRQwqLb5JUUZ6FD_bENlx2yez_VU-m7RKXvqX5MVudvrOcAZnD_dFWSjAjzHFy2r2397GL8rG7H5A6olbtrEj7AR6K0AAmPAXRA7DpcWg6ttVCkNvBQVyIyNoJMewJpxB6CTCYhQjE_c_i7B3O5ynJjWUgsbgY_FgBeqLbMuzugBKmYy5lcsTzAsHU_js5pJisyGtnvEdjRngLtxJnrv-2RnrHFgUFUaFTH2ylrfdyYGoBZoetKNKnvWKwZdOmoC9pOszGMN-CeuTh7o9GvRNYlpMUZmjseumMGLqKeOyaJyuiQsoU-T-_7qlQyCgjMyJj3LFbIvyrAh3JkE7oBGXTDjfpP71AySFc9OVLkckQygCqCp4vMmyIrvA4T66_xyRd-Rl9pXzhGw46mMmj4jl5kdhv9C.n9o4PSQRkG2Mc_cdZ3jpdQ&quot;}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (260 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Hash: 1e9953d455052698e0eac0927de7613b745b0ae3b4d344c7b6eda7295b117018
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Date: Wed, 21 Jun 2023 09:37:54 GMT
+Content-Length: 110
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (110 bytes)</summary>
+				
+				<pre><code>{&quot;status&quot;:&quot;0&quot;,&quot;message&quot;:&quot;Full-Attestation Successfully.&quot;,&quot;data&quot;:{&quot;security_code&quot;:1,&quot;reason&quot;:&quot;Relay detected&quot;}}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>device_id</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Attack</th>
+		<td><pre><code>full-attestation</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Assume all input is malicious. Use an &quot;accept known good&quot; input validation strategy, i.e., use an allow list of acceptable inputs that strictly conform to specifications. Reject any input that does not strictly conform to specifications, or transform it into something that does. Do not rely exclusively on looking for malicious or malformed inputs (i.e., do not rely on a deny list). However, deny lists can be useful for detecting potential attacks or determining which inputs are so malformed that they should be rejected outright.</p>
+
+<p>When performing input validation, consider all potentially relevant properties, including length, type of input, the full range of acceptable values, missing or extra inputs, syntax, consistency across related fields, and conformance to business rules. As an example of business rule logic, &quot;boat&quot; may be syntactically valid because it only contains alphanumeric characters, but it is not valid if you are expecting colors such as &quot;red&quot; or &quot;blue.&quot;</p>
+
+<p>For filenames, use stringent allow lists that limit the character set to be used. If feasible, only allow a single &quot;.&quot; character in the filename to avoid weaknesses, and exclude directory separators such as &quot;/&quot;. Use an allow list of allowable file extensions.</p>
+
+<p>Warning: if you attempt to cleanse your data, then do so that the end result is not in the form that can be dangerous. A sanitizing mechanism can remove characters such as &#39;.&#39; and &#39;;&#39; which may be required for some exploits. An attacker can try to fool the sanitizing mechanism into &quot;cleaning&quot; data into a dangerous form. Suppose the attacker injects a &#39;.&#39; inside a filename (e.g. &quot;sensi.tiveFile&quot;) and the sanitizing mechanism removes the character resulting in the valid filename, &quot;sensitiveFile&quot;. If the input data are now assumed to be safe, then the file may be compromised. </p>
+
+<p>Inputs should be decoded and canonicalized to the application&#39;s current internal representation before being validated. Make sure that your application does not decode the same input twice. Such errors could be used to bypass allow list schemes by introducing dangerous inputs after they have been checked.</p>
+
+<p>Use a built-in path canonicalization function (such as realpath() in C) that produces the canonical version of the pathname, which effectively removes &quot;..&quot; sequences and symbolic links.</p>
+
+<p>Run your code using the lowest privileges that are required to accomplish the necessary tasks. If possible, create isolated accounts with limited privileges that are only used for a single task. That way, a successful attack will not immediately give the attacker access to the rest of the software or its environment. For example, database applications rarely need to run as the database administrator, especially in day-to-day operations.</p>
+
+<p>When the set of acceptable objects, such as filenames or URLs, is limited or known, create a mapping from a set of fixed input values (such as numeric IDs) to the actual filenames or URLs, and reject all other inputs.</p>
+
+<p>Run your code in a &quot;jail&quot; or similar sandbox environment that enforces strict boundaries between the process and the operating system. This may effectively restrict which files can be accessed in a particular directory or which commands can be executed by your software.</p>
+
+<p>OS-level examples include the Unix chroot jail, AppArmor, and SELinux. In general, managed code may provide some protection. For example, java.io.FilePermission in the Java SecurityManager allows you to specify restrictions on file operations.</p>
+
+<p>This may not be a feasible solution, and it only limits the impact to the operating system; the rest of your application may still be subject to compromise.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+				 
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://localhost:9530</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-1">X-Content-Type-Options Header Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://localhost:9530/amk/api/full-attestation</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to &#39;nosniff&#39;. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p>
+
+<p>At &quot;High&quot; threshold this scan rule will not alert on client or server error responses.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (292 bytes)</summary>
+				
+				<pre><code>POST https://localhost:9530/amk/api/full-attestation HTTP/1.1
+Content-Type: application/json
+User-Agent: PostmanRuntime/7.32.3
+Accept: */*
+Cache-Control: no-cache
+Postman-Token: ee6d54f1-c7c3-4309-9ff6-760eca9f9f45
+Host: localhost:9530
+Connection: keep-alive
+Content-Length: 15593
+
+</code></pre>
+				
+				
+			</details> <details class="request-body">
+				<summary>Request body (15593 bytes)</summary>
+				
+				<pre><code>{&quot;application&quot;:{&quot;appPermissionrequested&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS AND 1=1 -- &quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appPermissionsGranted&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS&quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appVersionCode&quot;:2,&quot;appVersionName&quot;:&quot;1.0.1&quot;,&quot;isAdbOpen&quot;:false,&quot;isDebug&quot;:false,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;transactionInitiationVolume&quot;:0,&quot;transactionSuccessVolume&quot;:0,&quot;transactionFailureVolume&quot;:0,&quot;instanceID&quot;:&quot;e4RAPX8oSE-RaDmMTIMeDI&quot;,&quot;ctEmvCl&quot;:&quot;v9.0.010701-20230511-00000001&quot;,&quot;kms&quot;:&quot;v1.1.2-de1&quot;,&quot;ctPay&quot;:&quot;CTPAY.CtSoftPos_0.0.01&quot;,&quot;csp&quot;:&quot;1.0.0.20230512-00000001&quot;,&quot;csi&quot;:&quot;1.0.0&quot;,&quot;isKeyInSecureHardware&quot;:true},&quot;device_id&quot;:&quot;7576aa67c1cf61fd&quot;,&quot;platform&quot;:{&quot;NFCDetail&quot;:{&quot;NFCApps&quot;:[{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;}],&quot;NFCEnable&quot;:true,&quot;NFCStatus&quot;:true},&quot;SDK_INT&quot;:&quot;32&quot;,&quot;androidID&quot;:&quot;7576aa67c1cf61fd&quot;,&quot;appList&quot;:[{&quot;appName&quot;:&quot;Tethering&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.tethering&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9467362&quot;},{&quot;appName&quot;:&quot;OemDmTrigger&quot;,&quot;packageName&quot;:&quot;com.google.omadm.trigger&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Carrier Setup&quot;,&quot;packageName&quot;:&quot;com.google.android.carriersetup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Services Library&quot;,&quot;packageName&quot;:&quot;com.google.android.ext.services&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_ext_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¥ÂÂÃ§ÂÂ­Ã¤Â¿Â¡Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.telephony&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Dynamic System Updates&quot;,&quot;packageName&quot;:&quot;com.android.dynsystem&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ConnMO&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.connmo&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Cell Broadcast Service&quot;,&quot;packageName&quot;:&quot;com.google.android.cellbroadcastservice&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ¥Ã¥ÂÂÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.calendar&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.providers.media&quot;,&quot;packageName&quot;:&quot;com.android.providers.media&quot;,&quot;versionCode&quot;:1024,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;packageName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¶ÂÃ§ÂºÂ§Ã§ÂÂÃ§ÂÂµÃ¦Â¨Â¡Ã¥Â¼Â&quot;,&quot;packageName&quot;:&quot;com.google.android.flipendo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¤ÂÃ©ÂÂ¨Ã¥Â­ÂÃ¥ÂÂ¨Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.externalstorage&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã©ÂÂÃ¥Â¥ÂÃ¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.companiondevicemanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;MmsService&quot;,&quot;packageName&quot;:&quot;com.android.mms.service&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥ÂÂÃ¥Â®Â¹Ã¤Â¸ÂÃ¨Â½Â½Ã§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;USCC&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.usccdm&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¥ÂªÂÃ¤Â½Â&quot;,&quot;packageName&quot;:&quot;com.google.android.providers.media.module&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9427200&quot;},{&quot;appName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;packageName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;packageName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Factory OTA Mode&quot;,&quot;packageName&quot;:&quot;com.google.android.factoryota&quot;,&quot;versionCode&quot;:11000133,&quot;versionName&quot;:&quot;1.0.417357988&quot;},{&quot;appName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;packageName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;versionCode&quot;:10000000,&quot;versionName&quot;:&quot;1.0.0.0&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¨Â½Â½&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads.ui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;,&quot;versionCode&quot;:83471010,&quot;versionName&quot;:&quot;34.7.10-21 [0] [PR] 512129822&quot;},{&quot;appName&quot;:&quot;PacProcessor&quot;,&quot;packageName&quot;:&quot;com.android.pacprocessor&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¯ÂÃ¤Â¹Â¦Ã¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.certinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Ã§Â³Â»Ã§Â»Â&quot;,&quot;packageName&quot;:&quot;android&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android S Easter Egg&quot;,&quot;packageName&quot;:&quot;com.android.egg&quot;,&quot;versionCode&quot;:12,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;MTP Ã¤Â¸Â»Ã¦ÂÂº&quot;,&quot;packageName&quot;:&quot;com.android.mtp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.ons&quot;,&quot;packageName&quot;:&quot;com.android.ons&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SIM Ã¥ÂÂ¡Ã¥Â·Â¥Ã¥ÂÂ·Ã¥ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.stk&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.backupconfirm&quot;,&quot;packageName&quot;:&quot;com.android.backupconfirm&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RadioConfigService&quot;,&quot;packageName&quot;:&quot;com.samsung.slsi.telephony.oem.oemrilhookservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Intent Filter Verification Service&quot;,&quot;packageName&quot;:&quot;com.android.statementservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Device Health Services Adapter&quot;,&quot;packageName&quot;:&quot;com.google.android.turboadapter&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂÃ©ÂÂÃ¦ÂÂ§Ã¥ÂÂ¶Ã¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.permissioncontroller&quot;,&quot;versionCode&quot;:331411000,&quot;versionName&quot;:&quot;aml_per_331411000&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;packageName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.iwlan&quot;,&quot;packageName&quot;:&quot;com.google.android.iwlan&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SecureElementApplication&quot;,&quot;packageName&quot;:&quot;com.android.se&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¾ÂÃ¥ÂÂ¥Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.inputdevices&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ°Ã¥Â­ÂÃ¥ÂÂ¥Ã¥ÂºÂ·&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.wellbeing&quot;,&quot;versionCode&quot;:329097,&quot;versionName&quot;:&quot;1.0.410515141 (329097)&quot;},{&quot;appName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;packageName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã§Â½ÂÃ§Â»ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_net_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯Â&quot;,&quot;packageName&quot;:&quot;com.android.server.telecom&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¯ÂÃ©ÂÂ¥Ã©ÂÂ¾&quot;,&quot;packageName&quot;:&quot;com.android.keychain&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â½Â¯Ã¤Â»Â¶Ã¥ÂÂÃ¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.google.android.packageinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;,&quot;versionCode&quot;:230815044,&quot;versionName&quot;:&quot;23.08.15 (190400-512743456)&quot;},{&quot;appName&quot;:&quot;Google Ã¦ÂÂÃ¥ÂÂ¡Ã¦Â¡ÂÃ¦ÂÂ¶&quot;,&quot;packageName&quot;:&quot;com.google.android.gsf&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Ã¨Â¯Â­Ã©ÂÂ³Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.tts&quot;,&quot;versionCode&quot;:210414469,&quot;versionName&quot;:&quot;googletts.google-speech-apk_20230206.01_p2.509666633&quot;},{&quot;appName&quot;:&quot;Call Log Backup\/Restore&quot;,&quot;packageName&quot;:&quot;com.android.calllogbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;CameraExtensionsProxy&quot;,&quot;packageName&quot;:&quot;com.android.cameraextensions&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.localtransport&quot;,&quot;packageName&quot;:&quot;com.android.localtransport&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;packageName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¿ÂÃ¨ÂÂ¥Ã¥ÂÂÃ©Â»ÂÃ¨Â®Â¤Ã¥ÂºÂÃ§ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.carrierdefaultapp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RilConfig&quot;,&quot;packageName&quot;:&quot;com.google.RilConfigService&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ProxyHandler&quot;,&quot;packageName&quot;:&quot;com.android.proxyhandler&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;packageName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;,&quot;versionCode&quot;:22,&quot;versionName&quot;:&quot;Retail Demo Mode&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â£Â°Ã©ÂÂ³&quot;,&quot;packageName&quot;:&quot;com.android.soundpicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SystemUIGX&quot;,&quot;packageName&quot;:&quot;com.google.android.systemui.gxoverlay&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Carrier OMADM&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.dcmo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Pixel Ã§ÂÂ¸Ã¦ÂÂºÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.camera.services&quot;,&quot;versionCode&quot;:124657,&quot;versionName&quot;:&quot;1.0.491427692.03&quot;},{&quot;appName&quot;:&quot;Live Wallpaper Picker&quot;,&quot;packageName&quot;:&quot;com.android.wallpaper.livepicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;versionCode&quot;:6,&quot;versionName&quot;:&quot;6.1.407437803&quot;},{&quot;appName&quot;:&quot;com.android.server.NetworkPermissionConfig&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.permissionconfig&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;2019-09&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.omadm.service&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0.0&quot;},{&quot;appName&quot;:&quot;Connectivity Thermal Power Manager&quot;,&quot;packageName&quot;:&quot;com.google.android.connectivitythermalpowermanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;VpnDialogs&quot;,&quot;packageName&quot;:&quot;com.android.vpndialogs&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.angle&quot;,&quot;packageName&quot;:&quot;com.android.angle&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.phone&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0.1&quot;},{&quot;appName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;packageName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â­ÂÃ¥ÂÂ¨Ã¥Â·Â²Ã¥Â±ÂÃ¨ÂÂ½Ã§ÂÂÃ¥ÂÂ·Ã§ Â&quot;,&quot;packageName&quot;:&quot;com.android.providers.blockednumber&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂ¨Ã¦ÂÂ·Ã¥Â­ÂÃ¥ÂÂ¸&quot;,&quot;packageName&quot;:&quot;com.android.providers.userdictionary&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Emergency information&quot;,&quot;packageName&quot;:&quot;com.android.emergency&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¤Â½ÂÃ¥ÂÂÃ¤Â½ÂÃ§Â½Â®Ã¤Â¿Â¡Ã¦ÂÂ¯&quot;,&quot;packageName&quot;:&quot;com.android.location.fused&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§Â³Â»Ã§Â»ÂÃ§ÂÂÃ©ÂÂ¢&quot;,&quot;packageName&quot;:&quot;com.android.systemui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.bluetooth&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§Â³Â»Ã¤ÂºÂºÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.contacts&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.verizon.llkagent&quot;,&quot;packageName&quot;:&quot;com.verizon.llkagent&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;}],&quot;buildInfo&quot;:{&quot;CurCpuFreq&quot;:&quot;1803000&quot;,&quot;MaxCpuFreq&quot;:&quot;1803000&quot;,&quot;MinCpuFreq&quot;:&quot;300000&quot;,&quot;availableMemory&quot;:&quot;2449870848&quot;,&quot;availableRomSpace&quot;:&quot;108794150912&quot;,&quot;base_OS&quot;:&quot;&quot;,&quot;board&quot;:&quot;bluejay&quot;,&quot;bootloader&quot;:&quot;bluejay-1.1-8419703&quot;,&quot;brand&quot;:&quot;google&quot;,&quot;codeNAME&quot;:&quot;REL&quot;,&quot;display&quot;:&quot;SD2A.220601.003.B1&quot;,&quot;fingerprint&quot;:&quot;google\/bluejay\/bluejay:12\/SD2A.220601.003.B1\/8836721:user\/release-keys&quot;,&quot;incremental&quot;:&quot;8836721&quot;,&quot;manufacturer&quot;:&quot;Google&quot;,&quot;model&quot;:&quot;Pixel 6a&quot;,&quot;product&quot;:&quot;bluejay&quot;,&quot;radio&quot;:&quot;unknown&quot;,&quot;release&quot;:&quot;12&quot;,&quot;scaling_available_frequencies&quot;:&quot;300000 574000 738000 930000 1098000 1197000 1328000 1401000 1598000 1704000 1803000 &quot;,&quot;scaling_available_governors&quot;:&quot;sched_pixel conservative powersave performance schedutil &quot;,&quot;totalMemory&quot;:&quot;5851979776&quot;,&quot;totalRomSpace&quot;:&quot;128000000000&quot;},&quot;emulatorStatus&quot;:{&quot;hasGenyFiles&quot;:false,&quot;hasKnownPhoneNumber&quot;:false,&quot;hasPipes&quot;:false,&quot;hasQEmuFiles&quot;:false,&quot;hasqemuDrivers&quot;:false,&quot;isOperatorNameAndroid&quot;:false},&quot;googlePlayServiceVersion&quot;:&quot;23.08.15 (190400-512743456)&quot;,&quot;hasCameraPermission&quot;:true,&quot;hasLigntSensor&quot;:true,&quot;hasMicroPhonePermission&quot;:true,&quot;hookStatus&quot;:false,&quot;isGooglePlayServiceAvailable&quot;:true,&quot;macAddress&quot;:&quot;&quot;,&quot;rootStatus&quot;:{&quot;ForRWPATHS&quot;:false,&quot;SUBinary&quot;:false,&quot;busyBoxbinary&quot;:false,&quot;dangerousProps&quot;:false,&quot;potentiallyDangerousApp &quot;:false,&quot;rootCloakingApps&quot;:false,&quot;rootManagementApp&quot;:false,&quot;testkeys&quot;:false},&quot;security_patch&quot;:&quot;2022-06-01&quot;},&quot;freshnessIndicator&quot;:{&quot;ts&quot;:1684394408340,&quot;verifyCode&quot;:&quot;94c759bf-417e-44d7-82f8-0f8dd2e4e01f&quot;},&quot;rngHealth&quot;:{&quot;number&quot;:&quot;b4f8246b0dcdb8f79adc76a1e4bd1588d610dcc75859465137fa43e521ea5f8c&quot;,&quot;keyLen&quot;:32,&quot;entropy&quot;:&quot;780dc264ddf16ac9a2eec6c694ac54ef021a0e2c4e1fa236dd234099af4f2d28&quot;,&quot;nonce&quot;:&quot;8d0ec1c5bbf98486cd3fbfaec75b00eb&quot;,&quot;perStr&quot;:&quot;9e915c31a070a81329f317a8dd896b85&quot;},&quot;playIntegrityToken&quot;:&quot;eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2R0NNIn0.tFBagCyamgRx7bwkxIC7EB8-ReHTglnpFevrxXmVxqQE0g1OY0D-xg.oGpHiuoCqxbXnoyp.OIBppjJ15_TtAGZ2N0e9tKjPjqdJEXz8pvULzFxWGYTBOj6Wfl6fr07PRT8znkmAguSoHP6RkjTvH-GRTEuiVDG_CNrW5bRFwzBO5fB3x61R-12238oE7Qp1z20cTPaeRFb6kyxXBKQJ8wJa78Adb0h_oJWTuxIc2vp8dYsVbw0i1aNgbMXGHkyc3xw3cSSqHV2q41PpHCWT3by4A7Nz-aAHL_BhtffkuFZ7au05Utr1eAysTRnPWVm5BGhm8RLK8OqEYdaOmUcWR15iVVKFkmA4Ae7UA8Ghq6loIPj5BSEsTjEXBXTsiyTLWsffZvvh77AEKFS__af_b6dRc6mdvVy9gQB-P57Qh3_f7QaXT3LlYkfQSQ4z1tGR7p5I8N7OIfZPrajeI5doHvwM2jAXUOz6AIO192NfuAE-97B6VYpGJWkBH4FjwXx8bWEd7wDBIwNo9B2u6QnR7lOr0SPt1ykePBGxV7MJ0HTilwY23g92iZ_l7SylIZTsMiPH6QnNPWlS6mjDAeLldXEcbLLvAFccewJ86FmUUCrDcPXSsFIYq3GPeubColQQtbgxx8T7wnglIV1Bkv-XpF6Qimk7mnsvSU0NQsEnpFkFbSGZFoPe1sPbBDqv73OmPtDpo5Tnt4OXqdcLhvkipvHlp91NgRXES1kZw4ibP7wc3XlPoybtYqBrOmsniCi9BhCLg2KwdQRb6QlonCsR4gGH6eJEykl_CCxa5uVtc8SzksuDmepmC12s4Qo1qHGCPVA_uj1idXR7iGoVji83y0MqzFD0qNde0Hs-KLfgbs8fid3VIot1Pr5d95wT51Li4dAcLRQwqLb5JUUZ6FD_bENlx2yez_VU-m7RKXvqX5MVudvrOcAZnD_dFWSjAjzHFy2r2397GL8rG7H5A6olbtrEj7AR6K0AAmPAXRA7DpcWg6ttVCkNvBQVyIyNoJMewJpxB6CTCYhQjE_c_i7B3O5ynJjWUgsbgY_FgBeqLbMuzugBKmYy5lcsTzAsHU_js5pJisyGtnvEdjRngLtxJnrv-2RnrHFgUFUaFTH2ylrfdyYGoBZoetKNKnvWKwZdOmoC9pOszGMN-CeuTh7o9GvRNYlpMUZmjseumMGLqKeOyaJyuiQsoU-T-_7qlQyCgjMyJj3LFbIvyrAh3JkE7oBGXTDjfpP71AySFc9OVLkckQygCqCp4vMmyIrvA4T66_xyRd-Rl9pXzhGw46mMmj4jl5kdhv9C.n9o4PSQRkG2Mc_cdZ3jpdQ&quot;}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (260 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Hash: 1e9953d455052698e0eac0927de7613b745b0ae3b4d344c7b6eda7295b117018
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Date: Wed, 21 Jun 2023 09:37:36 GMT
+Content-Length: 110
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (110 bytes)</summary>
+				
+				<pre><code>{&quot;status&quot;:&quot;0&quot;,&quot;message&quot;:&quot;Full-Attestation Successfully.&quot;,&quot;data&quot;:{&quot;security_code&quot;:1,&quot;reason&quot;:&quot;Relay detected&quot;}}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>X-Content-Type-Options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to &#39;nosniff&#39; for all web pages.</p>
+
+<p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informational</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://localhost:9530</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-2">Re-examine Cache-control Directives</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://localhost:9530/amk/api/full-attestation</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses">WSTG-v42-ATHN-06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (292 bytes)</summary>
+				
+				<pre><code>POST https://localhost:9530/amk/api/full-attestation HTTP/1.1
+Content-Type: application/json
+User-Agent: PostmanRuntime/7.32.3
+Accept: */*
+Cache-Control: no-cache
+Postman-Token: ee6d54f1-c7c3-4309-9ff6-760eca9f9f45
+Host: localhost:9530
+Connection: keep-alive
+Content-Length: 15593
+
+</code></pre>
+				
+				
+			</details> <details class="request-body">
+				<summary>Request body (15593 bytes)</summary>
+				
+				<pre><code>{&quot;application&quot;:{&quot;appPermissionrequested&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS AND 1=1 -- &quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appPermissionsGranted&quot;:[&quot;android.permission.ACCESS_NETWORK_STATE&quot;,&quot;android.permission.CAMERA&quot;,&quot;android.permission.RECORD_AUDIO&quot;,&quot;android.permission.NFC&quot;,&quot;android.permission.INTERNET&quot;,&quot;android.permission.HIGH_SAMPLING_RATE_SENSORS&quot;,&quot;android.permission.WAKE_LOCK&quot;,&quot;android.permission.ACCESS_WIFI_STATE&quot;],&quot;appVersionCode&quot;:2,&quot;appVersionName&quot;:&quot;1.0.1&quot;,&quot;isAdbOpen&quot;:false,&quot;isDebug&quot;:false,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;transactionInitiationVolume&quot;:0,&quot;transactionSuccessVolume&quot;:0,&quot;transactionFailureVolume&quot;:0,&quot;instanceID&quot;:&quot;e4RAPX8oSE-RaDmMTIMeDI&quot;,&quot;ctEmvCl&quot;:&quot;v9.0.010701-20230511-00000001&quot;,&quot;kms&quot;:&quot;v1.1.2-de1&quot;,&quot;ctPay&quot;:&quot;CTPAY.CtSoftPos_0.0.01&quot;,&quot;csp&quot;:&quot;1.0.0.20230512-00000001&quot;,&quot;csi&quot;:&quot;1.0.0&quot;,&quot;isKeyInSecureHardware&quot;:true},&quot;device_id&quot;:&quot;7576aa67c1cf61fd&quot;,&quot;platform&quot;:{&quot;NFCDetail&quot;:{&quot;NFCApps&quot;:[{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;}],&quot;NFCEnable&quot;:true,&quot;NFCStatus&quot;:true},&quot;SDK_INT&quot;:&quot;32&quot;,&quot;androidID&quot;:&quot;7576aa67c1cf61fd&quot;,&quot;appList&quot;:[{&quot;appName&quot;:&quot;Tethering&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.tethering&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9467362&quot;},{&quot;appName&quot;:&quot;OemDmTrigger&quot;,&quot;packageName&quot;:&quot;com.google.omadm.trigger&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Carrier Setup&quot;,&quot;packageName&quot;:&quot;com.google.android.carriersetup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Services Library&quot;,&quot;packageName&quot;:&quot;com.google.android.ext.services&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_ext_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¥ÂÂÃ§ÂÂ­Ã¤Â¿Â¡Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.telephony&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Dynamic System Updates&quot;,&quot;packageName&quot;:&quot;com.android.dynsystem&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ConnMO&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.connmo&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Cell Broadcast Service&quot;,&quot;packageName&quot;:&quot;com.google.android.cellbroadcastservice&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ¥Ã¥ÂÂÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.calendar&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.providers.media&quot;,&quot;packageName&quot;:&quot;com.android.providers.media&quot;,&quot;versionCode&quot;:1024,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;packageName&quot;:&quot;com.android.hbmsvmanager&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¶ÂÃ§ÂºÂ§Ã§ÂÂÃ§ÂÂµÃ¦Â¨Â¡Ã¥Â¼Â&quot;,&quot;packageName&quot;:&quot;com.google.android.flipendo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¤ÂÃ©ÂÂ¨Ã¥Â­ÂÃ¥ÂÂ¨Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.externalstorage&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã©ÂÂÃ¥Â¥ÂÃ¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.companiondevicemanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;MmsService&quot;,&quot;packageName&quot;:&quot;com.android.mms.service&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥ÂÂÃ¥Â®Â¹Ã¤Â¸ÂÃ¨Â½Â½Ã§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;USCC&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.usccdm&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¥ÂªÂÃ¤Â½Â&quot;,&quot;packageName&quot;:&quot;com.google.android.providers.media.module&quot;,&quot;versionCode&quot;:33,&quot;versionName&quot;:&quot;13-9427200&quot;},{&quot;appName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;packageName&quot;:&quot;com.google.android.overlay.udfpsoverlay&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;packageName&quot;:&quot;com.google.android.wifi.resources.pixel&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Factory OTA Mode&quot;,&quot;packageName&quot;:&quot;com.google.android.factoryota&quot;,&quot;versionCode&quot;:11000133,&quot;versionName&quot;:&quot;1.0.417357988&quot;},{&quot;appName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;packageName&quot;:&quot;com.android.systemui.plugin.globalactions.wallet&quot;,&quot;versionCode&quot;:10000000,&quot;versionName&quot;:&quot;1.0.0.0&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¨Â½Â½&quot;,&quot;packageName&quot;:&quot;com.android.providers.downloads.ui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¥ÂÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.vending&quot;,&quot;versionCode&quot;:83471010,&quot;versionName&quot;:&quot;34.7.10-21 [0] [PR] 512129822&quot;},{&quot;appName&quot;:&quot;PacProcessor&quot;,&quot;packageName&quot;:&quot;com.android.pacprocessor&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¯ÂÃ¤Â¹Â¦Ã¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.android.certinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android Ã§Â³Â»Ã§Â»Â&quot;,&quot;packageName&quot;:&quot;android&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Android S Easter Egg&quot;,&quot;packageName&quot;:&quot;com.android.egg&quot;,&quot;versionCode&quot;:12,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;MTP Ã¤Â¸Â»Ã¦ÂÂº&quot;,&quot;packageName&quot;:&quot;com.android.mtp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;NFCÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.nfc&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.ons&quot;,&quot;packageName&quot;:&quot;com.android.ons&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SIM Ã¥ÂÂ¡Ã¥Â·Â¥Ã¥ÂÂ·Ã¥ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.stk&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.backupconfirm&quot;,&quot;packageName&quot;:&quot;com.android.backupconfirm&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RadioConfigService&quot;,&quot;packageName&quot;:&quot;com.samsung.slsi.telephony.oem.oemrilhookservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Intent Filter Verification Service&quot;,&quot;packageName&quot;:&quot;com.android.statementservice&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Device Health Services Adapter&quot;,&quot;packageName&quot;:&quot;com.google.android.turboadapter&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂÃ©ÂÂÃ¦ÂÂ§Ã¥ÂÂ¶Ã¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.permissioncontroller&quot;,&quot;versionCode&quot;:331411000,&quot;versionName&quot;:&quot;aml_per_331411000&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®Ã¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;packageName&quot;:&quot;com.android.sharedstoragebackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.iwlan&quot;,&quot;packageName&quot;:&quot;com.google.android.iwlan&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.diagmon&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SecureElementApplication&quot;,&quot;packageName&quot;:&quot;com.android.se&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â¾ÂÃ¥ÂÂ¥Ã¨Â®Â¾Ã¥Â¤Â&quot;,&quot;packageName&quot;:&quot;com.android.inputdevices&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¦ÂÂ°Ã¥Â­ÂÃ¥ÂÂ¥Ã¥ÂºÂ·&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.wellbeing&quot;,&quot;versionCode&quot;:329097,&quot;versionName&quot;:&quot;1.0.410515141 (329097)&quot;},{&quot;appName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;packageName&quot;:&quot;com.android.cellbroadcastreceiver&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;R-initial&quot;},{&quot;appName&quot;:&quot;Ã§Â½ÂÃ§Â»ÂÃ§Â®Â¡Ã§ÂÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack&quot;,&quot;versionCode&quot;:331412000,&quot;versionName&quot;:&quot;aml_net_331412000&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯Â&quot;,&quot;packageName&quot;:&quot;com.android.server.telecom&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â¯ÂÃ©ÂÂ¥Ã©ÂÂ¾&quot;,&quot;packageName&quot;:&quot;com.android.keychain&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â½Â¯Ã¤Â»Â¶Ã¥ÂÂÃ¥Â®ÂÃ¨Â£ÂÃ§Â¨ÂÃ¥ÂºÂ&quot;,&quot;packageName&quot;:&quot;com.google.android.packageinstaller&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Play Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.gms&quot;,&quot;versionCode&quot;:230815044,&quot;versionName&quot;:&quot;23.08.15 (190400-512743456)&quot;},{&quot;appName&quot;:&quot;Google Ã¦ÂÂÃ¥ÂÂ¡Ã¦Â¡ÂÃ¦ÂÂ¶&quot;,&quot;packageName&quot;:&quot;com.google.android.gsf&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Google Ã¨Â¯Â­Ã©ÂÂ³Ã¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.tts&quot;,&quot;versionCode&quot;:210414469,&quot;versionName&quot;:&quot;googletts.google-speech-apk_20230206.01_p2.509666633&quot;},{&quot;appName&quot;:&quot;Call Log Backup\/Restore&quot;,&quot;packageName&quot;:&quot;com.android.calllogbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;CameraExtensionsProxy&quot;,&quot;packageName&quot;:&quot;com.android.cameraextensions&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.localtransport&quot;,&quot;packageName&quot;:&quot;com.android.localtransport&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;packageName&quot;:&quot;com.google.euiccpixel.overlay.gs101&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0&quot;},{&quot;appName&quot;:&quot;Ã¨Â¿ÂÃ¨ÂÂ¥Ã¥ÂÂÃ©Â»ÂÃ¨Â®Â¤Ã¥ÂºÂÃ§ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.carrierdefaultapp&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;RilConfig&quot;,&quot;packageName&quot;:&quot;com.google.RilConfigService&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;ProxyHandler&quot;,&quot;packageName&quot;:&quot;com.android.proxyhandler&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;packageName&quot;:&quot;com.google.SSRestartDetector&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Retail Demo Mode&quot;,&quot;packageName&quot;:&quot;com.customermobile.preload.vzw&quot;,&quot;versionCode&quot;:22,&quot;versionName&quot;:&quot;Retail Demo Mode&quot;},{&quot;appName&quot;:&quot;Ã¥Â·Â¥Ã¤Â½ÂÃ¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.managedprovisioning&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â£Â°Ã©ÂÂ³&quot;,&quot;packageName&quot;:&quot;com.android.soundpicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;SystemUIGX&quot;,&quot;packageName&quot;:&quot;com.google.android.systemui.gxoverlay&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Carrier OMADM&quot;,&quot;packageName&quot;:&quot;com.android.sdm.plugins.dcmo&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Pixel Ã§ÂÂ¸Ã¦ÂÂºÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.camera.services&quot;,&quot;versionCode&quot;:124657,&quot;versionName&quot;:&quot;1.0.491427692.03&quot;},{&quot;appName&quot;:&quot;Live Wallpaper Picker&quot;,&quot;packageName&quot;:&quot;com.android.wallpaper.livepicker&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;packageName&quot;:&quot;com.google.android.apps.cbrsnetworkmonitor&quot;,&quot;versionCode&quot;:6,&quot;versionName&quot;:&quot;6.1.407437803&quot;},{&quot;appName&quot;:&quot;com.android.server.NetworkPermissionConfig&quot;,&quot;packageName&quot;:&quot;com.google.android.networkstack.permissionconfig&quot;,&quot;versionCode&quot;:300000000,&quot;versionName&quot;:&quot;2019-09&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã§Â½Â®&quot;,&quot;packageName&quot;:&quot;com.android.settings&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨Â®Â¾Ã¥Â¤ÂÃ§Â®Â¡Ã§ÂÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.omadm.service&quot;,&quot;versionCode&quot;:1,&quot;versionName&quot;:&quot;1.0.0&quot;},{&quot;appName&quot;:&quot;Connectivity Thermal Power Manager&quot;,&quot;packageName&quot;:&quot;com.google.android.connectivitythermalpowermanager&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;VpnDialogs&quot;,&quot;packageName&quot;:&quot;com.android.vpndialogs&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.android.angle&quot;,&quot;packageName&quot;:&quot;com.android.angle&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂµÃ¨Â¯ÂÃ¦ÂÂÃ¥ÂÂ¡&quot;,&quot;packageName&quot;:&quot;com.android.phone&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Shell&quot;,&quot;packageName&quot;:&quot;com.android.shell&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;PaymentDemo&quot;,&quot;packageName&quot;:&quot;com.castles.softpos.client&quot;,&quot;versionCode&quot;:2,&quot;versionName&quot;:&quot;1.0.1&quot;},{&quot;appName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;packageName&quot;:&quot;com.android.wallpaperbackup&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¥Â­ÂÃ¥ÂÂ¨Ã¥Â·Â²Ã¥Â±ÂÃ¨ÂÂ½Ã§ÂÂÃ¥ÂÂ·Ã§ Â&quot;,&quot;packageName&quot;:&quot;com.android.providers.blockednumber&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§ÂÂ¨Ã¦ÂÂ·Ã¥Â­ÂÃ¥ÂÂ¸&quot;,&quot;packageName&quot;:&quot;com.android.providers.userdictionary&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Emergency information&quot;,&quot;packageName&quot;:&quot;com.android.emergency&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¤Â¸ÂÃ¤Â½ÂÃ¥ÂÂÃ¤Â½ÂÃ§Â½Â®Ã¤Â¿Â¡Ã¦ÂÂ¯&quot;,&quot;packageName&quot;:&quot;com.android.location.fused&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã§Â³Â»Ã§Â»ÂÃ§ÂÂÃ©ÂÂ¢&quot;,&quot;packageName&quot;:&quot;com.android.systemui&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§ÂÂ&quot;,&quot;packageName&quot;:&quot;com.android.bluetooth&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;Ã¨ÂÂÃ§Â³Â»Ã¤ÂºÂºÃ¥Â­ÂÃ¥ÂÂ¨&quot;,&quot;packageName&quot;:&quot;com.android.providers.contacts&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;},{&quot;appName&quot;:&quot;com.verizon.llkagent&quot;,&quot;packageName&quot;:&quot;com.verizon.llkagent&quot;,&quot;versionCode&quot;:32,&quot;versionName&quot;:&quot;12&quot;}],&quot;buildInfo&quot;:{&quot;CurCpuFreq&quot;:&quot;1803000&quot;,&quot;MaxCpuFreq&quot;:&quot;1803000&quot;,&quot;MinCpuFreq&quot;:&quot;300000&quot;,&quot;availableMemory&quot;:&quot;2449870848&quot;,&quot;availableRomSpace&quot;:&quot;108794150912&quot;,&quot;base_OS&quot;:&quot;&quot;,&quot;board&quot;:&quot;bluejay&quot;,&quot;bootloader&quot;:&quot;bluejay-1.1-8419703&quot;,&quot;brand&quot;:&quot;google&quot;,&quot;codeNAME&quot;:&quot;REL&quot;,&quot;display&quot;:&quot;SD2A.220601.003.B1&quot;,&quot;fingerprint&quot;:&quot;google\/bluejay\/bluejay:12\/SD2A.220601.003.B1\/8836721:user\/release-keys&quot;,&quot;incremental&quot;:&quot;8836721&quot;,&quot;manufacturer&quot;:&quot;Google&quot;,&quot;model&quot;:&quot;Pixel 6a&quot;,&quot;product&quot;:&quot;bluejay&quot;,&quot;radio&quot;:&quot;unknown&quot;,&quot;release&quot;:&quot;12&quot;,&quot;scaling_available_frequencies&quot;:&quot;300000 574000 738000 930000 1098000 1197000 1328000 1401000 1598000 1704000 1803000 &quot;,&quot;scaling_available_governors&quot;:&quot;sched_pixel conservative powersave performance schedutil &quot;,&quot;totalMemory&quot;:&quot;5851979776&quot;,&quot;totalRomSpace&quot;:&quot;128000000000&quot;},&quot;emulatorStatus&quot;:{&quot;hasGenyFiles&quot;:false,&quot;hasKnownPhoneNumber&quot;:false,&quot;hasPipes&quot;:false,&quot;hasQEmuFiles&quot;:false,&quot;hasqemuDrivers&quot;:false,&quot;isOperatorNameAndroid&quot;:false},&quot;googlePlayServiceVersion&quot;:&quot;23.08.15 (190400-512743456)&quot;,&quot;hasCameraPermission&quot;:true,&quot;hasLigntSensor&quot;:true,&quot;hasMicroPhonePermission&quot;:true,&quot;hookStatus&quot;:false,&quot;isGooglePlayServiceAvailable&quot;:true,&quot;macAddress&quot;:&quot;&quot;,&quot;rootStatus&quot;:{&quot;ForRWPATHS&quot;:false,&quot;SUBinary&quot;:false,&quot;busyBoxbinary&quot;:false,&quot;dangerousProps&quot;:false,&quot;potentiallyDangerousApp &quot;:false,&quot;rootCloakingApps&quot;:false,&quot;rootManagementApp&quot;:false,&quot;testkeys&quot;:false},&quot;security_patch&quot;:&quot;2022-06-01&quot;},&quot;freshnessIndicator&quot;:{&quot;ts&quot;:1684394408340,&quot;verifyCode&quot;:&quot;94c759bf-417e-44d7-82f8-0f8dd2e4e01f&quot;},&quot;rngHealth&quot;:{&quot;number&quot;:&quot;b4f8246b0dcdb8f79adc76a1e4bd1588d610dcc75859465137fa43e521ea5f8c&quot;,&quot;keyLen&quot;:32,&quot;entropy&quot;:&quot;780dc264ddf16ac9a2eec6c694ac54ef021a0e2c4e1fa236dd234099af4f2d28&quot;,&quot;nonce&quot;:&quot;8d0ec1c5bbf98486cd3fbfaec75b00eb&quot;,&quot;perStr&quot;:&quot;9e915c31a070a81329f317a8dd896b85&quot;},&quot;playIntegrityToken&quot;:&quot;eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2R0NNIn0.tFBagCyamgRx7bwkxIC7EB8-ReHTglnpFevrxXmVxqQE0g1OY0D-xg.oGpHiuoCqxbXnoyp.OIBppjJ15_TtAGZ2N0e9tKjPjqdJEXz8pvULzFxWGYTBOj6Wfl6fr07PRT8znkmAguSoHP6RkjTvH-GRTEuiVDG_CNrW5bRFwzBO5fB3x61R-12238oE7Qp1z20cTPaeRFb6kyxXBKQJ8wJa78Adb0h_oJWTuxIc2vp8dYsVbw0i1aNgbMXGHkyc3xw3cSSqHV2q41PpHCWT3by4A7Nz-aAHL_BhtffkuFZ7au05Utr1eAysTRnPWVm5BGhm8RLK8OqEYdaOmUcWR15iVVKFkmA4Ae7UA8Ghq6loIPj5BSEsTjEXBXTsiyTLWsffZvvh77AEKFS__af_b6dRc6mdvVy9gQB-P57Qh3_f7QaXT3LlYkfQSQ4z1tGR7p5I8N7OIfZPrajeI5doHvwM2jAXUOz6AIO192NfuAE-97B6VYpGJWkBH4FjwXx8bWEd7wDBIwNo9B2u6QnR7lOr0SPt1ykePBGxV7MJ0HTilwY23g92iZ_l7SylIZTsMiPH6QnNPWlS6mjDAeLldXEcbLLvAFccewJ86FmUUCrDcPXSsFIYq3GPeubColQQtbgxx8T7wnglIV1Bkv-XpF6Qimk7mnsvSU0NQsEnpFkFbSGZFoPe1sPbBDqv73OmPtDpo5Tnt4OXqdcLhvkipvHlp91NgRXES1kZw4ibP7wc3XlPoybtYqBrOmsniCi9BhCLg2KwdQRb6QlonCsR4gGH6eJEykl_CCxa5uVtc8SzksuDmepmC12s4Qo1qHGCPVA_uj1idXR7iGoVji83y0MqzFD0qNde0Hs-KLfgbs8fid3VIot1Pr5d95wT51Li4dAcLRQwqLb5JUUZ6FD_bENlx2yez_VU-m7RKXvqX5MVudvrOcAZnD_dFWSjAjzHFy2r2397GL8rG7H5A6olbtrEj7AR6K0AAmPAXRA7DpcWg6ttVCkNvBQVyIyNoJMewJpxB6CTCYhQjE_c_i7B3O5ynJjWUgsbgY_FgBeqLbMuzugBKmYy5lcsTzAsHU_js5pJisyGtnvEdjRngLtxJnrv-2RnrHFgUFUaFTH2ylrfdyYGoBZoetKNKnvWKwZdOmoC9pOszGMN-CeuTh7o9GvRNYlpMUZmjseumMGLqKeOyaJyuiQsoU-T-_7qlQyCgjMyJj3LFbIvyrAh3JkE7oBGXTDjfpP71AySFc9OVLkckQygCqCp4vMmyIrvA4T66_xyRd-Rl9pXzhGw46mMmj4jl5kdhv9C.n9o4PSQRkG2Mc_cdZ3jpdQ&quot;}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (260 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Hash: 1e9953d455052698e0eac0927de7613b745b0ae3b4d344c7b6eda7295b117018
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Date: Wed, 21 Jun 2023 09:37:36 GMT
+Content-Length: 110
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (110 bytes)</summary>
+				
+				<pre><code>{&quot;status&quot;:&quot;0&quot;,&quot;message&quot;:&quot;Full-Attestation Successfully.&quot;,&quot;data&quot;:{&quot;security_code&quot;:1,&quot;reason&quot;:&quot;Relay detected&quot;}}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>Cache-Control</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>For secure content, ensure the cache-control HTTP header is set with &quot;no-cache, no-store, must-revalidate&quot;. If an asset should be cached consider setting the directives &quot;public, max-age, immutable&quot;.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>Path Traversal</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/6/">Path Traversal</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/22.html">22</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>33</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://projects.webappsec.org/Path-Traversal">http://projects.webappsec.org/Path-Traversal</a></li>
+										<li><a
+											href="http://cwe.mitre.org/data/definitions/22.html">http://cwe.mitre.org/data/definitions/22.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-1">
+						<h4>X-Content-Type-Options Header Missing</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10021/">X-Content-Type-Options Header Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-2">
+						<h4>Re-examine Cache-control Directives</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10015/">Re-examine Cache-control Directives</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/525.html">525</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching">https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</a></li>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</a></li>
+										<li><a
+											href="https://grayduck.mn/2021/09/13/cache-control-recommendations/">https://grayduck.mn/2021/09/13/cache-control-recommendations/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+</body>
+</html>
+
+
+

@@ -6,10 +6,11 @@ import (
 	"example1/app/service"
 	"example1/utils/global"
 	"example1/utils/token"
-	"github.com/gorilla/csrf"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/csrf"
 	_ "github.com/joho/godotenv/autoload"
 )
 
@@ -67,9 +68,10 @@ func (h *UserController) LogoutUser() gin.HandlerFunc {
 // Create User
 func (h *UserController) CreateUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		requestData := new(model.CreateStudent)
-		if err := c.ShouldBindJSON(requestData); err != nil {
-			c.JSON(http.StatusNotFound, responses.Status(responses.ParameterErr, nil))
+		requestData := new(model.Student)
+		if err := c.ShouldBindJSON(&requestData); err != nil {
+			fmt.Println("Error:" + err.Error())
+			c.JSON(http.StatusNotAcceptable, responses.Status(responses.ParameterErr, nil))
 			return
 		}
 		student_id, status := service.NewUserService().CreateUser(requestData)
