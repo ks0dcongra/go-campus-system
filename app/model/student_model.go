@@ -26,6 +26,6 @@ type SearchStudent struct {
 }
 
 type SQLinjectionStudent struct {
-	Id             int    `json:"Id" gorm:"primaryKey;uniqueIndex;autoIncrement;column:id"`
-	Name           string `json:"Name" binding:"required,userpasd"`
+	Id   int    `json:"Id" gorm:"primaryKey;uniqueIndex;autoIncrement;column:id"`
+	Name string `json:"Name" binding:"required,userpasd"`
 }

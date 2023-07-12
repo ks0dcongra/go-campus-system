@@ -7,11 +7,11 @@ import (
 	"example1/database"
 	"example1/utils/random"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 	"time"
-	"html/template"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/csrf"
@@ -90,9 +90,9 @@ func ApiRoutes(router *gin.Engine) {
 		fmt.Println(escapedName)
 		database.DB.Where("name = ?", escapedName).Find(&students)
 
-		c.JSON(http.StatusOK,gin.H{
-			"students":students,
-			},
+		c.JSON(http.StatusOK, gin.H{
+			"students": students,
+		},
 		)
 	})
 
