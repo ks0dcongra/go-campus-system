@@ -2,6 +2,7 @@ package token
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -26,7 +27,7 @@ func Newjwt() *JwtFactory {
 type CustomClaims struct {
 	Authorized bool `json:"authorized"`
 	UserID     int  `json:"user_id"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 func (j *JwtFactory) GenerateToken(user_id int) (string, error) {
@@ -48,10 +49,14 @@ func (j *JwtFactory) GenerateToken(user_id int) (string, error) {
 	claims := &CustomClaims{
 		Authorized: true,
 		UserID:     user_id,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix(),
-			// 設置簽署人
-			Issuer: "shehomebow",
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:    "shehomebow",
+			Subject:   "",
+			Audience:  []string{},
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * time.Duration(token_lifespan))),
+			NotBefore: &jwt.NumericDate{},
+			IssuedAt:  &jwt.NumericDate{},
+			ID:        "",
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -62,6 +67,7 @@ func (j *JwtFactory) GenerateToken(user_id int) (string, error) {
 func (j *JwtFactory) TokenValid(c *gin.Context) error {
 	tokenString := j.ExtractToken(c)
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		log.Println(token)
 		// 這個條件判斷用於檢查 Token 是否使用了預期的簽名方法。如果 Token 的簽名方法不是 HMAC，則返回一個錯誤，並指明簽名方法不符合預期。
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -73,7 +79,7 @@ func (j *JwtFactory) TokenValid(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
-
+	log.Println(token.Valid )
 	// 檢查簽名是否有效
 	if !token.Valid {
 		return fmt.Errorf("invalid token")
@@ -81,6 +87,7 @@ func (j *JwtFactory) TokenValid(c *gin.Context) error {
 
 	// 獲取解析後的 Payload
 	claims, ok := token.Claims.(*CustomClaims)
+	log.Println(claims)
 	if !ok {
 		return fmt.Errorf("failed to parse claims")
 	}
@@ -91,12 +98,12 @@ func (j *JwtFactory) TokenValid(c *gin.Context) error {
 	}
 
 	// 驗證過期時間
-	if time.Now().Unix() > claims.StandardClaims.ExpiresAt {
+	if time.Now().Unix() > claims.RegisteredClaims.ExpiresAt.Time.Unix() {
 		return fmt.Errorf("token has expired")
 	}
 
 	// 驗證 Issuer
-	if claims.StandardClaims.Issuer != "shehomebow" {
+	if claims.RegisteredClaims.Issuer != "shehomebow" {
 		return fmt.Errorf("invalid issuer")
 	}
 

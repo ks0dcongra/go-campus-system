@@ -1,19 +1,154 @@
-# Refer to golangci-lint's example config file for more options and information:
-# https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
-
 run:
-  timeout: 5m
-  modules-download-mode: readonly
+  # Timeout for analysis, e.g. 30s, 5m.
+  # Default: 1m
+  timeout: 10m
+  # default concurrency is a available CPU number
+  concurrency: 4
+  # skip vendor directory
+  skip-dirs:
+    - vendor
+
+linters-settings:
+  cyclop:
+    # The maximal code complexity to report.
+    # Default: 10
+    max-complexity: 30
+    # The maximal average package complexity.
+    # If it's higher than 0.0 (float) the check is enabled
+    # Default: 0.0
+    package-average: 10.0
+
+  errcheck:
+    # Report about not checking of errors in type assertions: `a := b.(MyStruct)`.
+    # Such cases aren't reported by default.
+    # Default: false
+    check-type-assertions: true
+    check-blank: true
+
+  exhaustive:
+    # Program elements to check for exhaustiveness.
+    # Default: [ switch ]
+    check:
+      - switch
+      - map
+  gocognit:
+    # Minimal code complexity to report.
+    # Default: 30 (but we recommend 10-20)
+    min-complexity: 20
+
+  gocritic:
+    # Settings passed to gocritic.
+    # The settings key is the name of a supported gocritic checker.
+    # The list of supported checkers can be find in https://go-critic.github.io/overview.
+    settings:
+      captLocal:
+        # Whether to restrict checker to params only.
+        # Default: true
+        paramsOnly: false
+      underef:
+        # Whether to skip (*x).method() calls where x is a pointer receiver.
+        # Default: true
+        skipRecvDeref: false
+
+  govet:
+    # Enable all analyzers.
+    # Default: false
+    enable-all: true
+    # Disable analyzers by name.
+    # Run `go tool vet help` to see all analyzers.
+    # Default: []
+    disable:
+      - fieldalignment # too strict
+    # Settings per analyzer.
+    settings:
+      shadow:
+        # Whether to be strict about shadowing; can be noisy.
+        # Default: false
+        strict: true
+
+  nakedret:
+    # Make an issue if func has more lines of code than this setting, and it has naked returns.
+    # Default: 30
+    max-func-lines: 0
+
+  nolintlint:
+    # Exclude following linters from requiring an explanation.
+    # Default: []
+    allow-no-explanation: [ funlen, gocognit, lll ]
+    # Enable to require an explanation of nonzero length after each nolint directive.
+    # Default: false
+    require-explanation: true
+    # Enable to require nolint directives to mention the specific linter being suppressed.
+    # Default: false
+    require-specific: true
+
+
 
 linters:
+  disable-all: true # 停用其他linter，包括golangci預設使用的套件
   enable:
-    - errcheck
-    - goimports
-    - golint
-    - govet
-    - staticcheck
-
+    # 預設使用套件
+    # - errcheck # 檢查未檢查的錯誤，宣告err後應該要判斷err是否為nil
+    # # _, err := ioutil.ReadFile("example.txt")
+    # # 應該檢查 err 是否為 nil
+    # - govet # 報告可疑結構，例如參數與格式字符串不符的 Printf 調用
+    # # fmt.Printf("Total count: %s\n", count)
+    # # 應該將 "%s" 改成 "%d"
+    # - gosimple # 尋找並建議使用更簡單構造的代碼
+    # # i++取代i = i + 1
+    # - ineffassign # 檢測現有變量的賦值是否未被使用。
+    # # x := 10，變數 x 被賦值但未使用
+    - staticcheck # 靜態檢查
+    # # gosimple 和 unparam很像
+    # - unused # 檢查未使用的常量、變量、函數和類型
+    # # 引入的新套件
+    # - revive # golint 的替代品，提供更多自定義設定的選項，用於程式碼風格檢查。
+    # - cyclop # 檢查函數和包的循環複雜性
+    # - gocyclo # 計算並檢查函數的循環複雜度
+    # - misspell # 檢查拼寫錯誤
+    # - goconst # 查找可以用常量替換的重複字符串。
+    # - gocritic # 提供檢查錯誤、性能和样式問題的診斷。
+    # # 使用 x < 10 替代 x <= 9，if x <= 9 
+    # - gosimple # 專門用於簡化代碼。
+    # - stylecheck # Stylecheck 是 golint 的替代品。
+    # - whitespace # 用於檢測前導和尾隨空格的工具，刪掉多餘的空格與空行
+    # - unconvert # 檢查並刪除不必要的類型轉換
+    # # i := int32(42) 不需要這個 int32() 的類型轉換
+    # - dupl # 代碼克隆檢測工具，用於發現和處理重複的程式碼片段。
+    # - gosec # 檢查潛在的安全漏洞。
+    # password := "mysecretpassword" 應該避免在程式碼中明碼存儲密碼
+    # - nolintlint # 報告格式不正確或不充分的 nolint 指令
+    # # nolint: gocritic // 排除 gocritic 檢查器的檢查
+    # - goprintffuncname # 檢查類似 printf 的函數是否以 f 結尾命名
+    # # func logf(format string, args ...interface{}) 命名不符合以 `f` 結尾的命名慣例
+    # - bodyclose # 檢查 HTTP 響應體是否已成功關閉
+    # - exportloopref # 檢查指向外層迴圈變數的指針
+    # # itemCopy := item指向外層迴圈變數的指針results = append(results, &itemCopy)
+    # - unparam # 報告未使用的函數參數
+    # # func exampleFunction(a int, b string) 沒有使用參數 a 和 b
+    # - nakedret #在大於指定函數長度的函數中查找裸返回
+    # # func longFunction() (result int) 長函數內容...return 裸返回，應該明確指定返回值
+    # - gocognit # 計算並檢查函數的認知複雜性。
+    # - exhaustive # 設定用於switch的全面性
+    # - goimports # 除了修復導入問題，goimports 還能以與 gofmt 相同的風格格式化程式碼
 issues:
-  exclude-use-default: false
-  max-issues-per-linter: 0
-  max-same-issues: 0
+  # 設定相同警告文本的最大問題數量
+  max-same-issues: 100000
+  # 定義要排除的規則，這些規則不會被檢查器應用
+  exclude-rules:
+    - source: "(noinspection|TODO)"
+      linters: [ godot ]
+    - path: "_test.go"
+      linters:
+        - govet
+        - revive
+        - bodyclose
+        - dupl
+        - funlen
+        - goconst
+        - gosec
+        - noctx
+        - wrapcheck
+    - linters:
+       - stylecheck
+      text: "ST1000:"

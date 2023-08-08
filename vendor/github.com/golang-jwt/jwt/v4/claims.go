@@ -8,7 +8,7 @@ import (
 
 // Claims must just have a Valid method that determines
 // if the token is invalid for any supported reason
-type Claims interface {
+type 	Claims interface {
 	Valid() error
 }
 
@@ -126,7 +126,6 @@ func (c *RegisteredClaims) VerifyIssuer(cmp string, req bool) bool {
 // support integer-based date fields and singular audiences. This might lead to
 // incompatibilities with other JWT implementations. The use of this is discouraged, instead
 // the newer RegisteredClaims struct should be used.
-//
 // Deprecated: Use RegisteredClaims instead for a forward-compatible way to access registered claims in a struct.
 type StandardClaims struct {
 	Audience  string `json:"aud,omitempty"`
