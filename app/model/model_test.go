@@ -68,6 +68,7 @@ func TestCourseScoreRelationship(t *testing.T) {
 			Course_id:  course.Id,
 		}
 
+		// FIXME:沒有意義?
 		err = db.Create(&score).Error
 		assert.NoError(t, err)
 
